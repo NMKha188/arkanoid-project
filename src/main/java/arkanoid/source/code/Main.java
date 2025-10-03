@@ -1,36 +1,68 @@
 package arkanoid.source.code;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    // Screen size
+    private final double SCREEN_WIDTH = 630;
+    private final double SCREEN_HEIGHT = 720;
+    // Check key press
+    private boolean isMovingLeft = false;
+    private boolean isMovingRight = false;
+    // Game objects
+    private Paddle paddle = new Paddle();
+
+    Pane root = new Pane();
+    Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     @Override
-    public void start(Stage stage) {
-        // Create a canvas for drawing
-        Canvas canvas = new Canvas(600, 400);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+    public void start(Stage primaryStage) {
+        root.getChildren().add(paddle.getPaddle());
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
-        // Draw a paddle
-        gc.setFill(Color.DARKBLUE);
-        gc.fillRect(250, 350, 100, 20);
+        /**
+         * Handle key press.
+         */
+        scene.setOnKeyPressed(event -> {
+            switch(event.getCode()) {
+                case LEFT:
+                    isMovingLeft = true;
+                    break;
+                case RIGHT:
+                    isMovingRight = true;
+                    break;
+                default:
+                    // blank
+            }
+        });
 
-        // Draw a ball
-        gc.setFill(Color.RED);
-        gc.fillOval(290, 320, 20, 20);
+        /**
+         * Handle key release.
+         */
+        scene.setOnKeyReleased(event -> {
+            switch(event.getCode()) {
+                case LEFT:
+                    isMovingLeft = false;
+                    break;
+                case RIGHT:
+                    isMovingRight = false;
+                    break;
+                default:
+                    // blank
+            }
+        });
 
-        // Set up scene
-        StackPane root = new StackPane(canvas);
-        Scene scene = new Scene(root, 600, 400, Color.LIGHTGRAY);
-
-        stage.setTitle("Arkanoid Test");
-        stage.setScene(scene);
-        stage.show();
+        new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
+            }
+        }.start();
     }
 
     public static void main(String[] args) {
