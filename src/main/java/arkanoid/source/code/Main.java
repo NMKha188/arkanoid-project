@@ -21,11 +21,15 @@ public class Main extends Application {
     Pane root = new Pane();
     Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+    //Ball
+    Ball ball=new Ball(paddle);
+
     @Override
     public void start(Stage primaryStage) {
-        root.getChildren().add(paddle.getPaddle());
+        root.getChildren().addAll(paddle.getPaddle(),ball.getBall());
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStage.setTitle("Arkanoid Game");
 
         /**
          * Handle key press.
@@ -54,15 +58,25 @@ public class Main extends Application {
                 case RIGHT:
                     isMovingRight = false;
                     break;
+
+                case SPACE:
+                    if(ball.getX()==paddle.getX()+paddle.getWIDTH()/2)
+                    {
+                        ball.setStart(true);
+                    }
+                    break;
+
                 default:
                     // blank
             }
         });
 
+
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
+                paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH,ball);
+                ball.update(SCREEN_WIDTH, SCREEN_HEIGHT,paddle);
             }
         }.start();
     }

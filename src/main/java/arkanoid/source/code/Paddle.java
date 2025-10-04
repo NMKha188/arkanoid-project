@@ -7,8 +7,8 @@ public class Paddle {
     private double y;
     private final double WIDTH = 80;
     private final double HEIGHT = 15;
-    private final double PADDLE_SPEED = 2;
-    private Rectangle paddle;
+    private final double PADDLE_SPEED = 7;
+    public Rectangle paddle;
 
     public Paddle(double SCREEN_WIDTH, double SCREEN_HEIGHT) {
         this.x = (SCREEN_WIDTH - this.WIDTH) / 2;
@@ -21,13 +21,28 @@ public class Paddle {
     public double getY() { return this.y; }
     public void setY(double y) { this.y = y; }
     public Rectangle getPaddle() { return this.paddle; }
+    public double getWIDTH(){
+        return this.WIDTH;
+    }
+    public double getHEIGHT(){
+        return this.HEIGHT;
+    }
 
-    public void updatePosition(boolean isMovingLeft, boolean isMovingRight, double SCREEN_WIDTH) {
+    public void updatePosition(boolean isMovingLeft, boolean isMovingRight, double SCREEN_WIDTH,Ball ball) {
         if (isMovingLeft && !isMovingRight && this.x >= 0) {
             this.x -= PADDLE_SPEED;
+            if(ball.getStart()==false)
+            {
+                ball.setX(ball.getX()-PADDLE_SPEED);
+            }
         } else if (isMovingRight && !isMovingLeft && this.x <= SCREEN_WIDTH - this.WIDTH) {
             this.x += PADDLE_SPEED;
+            if(ball.getStart()==false)
+            {
+                ball.setX(ball.getX()+PADDLE_SPEED);
+            }
         }
         this.paddle.setX(this.x);
     }
 }
+
