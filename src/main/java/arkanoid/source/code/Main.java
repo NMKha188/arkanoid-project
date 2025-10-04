@@ -58,9 +58,13 @@ public class Main extends Application {
                 case RIGHT:
                     isMovingRight = false;
                     break;
-                    case SPACE:
+
+                case SPACE:
+                    if(ball.getX()==paddle.getX()+paddle.getWIDTH()/2)
+                    {
                         ball.start=true;
-                        break;
+                    }
+                    break;
 
                 default:
                     // blank
@@ -71,8 +75,8 @@ public class Main extends Application {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
-                ball.update(SCREEN_WIDTH, SCREEN_HEIGHT);
+                paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH,ball);
+                ball.update(SCREEN_WIDTH, SCREEN_HEIGHT,paddle);
             }
         }.start();
     }
