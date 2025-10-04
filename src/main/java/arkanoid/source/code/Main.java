@@ -62,7 +62,7 @@ public class Main extends Application {
                 case SPACE:
                     if(ball.getX()==paddle.getX()+paddle.getWIDTH()/2)
                     {
-                        ball.start=true;
+                        ball.setStart(true);
                     }
                     break;
 

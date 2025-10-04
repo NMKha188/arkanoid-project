@@ -31,15 +31,15 @@ public class Paddle {
     public void updatePosition(boolean isMovingLeft, boolean isMovingRight, double SCREEN_WIDTH,Ball ball) {
         if (isMovingLeft && !isMovingRight && this.x >= 0) {
             this.x -= PADDLE_SPEED;
-            if(ball.start==false)
+            if(ball.getStart()==false)
             {
-                ball.x-=PADDLE_SPEED;
+                ball.setX(ball.getX()-PADDLE_SPEED);
             }
         } else if (isMovingRight && !isMovingLeft && this.x <= SCREEN_WIDTH - this.WIDTH) {
             this.x += PADDLE_SPEED;
-            if(ball.start==false)
+            if(ball.getStart()==false)
             {
-                ball.x+=PADDLE_SPEED;
+                ball.setX(ball.getX()+PADDLE_SPEED);
             }
         }
         this.paddle.setX(this.x);
