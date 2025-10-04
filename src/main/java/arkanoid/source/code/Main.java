@@ -8,13 +8,15 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     // Screen size
-    private final double SCREEN_WIDTH = 630;
-    private final double SCREEN_HEIGHT = 720;
+    private final double SCREEN_WIDTH = 560;
+    private final double SCREEN_HEIGHT = 640;
+
     // Check key press
     private boolean isMovingLeft = false;
     private boolean isMovingRight = false;
+
     // Game objects
-    private Paddle paddle = new Paddle();
+    private Paddle paddle = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     Pane root = new Pane();
     Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);

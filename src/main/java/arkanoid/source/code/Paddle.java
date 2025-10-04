@@ -10,9 +10,9 @@ public class Paddle {
     private final double PADDLE_SPEED = 2;
     private Rectangle paddle;
 
-    public Paddle() {
-        this.x = 275;
-        this.y = 680;
+    public Paddle(double SCREEN_WIDTH, double SCREEN_HEIGHT) {
+        this.x = (SCREEN_WIDTH - this.WIDTH) / 2;
+        this.y = SCREEN_HEIGHT - 40;
         this.paddle = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
     }
 
