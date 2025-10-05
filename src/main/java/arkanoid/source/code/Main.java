@@ -22,11 +22,11 @@ public class Main extends Application {
     Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     //Ball
-    Ball ball=new Ball(paddle);
+    Ball ball = new Ball(paddle);
 
     @Override
     public void start(Stage primaryStage) {
-        root.getChildren().addAll(paddle.getPaddle(),ball.getBall());
+        root.getChildren().addAll(paddle.getPaddle(), ball.getBall());
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setTitle("Arkanoid Game");
@@ -35,7 +35,7 @@ public class Main extends Application {
          * Handle key press.
          */
         scene.setOnKeyPressed(event -> {
-            switch(event.getCode()) {
+            switch (event.getCode()) {
                 case LEFT:
                     isMovingLeft = true;
                     break;
@@ -51,21 +51,18 @@ public class Main extends Application {
          * Handle key release.
          */
         scene.setOnKeyReleased(event -> {
-            switch(event.getCode()) {
+            switch (event.getCode()) {
                 case LEFT:
                     isMovingLeft = false;
                     break;
                 case RIGHT:
                     isMovingRight = false;
                     break;
-
                 case SPACE:
-                    if(ball.getX()==paddle.getX()+paddle.getWIDTH()/2)
-                    {
+                    if (ball.getX() == paddle.getX() + paddle.getWIDTH() / 2) {
                         ball.setStart(true);
                     }
                     break;
-
                 default:
                     // blank
             }
@@ -75,8 +72,8 @@ public class Main extends Application {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH,ball);
-                ball.update(SCREEN_WIDTH, SCREEN_HEIGHT,paddle);
+                paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH, ball);
+                ball.update(SCREEN_WIDTH, SCREEN_HEIGHT, paddle);
             }
         }.start();
     }
