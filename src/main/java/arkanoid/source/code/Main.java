@@ -21,6 +21,8 @@ public class Main extends Application {
     // ball
     private Ball ball = new Ball();
 
+    //brick
+    private Brick brick=new Brick(SCREEN_WIDTH);
     // root and scene
     Pane root = new Pane();
     Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -32,7 +34,7 @@ public class Main extends Application {
         root.getChildren().add(ball.getLine());
         primaryStage.setScene(scene);
         primaryStage.show();
-
+        brick.khoiTao(root);
         // handle key press
         scene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
@@ -70,10 +72,10 @@ public class Main extends Application {
             public void handle(long now) {
                 paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
                 ball.updatePosition(SCREEN_WIDTH, SCREEN_HEIGHT, paddle, isMovingLeft, isMovingRight);
+                brick.vaCham(ball,root);
             }
         }.start();
     }
-
     public static void main(String[] args) {
         launch(args);
     }

@@ -7,7 +7,7 @@ public class Paddle {
     private double y;
     private final double WIDTH = 80;
     private final double HEIGHT = 15;
-    private final double PADDLE_SPEED = 2;
+    private final double PADDLE_SPEED = 5;
     private Rectangle paddle;
 
     public Paddle(double SCREEN_WIDTH, double SCREEN_HEIGHT) {

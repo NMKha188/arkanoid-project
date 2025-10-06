@@ -12,8 +12,8 @@ public class Ball {
     private Circle ball;
 
     private double Vx;
-    double changeVx = 0.05;
-    final double MAX_VX = 3;
+    double changeVx = 1;
+    final double MAX_VX = 9;
     private double Vy;
 
     private boolean released;
