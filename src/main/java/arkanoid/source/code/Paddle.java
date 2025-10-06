@@ -7,56 +7,39 @@ public class Paddle {
     private double y;
     private final double WIDTH = 80;
     private final double HEIGHT = 15;
-    private final double PADDLE_SPEED = 7;
-    public Rectangle paddle;
+    private final double PADDLE_SPEED = 2;
+    private Rectangle paddle;
 
     public Paddle(double SCREEN_WIDTH, double SCREEN_HEIGHT) {
         this.x = (SCREEN_WIDTH - this.WIDTH) / 2;
-        this.y = SCREEN_HEIGHT - 80;
+        this.y = SCREEN_HEIGHT - 30;
         this.paddle = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
     }
 
-    public double getX() {
-        return this.x;
-    }
+    // getter setter BEGIN
+    public double getX() { return this.x; }
 
-    public void setX(double x) {
-        this.x = x;
-    }
+    public void setX(double x) { this.x = x; }
 
-    public double getY() {
-        return this.y;
-    }
+    public double getY() { return this.y; }
 
-    public void setY(double y) {
-        this.y = y;
-    }
+    public void setY(double y) { this.y = y; }
 
-    public Rectangle getPaddle() {
-        return this.paddle;
-    }
+    public double getWidth() { return this.WIDTH; }
 
-    public double getWIDTH() {
-        return this.WIDTH;
-    }
+    public double getHeight() { return this.HEIGHT; }
 
-    public double getHEIGHT() {
-        return this.HEIGHT;
-    }
+    public double getSpeed() { return this.PADDLE_SPEED; }
 
-    public void updatePosition(boolean isMovingLeft, boolean isMovingRight, double SCREEN_WIDTH, Ball ball) {
+    public Rectangle getPaddle() { return this.paddle; }
+    // getter setter END
+
+    public void updatePosition(boolean isMovingLeft, boolean isMovingRight, double SCREEN_WIDTH) {
         if (isMovingLeft && !isMovingRight && this.x >= 0) {
             this.x -= PADDLE_SPEED;
-            if (!ball.getStart()) {
-                ball.setX(ball.getX() - PADDLE_SPEED);
-            }
         } else if (isMovingRight && !isMovingLeft && this.x <= SCREEN_WIDTH - this.WIDTH) {
             this.x += PADDLE_SPEED;
-            if (!ball.getStart()) {
-                ball.setX(ball.getX() + PADDLE_SPEED);
-            }
         }
         this.paddle.setX(this.x);
     }
 }
-
