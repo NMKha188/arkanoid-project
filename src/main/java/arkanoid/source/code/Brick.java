@@ -3,6 +3,9 @@ package arkanoid.source.code;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.scene.shape.Circle;
+
 
 import java.util.LinkedList;
 
@@ -59,63 +62,45 @@ public class Brick {
             }
         }
     }
-    public void vaCham(Ball ball,Pane root) {
+    public void vaCham(Ball ball, Pane root) {
+        javafx.scene.shape.Circle circle = new javafx.scene.shape.Circle(ball.getX(), ball.getY(), ball.getRadius());
+
         Rectangle touchedBrick = null;
-        for (Rectangle brick : basic_bricks) {
-            if (ball.getReleasedState()) {
-                if (ball.getX() >= brick.getX() && ball.getX() <= brick.getX() + brick.getWidth()) {
-                    if ((ball.getY() + ball.getRadius() > brick.getY() && ball.getY() + ball.getRadius() < brick.getY() + brick.getHeight())
-                            || ((ball.getY() - ball.getRadius() < brick.getY() + brick.getHeight() && ball.getY() - ball.getRadius() < brick.getY()))) {
-                        ball.setVy(-ball.getVy());
-                        touchedBrick = brick;
-                        break;
-                    }
-                }
-                if (ball.getY() >= brick.getY() && ball.getY() <= brick.getY() + brick.getHeight()) {
-                    if ((ball.getX() + ball.getRadius() > brick.getX() && ball.getX() + ball.getRadius() < brick.getX() + brick.getWidth())
-                            || ((ball.getX() - ball.getRadius() < brick.getX() + brick.getWidth() && ball.getX() - ball.getRadius() < brick.getX()))) {
-                        ball.setVy(-ball.getVy());
-                        touchedBrick = brick;
-                        break;
-                    }
+        blockBrick touchedBlock = null;
+
+        if (ball.getReleasedState()) {
+            for (Rectangle brick : basic_bricks) {
+                Shape inter = Shape.intersect(circle, brick);
+                if (inter.getBoundsInLocal().getWidth() > 0 && inter.getBoundsInLocal().getHeight() > 0) {
+                    ball.setVy(-ball.getVy());
+                    touchedBrick = brick;
+                    break;
                 }
             }
-        }
-        blockBrick bb = null;
-        for (blockBrick br : block_brick) {
-            if (ball.getReleasedState()) {
-                if (ball.getX() >= br.brick .getX() && ball.getX() <= br.brick.getX() + br.brick.getWidth()) {
-                    if ((ball.getY() + ball.getRadius() > br.brick.getY() && ball.getY() + ball.getRadius() < br.brick.getY() + br.brick.getHeight())
-                            || ((ball.getY() - ball.getRadius() < br.brick.getY() + br.brick.getHeight() && ball.getY() - ball.getRadius() < br.brick.getY()))) {
+
+            if (touchedBrick == null) {
+                for (blockBrick br : block_brick) {
+                    Shape inter = Shape.intersect(circle, br.brick);
+                    if (inter.getBoundsInLocal().getWidth() > 0 && inter.getBoundsInLocal().getHeight() > 0) {
                         ball.setVy(-ball.getVy());
                         br.times--;
                         if (br.times == 0) {
-                            bb = br;
-                        }
-                        break;
-                    }
-                }
-                if (ball.getY() >= br.brick.getY() && ball.getY() <= br.brick.getY() + br.brick.getHeight()) {
-                    if ((ball.getX() + ball.getRadius() > br.brick.getX() && ball.getX() + ball.getRadius() < br.brick.getX() + br.brick.getWidth())
-                            || ((ball.getX() - ball.getRadius() < br.brick.getX() + br.brick.getWidth() && ball.getX() - ball.getRadius() < br.brick.getX()))) {
-                        ball.setVy(-ball.getVy());
-                        br.times--;
-                        if (br.times == 0) {
-                            bb = br;
+                            touchedBlock = br;
                         }
                         break;
                     }
                 }
             }
         }
+
         if (touchedBrick != null) {
             root.getChildren().remove(touchedBrick);
             basic_bricks.remove(touchedBrick);
         }
-        if (bb != null)
-        {
-            root.getChildren().remove(bb.brick);
-            block_brick.remove(bb);
+        if (touchedBlock != null) {
+            root.getChildren().remove(touchedBlock.brick);
+            block_brick.remove(touchedBlock);
         }
     }
+
 }

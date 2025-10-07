@@ -45,10 +45,10 @@ public class Main extends Application {
                     isMovingRight = true;
                     break;
                 case SPACE:
-                    ball.setReleasedState(true);
+                    if (!ball.getReleasedState()) {
+                        ball.setReleasedState(true);
+                    }
                     break;
-                default:
-                    // blank
             }
         });
 
