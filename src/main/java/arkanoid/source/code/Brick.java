@@ -14,6 +14,8 @@ public class Brick {
     private double y;
     private double width;
     private double height;
+    private double centerX=width/2;
+    private double centerY=height/2;
     LinkedList<Rectangle> basic_bricks = new LinkedList<Rectangle>();
     LinkedList<blockBrick> block_brick = new LinkedList<blockBrick>();
     public class blockBrick{
@@ -44,14 +46,14 @@ public class Brick {
                     if(maps[k][i][j]==1){
                         rec.setFill(Color.PINK);
                         rec.setStroke(Color.BLACK);
-                        rec.setStrokeWidth(15);
+                        rec.setStrokeWidth(5);
                         root.getChildren().add(rec);
                         basic_bricks.add(rec);
                     }
                     else if(maps[k][i][j]==2){
                         rec.setFill(Color.RED);
                         rec.setStroke(Color.BLACK);
-                        rec.setStrokeWidth(15);
+                        rec.setStrokeWidth(5);
                         root.getChildren().add(rec);
                         block_brick.add(new blockBrick(rec,3));
                     }
@@ -70,11 +72,22 @@ public class Brick {
 
         if (ball.getReleasedState()) {
             for (Rectangle brick : basic_bricks) {
-                Shape inter = Shape.intersect(circle, brick);
+                Shape inter = Shape.intersect(ball.getBall(), brick);
                 if (inter.getBoundsInLocal().getWidth() > 0 && inter.getBoundsInLocal().getHeight() > 0) {
-                    ball.setVy(-ball.getVy());
-                    touchedBrick = brick;
-                    break;
+                    if((ball.getY()>= brick.getY()&&ball.getY()<=brick.getY()+brick.getHeight())
+                            &&((ball.getX()+ball.getRadius()>=brick.getX()&&ball.getX()+ball.getRadius()<=brick.getX()+this.centerX)
+                            ||(ball.getX()-ball.getRadius()<=brick.getX()+brick.getWidth()&&ball.getX()-ball.getRadius()>=brick.getX()+this.centerX)))
+                    {
+                        ball.setVx(-ball.getVx());
+                        touchedBrick=brick;
+                    }
+                    if((ball.getX()>= brick.getX()&&ball.getX()<=brick.getX()+brick.getWidth())
+                            &&((ball.getY()+ball.getRadius()>=brick.getY()&&ball.getY()+ball.getRadius()<=brick.getY()+this.centerY)
+                            ||(ball.getY()-ball.getRadius()<=brick.getY()+brick.getHeight()&&ball.getY()-ball.getRadius()>=brick.getY()+this.centerY)))
+                    {
+                        ball.setVy(-ball.getVy());
+                        touchedBrick=brick;
+                    }
                 }
             }
 
@@ -82,12 +95,29 @@ public class Brick {
                 for (blockBrick br : block_brick) {
                     Shape inter = Shape.intersect(circle, br.brick);
                     if (inter.getBoundsInLocal().getWidth() > 0 && inter.getBoundsInLocal().getHeight() > 0) {
-                        ball.setVy(-ball.getVy());
-                        br.times--;
-                        if (br.times == 0) {
-                            touchedBlock = br;
+                        if((ball.getY()>= br.brick.getY()&&ball.getY()<=br.brick.getY()+br.brick.getHeight())
+                                &&((ball.getX()+ball.getRadius()>=br.brick.getX()&&ball.getX()+ball.getRadius()<=br.brick.getX()+this.centerX)
+                                ||(ball.getX()-ball.getRadius()<=br.brick.getX()+br.brick.getWidth()&&ball.getX()-ball.getRadius()>=br.brick.getX()+this.centerX)))
+                        {
+                            br.times--;
+                            ball.setVx(-ball.getVx());
+                            if (br.times == 0) {
+                                touchedBlock = br;
+                            }
+                            break;
                         }
-                        break;
+                        if((ball.getX()>= br.brick.getX()&&ball.getX()<=br.brick.getX()+br.brick.getWidth())
+                                &&((ball.getY()+ball.getRadius()>=br.brick.getY()&&ball.getY()+ball.getRadius()<=br.brick.getY()+this.centerY)
+                                ||(ball.getY()-ball.getRadius()<=br.brick.getY()+br.brick.getHeight()&&ball.getY()-ball.getRadius()>=br.brick.getY()+this.centerY)))
+                        {
+                            br.times--;
+                            ball.setVy(-ball.getVy());
+                            if (br.times == 0) {
+                                touchedBlock = br;
+                            }
+                            break;
+                        }
+
                     }
                 }
             }

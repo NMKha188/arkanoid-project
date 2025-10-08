@@ -11,7 +11,6 @@ public class Ball {
     private double y;
     private final double RADIUS = 10;
     private Circle ball;
-
     // x and y velocity
     private double Vx;
     double changeVx = 0.06;
