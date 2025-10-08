@@ -14,8 +14,8 @@ public class Brick {
     private double y;
     private double width;
     private double height;
-    private double centerX=width/2;
-    private double centerY=height/2;
+    private double centerX;
+    private double centerY;
     LinkedList<Rectangle> basic_bricks = new LinkedList<Rectangle>();
     LinkedList<blockBrick> block_brick = new LinkedList<blockBrick>();
     public class blockBrick{
@@ -31,6 +31,8 @@ public class Brick {
         this.y = 60;
         this.width =SCREEN_WIDTH/5;
         this.height = 30;
+        this.centerX=width/2;
+        this.centerY=height/2;
     }
     public int [][]map1={{0,0,0,1,0},{1,2,2,1,0},{0,0,1,2,0}};
     public int[][][] maps={map1};
@@ -95,12 +97,13 @@ public class Brick {
                 for (blockBrick br : block_brick) {
                     Shape inter = Shape.intersect(circle, br.brick);
                     if (inter.getBoundsInLocal().getWidth() > 0 && inter.getBoundsInLocal().getHeight() > 0) {
-                        if((ball.getY()>= br.brick.getY()&&ball.getY()<=br.brick.getY()+br.brick.getHeight())
+                        if((ball.getY()> br.brick.getY()&&ball.getY()<br.brick.getY()+br.brick.getHeight())
                                 &&((ball.getX()+ball.getRadius()>=br.brick.getX()&&ball.getX()+ball.getRadius()<=br.brick.getX()+this.centerX)
                                 ||(ball.getX()-ball.getRadius()<=br.brick.getX()+br.brick.getWidth()&&ball.getX()-ball.getRadius()>=br.brick.getX()+this.centerX)))
                         {
-                            br.times--;
                             ball.setVx(-ball.getVx());
+                            br.times--;
+
                             if (br.times == 0) {
                                 touchedBlock = br;
                             }
@@ -110,8 +113,8 @@ public class Brick {
                                 &&((ball.getY()+ball.getRadius()>=br.brick.getY()&&ball.getY()+ball.getRadius()<=br.brick.getY()+this.centerY)
                                 ||(ball.getY()-ball.getRadius()<=br.brick.getY()+br.brick.getHeight()&&ball.getY()-ball.getRadius()>=br.brick.getY()+this.centerY)))
                         {
-                            br.times--;
                             ball.setVy(-ball.getVy());
+                            br.times--;
                             if (br.times == 0) {
                                 touchedBlock = br;
                             }
