@@ -93,12 +93,11 @@ public class Brick {
                 if (inter.getBoundsInLocal().getWidth() > 0 && inter.getBoundsInLocal().getHeight() > 0) {
                     if (ball.getX() > brick.getX() && ball.getX() < brick.getX() + brick.getWidth()) {
                         ball.setVy(-ball.getVy());
-                        touchedBrick = brick;
+
                     } else if (ball.getY() > brick.getY() && ball.getY() < brick.getY() + brick.getHeight()) {
                         ball.setVx(-ball.getVx());
-                        touchedBrick = brick;
                     }
-
+                    touchedBrick = brick;
                 }
             }
 
@@ -109,19 +108,14 @@ public class Brick {
                         if (ball.getX() > br.brick.getX() && ball.getX() < br.brick.getX() + br.brick.getWidth()) {
                             ball.setVy(-ball.getVy());
                             br.times--;
-                            if (br.times == 0) {
-                                touchedBlock = br;
-                            }
-                            break;
                         } else if (ball.getY() > br.brick.getY() && ball.getY() < br.brick.getY() + br.brick.getHeight()) {
                             ball.setVx(-ball.getVx());
                             br.times--;
-                            if (br.times == 0) {
-                                touchedBlock = br;
-                            }
-                            break;
                         }
-
+                        if (br.times == 0) {
+                            touchedBlock = br;
+                        }
+                        break;
                     }
                 }
             }
