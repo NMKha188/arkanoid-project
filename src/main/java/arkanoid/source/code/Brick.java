@@ -17,6 +17,7 @@ public class Brick {
     private int hitPoints;
     private Rectangle rec;
     private boolean daVaCham = false;
+    private int type;
 
     public Brick getBrick() {
         return this;
@@ -27,9 +28,10 @@ public class Brick {
     public Brick() {
     }
 
-    public Brick(Rectangle rec, int hitPoints) {
+    public Brick(Rectangle rec, int type, int hitPoints) {
         this.rec = rec;
         this.hitPoints = hitPoints;
+        this.type = type;
     }
 
     public int[][] map1 = {
@@ -60,12 +62,12 @@ public class Brick {
                         rec.setFill(Color.PINK);
                         rec.setStroke(Color.BLACK);
                         root.getChildren().add(rec);
-                        bricks.add(new Brick(rec, 1));
+                        bricks.add(new Brick(rec, 1,1));
                     } else if (maps[k][i][j] == 2) {
                         rec.setFill(Color.RED);
                         rec.setStroke(Color.BLACK);
                         root.getChildren().add(rec);
-                        bricks.add(new Brick(rec, 3));
+                        bricks.add(new Brick(rec,2,3));
                     } else {
                         continue;
                     }
@@ -77,8 +79,6 @@ public class Brick {
     public double getX(Brick brick) {
         return brick.x;
     }
-
-
 
     public void kiemTraVaCham(Ball ball, Pane root) {
         if (ball.getReleasedState()) {
@@ -115,11 +115,11 @@ public class Brick {
     }
 
     public void kiemTraLoaiGach (Brick brick){
-            switch (brick.hitPoints) {
+            switch (brick.type) {
                 case 1 -> {
                     brick.hitPoints=0;
                 }
-                case 2 -> {
+                case 2-> {
                     brick.hitPoints--;
                 }
                 default -> {}
