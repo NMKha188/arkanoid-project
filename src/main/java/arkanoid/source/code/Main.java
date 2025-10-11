@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     // Screen size
-    private final double SCREEN_WIDTH = 560;
+    private static final double SCREEN_WIDTH = 560;
     private final double SCREEN_HEIGHT = 640;
 
     // Check key press
@@ -22,10 +22,13 @@ public class Main extends Application {
     private Ball ball = new Ball();
 
     //brick
-    private Brick brick=new Brick(SCREEN_WIDTH);
+    private Brick brick=new Brick();
     // root and scene
     Pane root = new Pane();
     Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
+    public static double getSCREEN_WIDTH() {
+        return SCREEN_WIDTH;
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -72,7 +75,7 @@ public class Main extends Application {
             public void handle(long now) {
                 paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
                 ball.updatePosition(SCREEN_WIDTH, SCREEN_HEIGHT, paddle, isMovingLeft, isMovingRight);
-                brick.vaCham(ball,root);
+                brick.kiemTraVaCham(ball,root);
             }
         }.start();
     }

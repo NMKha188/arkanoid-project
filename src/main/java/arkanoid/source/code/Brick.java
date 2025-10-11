@@ -10,32 +10,26 @@ import javafx.scene.shape.Circle;
 import java.util.LinkedList;
 
 public class Brick {
-    private double x;
-    private double y;
-    private double width;
-    private double height;
-    private double centerX;
-    private double centerY;
-    LinkedList<Rectangle> basic_bricks = new LinkedList<Rectangle>();
-    LinkedList<blockBrick> block_brick = new LinkedList<blockBrick>();
+    private double x = 0;
+    private double y = 60;
+    private double width = Main.getSCREEN_WIDTH()/10;
+    private double height=15;
+    private int hitPoints;
+    private Rectangle rec;
+    private boolean daVaCham = false;
 
-    public class blockBrick {
-        Rectangle brick;
-        int times;
-
-        blockBrick(Rectangle brick, int times) {
-            this.brick = brick;
-            this.times = times;
-        }
+    public Brick getBrick() {
+        return this;
     }
 
-    public Brick(double SCREEN_WIDTH) {
-        this.x = 0;
-        this.y = 60;
-        this.width = SCREEN_WIDTH / 5;
-        this.height = 30;
-        this.centerX = width / 2;
-        this.centerY = height / 2;
+    LinkedList<Brick> bricks = new LinkedList<Brick>();
+
+    public Brick() {
+    }
+
+    public Brick(Rectangle rec, int hitPoints) {
+        this.rec = rec;
+        this.hitPoints = hitPoints;
     }
 
     public int[][] map1 = {
@@ -61,18 +55,17 @@ public class Brick {
                     rec.setHeight(height);
                     rec.setX(x + j * width);
                     rec.setY(y + i * height);
+                    rec.setStrokeWidth(5);
                     if (maps[k][i][j] == 1) {
                         rec.setFill(Color.PINK);
                         rec.setStroke(Color.BLACK);
-                        rec.setStrokeWidth(5);
                         root.getChildren().add(rec);
-                        basic_bricks.add(rec);
+                        bricks.add(new Brick(rec, 1));
                     } else if (maps[k][i][j] == 2) {
                         rec.setFill(Color.RED);
                         rec.setStroke(Color.BLACK);
-                        rec.setStrokeWidth(5);
                         root.getChildren().add(rec);
-                        block_brick.add(new blockBrick(rec, 3));
+                        bricks.add(new Brick(rec, 3));
                     } else {
                         continue;
                     }
@@ -81,84 +74,56 @@ public class Brick {
         }
     }
 
-    public void vaCham(Ball ball, Pane root) {
-        javafx.scene.shape.Circle circle = new javafx.scene.shape.Circle(ball.getX(), ball.getY(), ball.getRadius());
+    public double getX(Brick brick) {
+        return brick.x;
+    }
 
-        Rectangle touchedBrick = null;
-        blockBrick touchedBlock = null;
 
+
+    public void kiemTraVaCham(Ball ball, Pane root) {
         if (ball.getReleasedState()) {
-            for (Rectangle brick : basic_bricks) {
-                Shape inter = Shape.intersect(ball.getBall(), brick);
+            Brick touchedBrick = null;
+            for (Brick brick : bricks) {
+                Shape inter = Shape.intersect(ball.getBall(), brick.rec);
                 if (inter.getBoundsInLocal().getWidth() > 0 && inter.getBoundsInLocal().getHeight() > 0) {
-                    if (ball.getX() > brick.getX() && ball.getX() < brick.getX() + brick.getWidth()) {
+                    if (ball.getX() > brick.rec.getX() && ball.getX() < brick.rec.getX() + brick.rec.getWidth()) {
                         ball.setVy(-ball.getVy());
-                        touchedBrick = brick;
-                        break;
-
-                    }
-                    if (ball.getY() > brick.getY() && ball.getY() < brick.getY() + brick.getHeight()) {
+                        daVaCham = true;
+                    } else if (ball.getY() > brick.rec.getY() && ball.getY() < brick.rec.getY() + brick.rec.getHeight()) {
                         ball.setVx(-ball.getVx());
-                        touchedBrick = brick;
-                        break;
-                    }
-                    if ((ball.getX() < brick.getX() && ball.getY() < brick.getY())
-                            || (ball.getX() < brick.getX() && ball.getY() > brick.getY() + brick.getHeight())
-                            || (ball.getX() > brick.getX() + brick.getWidth() && ball.getY() > brick.getY() + brick.getHeight())
-                            || (ball.getX() > brick.getX() + brick.getWidth() && ball.getY() < brick.getY())) {
+                        daVaCham = true;
+                    } else {
                         ball.setVy(-ball.getVy());
                         ball.setVx(-ball.getVx());
-                        touchedBrick = brick;
+                        daVaCham = true;
+                    }
+                    if (daVaCham) {
+                        kiemTraLoaiGach(brick);
+                        if (brick.hitPoints <= 0) {
+                            touchedBrick = brick;
+                        }
                         break;
                     }
                 }
             }
-
-            if (touchedBrick == null) {
-                for (blockBrick br : block_brick) {
-                    Shape inter = Shape.intersect(circle, br.brick);
-                    if (inter.getBoundsInLocal().getWidth() > 0 && inter.getBoundsInLocal().getHeight() > 0) {
-                        if (ball.getX() > br.brick.getX() && ball.getX() < br.brick.getX() + br.brick.getWidth()) {
-                            ball.setVy(-ball.getVy());
-                            br.times--;
-                            if (br.times == 0) {
-                                touchedBlock = br;
-                            }
-                            break;
-                        }
-                        if (ball.getY() > br.brick.getY() && ball.getY() < br.brick.getY() + br.brick.getHeight()) {
-                            ball.setVx(-ball.getVx());
-                            br.times--;
-                            if (br.times == 0) {
-                                touchedBlock = br;
-                            }
-                            break;
-                        }
-                        if ((ball.getX() < br.brick.getX() && ball.getY() < br.brick.getY())
-                                || (ball.getX() < br.brick.getX() && ball.getY() > br.brick.getY() + br.brick.getHeight())
-                                || (ball.getX() > br.brick.getX() + br.brick.getWidth() && ball.getY() > br.brick.getY() + br.brick.getHeight())
-                                || (ball.getX() > br.brick.getX() + br.brick.getWidth() && ball.getY() < br.brick.getY())) {
-                            ball.setVy(-ball.getVy());
-                            ball.setVx(-ball.getVx());
-                            br.times--;
-                            if (br.times == 0) {
-                                touchedBlock = br;
-                            }
-                            break;
-                        }
-                    }
-                }
+            if (touchedBrick != null) {
+                root.getChildren().remove(touchedBrick.rec);
+                bricks.remove(touchedBrick);
             }
+            daVaCham = false;
         }
+    }
 
-        if (touchedBrick != null) {
-            root.getChildren().remove(touchedBrick);
-            basic_bricks.remove(touchedBrick);
-        }
-        if (touchedBlock != null) {
-            root.getChildren().remove(touchedBlock.brick);
-            block_brick.remove(touchedBlock);
-        }
+    public void kiemTraLoaiGach (Brick brick){
+            switch (brick.hitPoints) {
+                case 1 -> {
+                    brick.hitPoints=0;
+                }
+                case 2 -> {
+                    brick.hitPoints--;
+                }
+                default -> {}
+            }
     }
 
 }
