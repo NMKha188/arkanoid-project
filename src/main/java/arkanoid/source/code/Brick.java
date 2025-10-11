@@ -93,11 +93,24 @@ public class Brick {
                 if (inter.getBoundsInLocal().getWidth() > 0 && inter.getBoundsInLocal().getHeight() > 0) {
                     if (ball.getX() > brick.getX() && ball.getX() < brick.getX() + brick.getWidth()) {
                         ball.setVy(-ball.getVy());
+                        touchedBrick = brick;
+                        break;
 
-                    } else if (ball.getY() > brick.getY() && ball.getY() < brick.getY() + brick.getHeight()) {
-                        ball.setVx(-ball.getVx());
                     }
-                    touchedBrick = brick;
+                    if (ball.getY() > brick.getY() && ball.getY() < brick.getY() + brick.getHeight()) {
+                        ball.setVx(-ball.getVx());
+                        touchedBrick = brick;
+                        break;
+                    }
+                    if ((ball.getX() < brick.getX() && ball.getY() < brick.getY())
+                            || (ball.getX() < brick.getX() && ball.getY() > brick.getY() + brick.getHeight())
+                            || (ball.getX() > brick.getX() + brick.getWidth() && ball.getY() > brick.getY() + brick.getHeight())
+                            || (ball.getX() > brick.getX() + brick.getWidth() && ball.getY() < brick.getY())) {
+                        ball.setVy(-ball.getVy());
+                        ball.setVx(-ball.getVx());
+                        touchedBrick = brick;
+                        break;
+                    }
                 }
             }
 
@@ -108,14 +121,31 @@ public class Brick {
                         if (ball.getX() > br.brick.getX() && ball.getX() < br.brick.getX() + br.brick.getWidth()) {
                             ball.setVy(-ball.getVy());
                             br.times--;
-                        } else if (ball.getY() > br.brick.getY() && ball.getY() < br.brick.getY() + br.brick.getHeight()) {
+                            if (br.times == 0) {
+                                touchedBlock = br;
+                            }
+                            break;
+                        }
+                        if (ball.getY() > br.brick.getY() && ball.getY() < br.brick.getY() + br.brick.getHeight()) {
                             ball.setVx(-ball.getVx());
                             br.times--;
+                            if (br.times == 0) {
+                                touchedBlock = br;
+                            }
+                            break;
                         }
-                        if (br.times == 0) {
-                            touchedBlock = br;
+                        if ((ball.getX() < br.brick.getX() && ball.getY() < br.brick.getY())
+                                || (ball.getX() < br.brick.getX() && ball.getY() > br.brick.getY() + br.brick.getHeight())
+                                || (ball.getX() > br.brick.getX() + br.brick.getWidth() && ball.getY() > br.brick.getY() + br.brick.getHeight())
+                                || (ball.getX() > br.brick.getX() + br.brick.getWidth() && ball.getY() < br.brick.getY())) {
+                            ball.setVy(-ball.getVy());
+                            ball.setVx(-ball.getVx());
+                            br.times--;
+                            if (br.times == 0) {
+                                touchedBlock = br;
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
             }
