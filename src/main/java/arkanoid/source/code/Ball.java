@@ -1,9 +1,13 @@
 package arkanoid.source.code;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+
+import java.util.LinkedList;
 
 public class Ball {
     // ball center and radius
@@ -24,6 +28,8 @@ public class Ball {
 
     // initial Vx representative line
     private Line line;
+    //da va cham ball
+    private boolean daVaCham = false;
 
     public Ball() {
         this.ball = new Circle(RADIUS);
@@ -157,5 +163,45 @@ public class Ball {
         }
         this.ball.setCenterX(this.x);
         this.ball.setCenterY(this.y);
+    }
+
+    public void kiemTraVaCham(LinkedList<Brick> bricks, Pane root) {
+        if (this.getReleasedState()) {
+            Brick touchedBrick = null;
+            for (Brick brick : bricks) {
+                Shape inter = Shape.intersect(this.getBall(), brick.getRec());
+                if (inter.getBoundsInLocal().getWidth() > 0 &&
+                        inter.getBoundsInLocal().getHeight() > 0) {
+
+                    if (this.x > brick.getRec().getX() &&
+                            this.x < brick.getRec().getX() + brick.getRec().getWidth()) {
+                        this.Vy = -this.Vy;
+                        daVaCham = true;
+                    } else if (this.y > brick.getRec().getY() &&
+                            this.y < brick.getRec().getY() + brick.getRec().getHeight()) {
+                        this.Vx = -this.Vx;
+                        daVaCham = true;
+                    } else {
+                        this.Vx = -this.Vx;
+                        this.Vy = -this.Vy;
+                        daVaCham = true;
+                    }
+
+                    if (daVaCham) {
+                        brick.kiemTraLoaiGach(brick);
+                        if (brick.getHitPoints() <= 0) {
+                            touchedBrick = brick;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            if (touchedBrick != null) {
+                root.getChildren().remove(touchedBrick.getRec());
+                bricks.remove(touchedBrick);
+            }
+            daVaCham = false;
+        }
     }
 }

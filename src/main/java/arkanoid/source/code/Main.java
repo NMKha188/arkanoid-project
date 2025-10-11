@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.util.LinkedList;
+
 public class Main extends Application {
     // Screen size
     private static final double SCREEN_WIDTH = 560;
@@ -29,6 +31,8 @@ public class Main extends Application {
     public static double getSCREEN_WIDTH() {
         return SCREEN_WIDTH;
     }
+    //
+    private LinkedList<Brick> bricks=new LinkedList<>();
 
     @Override
     public void start(Stage primaryStage) {
@@ -74,8 +78,9 @@ public class Main extends Application {
             @Override
             public void handle(long now) {
                 paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
+                bricks = brick.getBricks();
                 ball.updatePosition(SCREEN_WIDTH, SCREEN_HEIGHT, paddle, isMovingLeft, isMovingRight);
-                brick.kiemTraVaCham(ball,root);
+                ball.kiemTraVaCham( bricks,root);
             }
         }.start();
     }

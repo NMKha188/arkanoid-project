@@ -16,15 +16,27 @@ public class Brick {
     private double height=15;
     private int hitPoints;
     private Rectangle rec;
-    private boolean daVaCham = false;
+    private LinkedList<Brick> bricks = new LinkedList<Brick>();
     private int type;
-
+    //getter and setter
+    public Rectangle getRec() {
+        return rec;
+    }
     public Brick getBrick() {
         return this;
     }
+    public void setHitPoints(int hitPoints) {
+        this.hitPoints = hitPoints;
+    }
+    public int getHitPoints() {
+        return hitPoints;
+    }
 
-    LinkedList<Brick> bricks = new LinkedList<Brick>();
+    public LinkedList<Brick> getBricks() {
+        return bricks;
+    }
 
+    //Constructor
     public Brick() {
     }
 
@@ -80,39 +92,7 @@ public class Brick {
         return brick.x;
     }
 
-    public void kiemTraVaCham(Ball ball, Pane root) {
-        if (ball.getReleasedState()) {
-            Brick touchedBrick = null;
-            for (Brick brick : bricks) {
-                Shape inter = Shape.intersect(ball.getBall(), brick.rec);
-                if (inter.getBoundsInLocal().getWidth() > 0 && inter.getBoundsInLocal().getHeight() > 0) {
-                    if (ball.getX() > brick.rec.getX() && ball.getX() < brick.rec.getX() + brick.rec.getWidth()) {
-                        ball.setVy(-ball.getVy());
-                        daVaCham = true;
-                    } else if (ball.getY() > brick.rec.getY() && ball.getY() < brick.rec.getY() + brick.rec.getHeight()) {
-                        ball.setVx(-ball.getVx());
-                        daVaCham = true;
-                    } else {
-                        ball.setVy(-ball.getVy());
-                        ball.setVx(-ball.getVx());
-                        daVaCham = true;
-                    }
-                    if (daVaCham) {
-                        kiemTraLoaiGach(brick);
-                        if (brick.hitPoints <= 0) {
-                            touchedBrick = brick;
-                        }
-                        break;
-                    }
-                }
-            }
-            if (touchedBrick != null) {
-                root.getChildren().remove(touchedBrick.rec);
-                bricks.remove(touchedBrick);
-            }
-            daVaCham = false;
-        }
-    }
+
 
     public void kiemTraLoaiGach (Brick brick){
             switch (brick.type) {
