@@ -88,12 +88,44 @@ public class Ball {
     }
     // getter setter END
 
+    private void collideWithPaddle(Paddle paddle, boolean isMovingLeft, boolean isMovingRight) {
+        if (Shape.intersect(this.ball, paddle.getPaddle()).getBoundsInLocal().getHeight() > 0) {
+            // collide with the top surface of the paddle
+            if (paddle.getX() <= this.x && this.x <= paddle.getX() + paddle.getWidth()) {
+                // effect from the distance between the position of collision and the center of the paddle
+                double paddleCenter = paddle.getX() + paddle.getWidth() / 2;
+                double dx = Math.abs(paddleCenter - this.x);
+                this.Vx = MAX_VX * (dx / (paddle.getWidth() / 2));
+                if ((this.Vx > 0 && this.x < paddleCenter) || (this.Vx < 0 && this.x > paddleCenter)) {
+                    this.Vx = -this.Vx;
+                }
+                // effect from paddle speed
+                if (isMovingLeft) {
+                    this.Vx = this.Vx * 0.7 - 0.3 * paddle.getSpeed();
+                } else if (isMovingRight) {
+                    this.Vx = this.Vx * 0.7 + 0.3 * paddle.getSpeed();
+                }
+                this.Vy = -Math.sqrt(Math.pow(BALL_SPEED, 2) - Math.pow(Vx, 2));
+            } else if (paddle.getY() <= this.y) { // collide with the sides of the paddle
+                this.Vx = -this.Vx;
+            } else { // collide with the corners of the paddle
+                if (this.x < paddle.getX() + paddle.getWidth()) {
+                    this.Vx = -MAX_VX;
+                } else {
+                    this.Vx = MAX_VX;
+                }
+                this.Vy = -Math.sqrt(Math.pow(BALL_SPEED, 2) - Math.pow(Vx, 2));
+            }
+        }
+    }
+
     public void updatePosition(double SCREEN_WIDTH, double SCREEN_HEIGHT, Paddle paddle, boolean isMovingLeft, boolean isMovingRight) {
+        // not released, stick to the paddle
         if (!this.released) {
             // stick to the paddle
             this.x = paddle.getX() + paddle.getWidth() / 2;
             this.y = paddle.getY() - this.RADIUS;
-            // initialize Vx
+            // initialize Vx Vy
             if (this.Vx >= MAX_VX || this.Vx <= -MAX_VX) {
                 changeVx = -changeVx;
             }
@@ -109,51 +141,26 @@ public class Ball {
             this.line.setVisible(false);
             // collide with the side walls
             if (this.x <= RADIUS || this.x >= SCREEN_WIDTH - RADIUS) {
-                this.Vx = -this.Vx;
                 if (this.x <= RADIUS) {
                     this.x = RADIUS;
                 } else {
                     this.x = SCREEN_WIDTH - RADIUS;
                 }
+                this.Vx = -this.Vx;
             }
             // collide with the top
             if (this.y <= RADIUS) {
+                this.y = RADIUS;
                 this.Vy = -this.Vy;
             }
             // fall to the bottom -> reset
             if (this.y >= SCREEN_HEIGHT - RADIUS) {
+                this.y = SCREEN_HEIGHT - RADIUS;
                 this.released = false;
                 this.Vx = 0;
             }
             // Collide with the paddle
-            if (Shape.intersect(this.ball, paddle.getPaddle()).getBoundsInLocal().getHeight() > 0) {
-                // collide with the top surface of the paddle
-                if (paddle.getX() <= this.x && this.x <= paddle.getX() + paddle.getWidth()) {
-                    // effect from the distance between the position of collision and the center of the paddle
-                    double paddleCenter = paddle.getX() + paddle.getWidth() / 2;
-                    double dx = Math.abs(paddleCenter - this.x);
-                    this.Vx = MAX_VX * (dx / (paddle.getWidth() / 2));
-                    if ((this.Vx > 0 && this.x < paddleCenter) || (this.Vx < 0 && this.x > paddleCenter)) {
-                        this.Vx = -this.Vx;
-                    }
-                    // effect from paddle speed
-                    if (isMovingLeft) {
-                        this.Vx = this.Vx * 0.7 - 0.3 * paddle.getSpeed();
-                    } else if (isMovingRight) {
-                        this.Vx = this.Vx * 0.7 + 0.3 * paddle.getSpeed();
-                    }
-                    this.Vy = -Math.sqrt(Math.pow(BALL_SPEED, 2) - Math.pow(Vx, 2));
-                } else if (paddle.getY() <= this.y) { // collide with the sides of the paddle
-                    this.Vx = -this.Vx;
-                } else { // collide with the corners of the paddle
-                    if (this.x < paddle.getX() + paddle.getWidth()) {
-                        this.Vx = -MAX_VX;
-                    } else {
-                        this.Vx = MAX_VX;
-                    }
-                    this.Vy = -Math.sqrt(Math.pow(BALL_SPEED, 2) - Math.pow(Vx, 2));
-                }
-            }
+            this.collideWithPaddle(paddle, isMovingLeft, isMovingRight);
             this.x += this.Vx;
             this.y += this.Vy;
         }
