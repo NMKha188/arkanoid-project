@@ -24,7 +24,7 @@ public class Ball {
     // check if ball is released or sticks to the paddle
     private boolean released;
 
-    // Vx representative line while sticking to the paddle
+    // Vx representative line while sticking to the paddle (GUI for player to know which way will the ball fly after being released)
     private final Line line;
 
     public Ball() {
@@ -89,6 +89,49 @@ public class Ball {
     }
     // getter setter END
 
+    // stick to the paddle and initialize Vx Vy
+    private void initializeVelocity(Paddle paddle) {
+        // stick to the paddle
+        this.x = paddle.getX() + paddle.getWidth() / 2;
+        this.y = paddle.getY() - BALL_RADIUS;
+        // initialize Vx Vy
+        if (this.Vx >= MAX_VX || this.Vx <= -MAX_VX) {
+            this.changeVx = -this.changeVx;
+        }
+        this.Vx += this.changeVx;
+        this.Vy = -Math.sqrt(Math.pow(BALL_SPEED, 2) - Math.pow(this.Vx, 2));
+        // Vx representative line (GUI for player to know which way will the ball fly after being released)
+        this.line.setVisible(true);
+        this.line.setStartX(this.x);
+        this.line.setStartY(this.y + BALL_RADIUS + paddle.getHeight() + 5);
+        this.line.setEndX(this.x + this.Vx * ((paddle.getWidth() / 2) / MAX_VX));
+        this.line.setEndY(this.y + BALL_RADIUS + paddle.getHeight() + 5);
+    }
+
+    // collide with top and side walls, fall to the bottom -> reset logic
+    private void collideWithWalls(double SCREEN_WIDTH, double SCREEN_HEIGHT) {
+        // collide with the side walls
+        if (this.x <= BALL_RADIUS || this.x >= SCREEN_WIDTH - BALL_RADIUS) {
+            if (this.x <= BALL_RADIUS) {
+                this.x = BALL_RADIUS;
+            } else {
+                this.x = SCREEN_WIDTH - BALL_RADIUS;
+            }
+            this.Vx = -this.Vx;
+        }
+        // collide with the top
+        if (this.y <= BALL_RADIUS) {
+            this.y = BALL_RADIUS;
+            this.Vy = -this.Vy;
+        }
+        // fall to the bottom -> reset
+        if (this.y >= SCREEN_HEIGHT - BALL_RADIUS) {
+            this.y = SCREEN_HEIGHT - BALL_RADIUS;
+            this.released = false;
+            this.Vx = 0;
+        }
+    }
+
     // collide with paddle logic
     private void collideWithPaddle(Paddle paddle, boolean isMovingLeft, boolean isMovingRight) {
         if (Shape.intersect(this.ball, paddle.getPaddle()).getBoundsInLocal().getHeight() > 0) {
@@ -152,46 +195,16 @@ public class Ball {
     public void updatePosition(double SCREEN_WIDTH, double SCREEN_HEIGHT, Paddle paddle, boolean isMovingLeft, boolean isMovingRight, BrickSet brickSet) {
         // not released, stick to the paddle
         if (!this.released) {
-            // stick to the paddle
-            this.x = paddle.getX() + paddle.getWidth() / 2;
-            this.y = paddle.getY() - BALL_RADIUS;
-            // initialize Vx Vy
-            if (this.Vx >= MAX_VX || this.Vx <= -MAX_VX) {
-                this.changeVx = -this.changeVx;
-            }
-            this.Vx += this.changeVx;
-            this.Vy = -Math.sqrt(Math.pow(BALL_SPEED, 2) - Math.pow(this.Vx, 2));
-            // initial Vx representative line
-            this.line.setVisible(true);
-            this.line.setStartX(this.x);
-            this.line.setStartY(this.y + BALL_RADIUS + paddle.getHeight() + 5);
-            this.line.setEndX(this.x + this.Vx * ((paddle.getWidth() / 2) / MAX_VX));
-            this.line.setEndY(this.y + BALL_RADIUS + paddle.getHeight() + 5);
+            this.initializeVelocity(paddle);
         } else {
             this.line.setVisible(false);
-            // collide with the side walls
-            if (this.x <= BALL_RADIUS || this.x >= SCREEN_WIDTH - BALL_RADIUS) {
-                if (this.x <= BALL_RADIUS) {
-                    this.x = BALL_RADIUS;
-                } else {
-                    this.x = SCREEN_WIDTH - BALL_RADIUS;
-                }
-                this.Vx = -this.Vx;
-            }
-            // collide with the top
-            if (this.y <= BALL_RADIUS) {
-                this.y = BALL_RADIUS;
-                this.Vy = -this.Vy;
-            }
-            // fall to the bottom -> reset
-            if (this.y >= SCREEN_HEIGHT - BALL_RADIUS) {
-                this.y = SCREEN_HEIGHT - BALL_RADIUS;
-                this.released = false;
-                this.Vx = 0;
-            }
+            //collide with top and side walls, fall to the bottom -> reset
+            this.collideWithWalls(SCREEN_WIDTH, SCREEN_HEIGHT);
             // Collide with the paddle
             this.collideWithPaddle(paddle, isMovingLeft, isMovingRight);
+            // collide with bricks
             this.collideWithBrickSet(brickSet);
+            // position change
             this.x += this.Vx;
             this.y += this.Vy;
         }

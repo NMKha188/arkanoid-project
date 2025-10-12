@@ -5,18 +5,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BrickSet {
-    private static final int BRICK_ROW = 10;
-    private static final int BRICKS_EACH_ROW = 12;
+    private static final int BRICK_ROW = 18;
+    private static final int BRICKS_EACH_ROW = 29;
 
     private final ArrayList<Brick> brickSet = new ArrayList<>();
 
-    public BrickSet() {
-    }
-
+    // getter setter BEGIN
     public static int getBricksEachRow() {
         return BRICKS_EACH_ROW;
     }
+    // getter setter END
 
+    /*
+    read 2-dimensional array data from a file path, turn that data into List of Brick objects
+    using title map method
+     */
     public void readData(String path) {
         InputStream inputStream = Main.class.getResourceAsStream(path);
         if (inputStream != null) {
