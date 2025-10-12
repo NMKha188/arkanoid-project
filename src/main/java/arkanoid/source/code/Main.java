@@ -8,28 +8,46 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     // Screen size
-    private final double SCREEN_WIDTH = 560;
-    private final double SCREEN_HEIGHT = 640;
+    private static final double SCREEN_WIDTH = 560;
+    private static final double SCREEN_HEIGHT = 640;
 
     // Check key press
-    private boolean isMovingLeft = false;
-    private boolean isMovingRight = false;
+    private static boolean isMovingLeft = false;
+    private static boolean isMovingRight = false;
 
     // paddle
-    private Paddle paddle = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
+    private final Paddle paddle = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     // ball
-    private Ball ball = new Ball();
+    private final Ball ball = new Ball();
+
+    // brickSet
+    private final BrickSet brickSet = new BrickSet();
+    String dataPath = "/arkanoid/resources/map1.txt";
 
     // root and scene
     Pane root = new Pane();
     Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+    public static double getScreenWidth() {
+        return SCREEN_WIDTH;
+    }
+
+    public static double getScreenHeight() {
+        return SCREEN_HEIGHT;
+    }
+
     @Override
     public void start(Stage primaryStage) {
+        brickSet.readData(dataPath);
+
         root.getChildren().add(paddle.getPaddle());
         root.getChildren().add(ball.getBall());
         root.getChildren().add(ball.getLine());
+        for (Brick brick : brickSet.getBrickSet()) {
+            root.getChildren().add(brick.getBrick());
+        }
+
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -68,7 +86,7 @@ public class Main extends Application {
             @Override
             public void handle(long now) {
                 paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
-                ball.updatePosition(SCREEN_WIDTH, SCREEN_HEIGHT, paddle, isMovingLeft, isMovingRight);
+                ball.updatePosition(SCREEN_WIDTH, SCREEN_HEIGHT, paddle, isMovingLeft, isMovingRight, brickSet);
             }
         }.start();
     }
