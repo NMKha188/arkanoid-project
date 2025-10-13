@@ -78,6 +78,13 @@ public class Brick {
         this.hitPoints = hitPoints;
     }
 
+    public void getHit(int hitPointsLoss) {
+        this.hitPoints -= hitPointsLoss;
+        if (this.hitPoints <= 0) {
+            this.setVisibility(false);
+        }
+    }
+
     public void setVisibility(boolean isShowed) {
         this.brick.setVisible(isShowed);
     }

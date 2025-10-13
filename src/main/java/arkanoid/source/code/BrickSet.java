@@ -5,14 +5,26 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BrickSet {
-    private static final int BRICK_ROW = 18;
-    private static final int BRICKS_EACH_ROW = 29;
+    private static final int BRICK_ROW = 10;
+    private static final int BRICKS_EACH_ROW = 12;
 
-    private final ArrayList<Brick> brickSet = new ArrayList<>();
+    private final Brick[][] brickSet = new Brick[BRICK_ROW][BRICKS_EACH_ROW];
 
     // getter setter BEGIN
+    public static int getBrickRow() {
+        return BRICK_ROW;
+    }
+
     public static int getBricksEachRow() {
         return BRICKS_EACH_ROW;
+    }
+
+    public Brick[][] getBrickSet() {
+        return this.brickSet;
+    }
+
+    public Brick getOneBrickAt(int i, int j) {
+        return this.brickSet[i][j];
     }
     // getter setter END
 
@@ -26,16 +38,15 @@ public class BrickSet {
             Scanner scanner = new Scanner(inputStream);
             for (int i = 0; i < BRICK_ROW; i++) {
                 for (int j = 0; j < BRICKS_EACH_ROW; j++) {
+                    if (!scanner.hasNextInt()) {
+                        return;
+                    }
                     int number = scanner.nextInt();
                     Brick brick = new Brick(j * Brick.getBrickWidth(), i * Brick.getBrickHeight(), number);
-                    brickSet.add(brick);
+                    brickSet[i][j] = brick;
                 }
             }
             scanner.close();
         }
-    }
-
-    public ArrayList<Brick> getBrickSet() {
-        return this.brickSet;
     }
 }

@@ -44,8 +44,10 @@ public class Main extends Application {
         root.getChildren().add(paddle.getPaddle());
         root.getChildren().add(ball.getBall());
         root.getChildren().add(ball.getLine());
-        for (Brick brick : brickSet.getBrickSet()) {
-            root.getChildren().add(brick.getBrick());
+        for (int i = 0; i < BrickSet.getBrickRow(); i++) {
+            for (int j = 0; j < BrickSet.getBricksEachRow(); j++) {
+                root.getChildren().add(brickSet.getBrickSet()[i][j].getBrick());
+            }
         }
 
         primaryStage.setScene(scene);
