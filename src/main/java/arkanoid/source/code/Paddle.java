@@ -10,7 +10,7 @@ public class Paddle {
     private static final double PADDLE_HEIGHT = 15;
     private final Rectangle paddle;
     // paddle speed
-    private static final double PADDLE_SPEED = 2;
+    private static final double PADDLE_SPEED = 3;
 
     public Paddle(double SCREEN_WIDTH, double SCREEN_HEIGHT) {
         this.x = (SCREEN_WIDTH - PADDLE_WIDTH) / 2;

@@ -234,6 +234,9 @@ public class Ball {
         for (int i = 0; i < BrickSet.getBrickRow(); i++) {
             for (int j = 0; j < BrickSet.getBricksEachRow(); j++) {
                 Brick currentBrick = brickSet.getOneBrickAt(i, j);
+                if (currentBrick == null) {
+                    continue;
+                }
                 if (currentBrick.getHitPoints() > 0 && this.checkCollision(currentBrick)) {
                     currentBrick.getHit(1);
                     // create temporary references to left, right, top and bottom bricks of the current brick
@@ -257,7 +260,14 @@ public class Ball {
                     // collide with current brick and either left or right brick
                     if ((leftBrick != null && leftBrick.getHitPoints() > 0 && this.checkCollision(leftBrick))
                             || (rightBrick != null && rightBrick.getHitPoints() > 0 && this.checkCollision(rightBrick))) {
+                        // change Vy and set new position
                         this.Vy = -this.Vy;
+                        if (this.y < currentBrick.getY() + Brick.getBrickHeight() / 2) {
+                            this.y = currentBrick.getY() - BALL_RADIUS;
+                        } else {
+                            this.y = currentBrick.getY() + Brick.getBrickHeight() + BALL_RADIUS;
+                        }
+                        // hit left or right brick
                         if (leftBrick != null && this.checkCollision(leftBrick)) {
                             leftBrick.getHit(1);
                         } else if (rightBrick != null && this.checkCollision(rightBrick)) {
@@ -267,7 +277,14 @@ public class Ball {
                     // collide with current brick and either top or bottom brick
                     else if (topBrick != null && topBrick.getHitPoints() > 0 && this.checkCollision(topBrick)
                             || (bottomBrick != null && bottomBrick.getHitPoints() > 0 && this.checkCollision(bottomBrick))) {
+                        // change Vx and set new position
                         this.Vx = -this.Vx;
+                        if (this.x < currentBrick.getX() + Brick.getBrickWidth() / 2) {
+                            this.x = currentBrick.getX() - BALL_RADIUS;
+                        } else {
+                            this.x = currentBrick.getX() + Brick.getBrickWidth() + BALL_RADIUS;
+                        }
+                        // hit top or bottom brick
                         if (topBrick != null && this.checkCollision(topBrick)) {
                             topBrick.getHit(1);
                         } else if (bottomBrick != null && this.checkCollision(bottomBrick)) {

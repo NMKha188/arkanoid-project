@@ -46,7 +46,9 @@ public class Main extends Application {
         root.getChildren().add(ball.getLine());
         for (int i = 0; i < BrickSet.getBrickRow(); i++) {
             for (int j = 0; j < BrickSet.getBricksEachRow(); j++) {
-                root.getChildren().add(brickSet.getBrickSet()[i][j].getBrick());
+                if (brickSet.getOneBrickAt(i, j) != null) {
+                    root.getChildren().add(brickSet.getOneBrickAt(i, j).getBrick());
+                }
             }
         }
 

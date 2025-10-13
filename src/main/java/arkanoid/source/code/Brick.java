@@ -24,12 +24,16 @@ public class Brick {
         switch (type) {
             case 1:
                 this.hitPoints = 1;
+                this.brick.setFill(Color.YELLOW);
+                this.brick.setVisible(true);
+                break;
+            case 2:
+                this.hitPoints = 3;
                 this.brick.setFill(Color.RED);
                 this.brick.setVisible(true);
                 break;
             default:
-                this.hitPoints = 0;
-                this.brick.setVisible(false);
+
         }
     }
 

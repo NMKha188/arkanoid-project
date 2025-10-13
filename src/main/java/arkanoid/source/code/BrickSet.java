@@ -42,6 +42,9 @@ public class BrickSet {
                         return;
                     }
                     int number = scanner.nextInt();
+                    if (number == 0) {
+                        continue;
+                    }
                     Brick brick = new Brick(j * Brick.getBrickWidth(), i * Brick.getBrickHeight(), number);
                     brickSet[i][j] = brick;
                 }
