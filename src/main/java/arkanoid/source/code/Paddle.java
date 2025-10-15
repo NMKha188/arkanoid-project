@@ -6,21 +6,21 @@ public class Paddle {
     // paddle position and size
     private double x;
     private double y;
-    private static final double PADDLE_WIDTH = 80;
-    private static final double PADDLE_HEIGHT = 15;
-    private final Rectangle paddle;
+    private double paddleWidth = 80;
+    private double paddleHeight = 15;
+    private final Rectangle shape;
     // paddle speed
-    private static final double PADDLE_SPEED = 3;
+    private final double PADDLE_SPEED = 3;
 
     public Paddle(double SCREEN_WIDTH, double SCREEN_HEIGHT) {
-        this.x = (SCREEN_WIDTH - PADDLE_WIDTH) / 2;
-        this.y = SCREEN_HEIGHT - 30;
-        this.paddle = new Rectangle(this.x, this.y, PADDLE_WIDTH, PADDLE_HEIGHT);
+        x = (SCREEN_WIDTH - paddleWidth) / 2;
+        y = SCREEN_HEIGHT - 30;
+        this.shape = new Rectangle(this.x, this.y, paddleWidth, paddleHeight);
     }
 
     // getter setter BEGIN
     public double getX() {
-        return this.x;
+        return x;
     }
 
     public void setX(double x) {
@@ -28,7 +28,7 @@ public class Paddle {
     }
 
     public double getY() {
-        return this.y;
+        return y;
     }
 
     public void setY(double y) {
@@ -36,29 +36,29 @@ public class Paddle {
     }
 
     public double getWidth() {
-        return PADDLE_WIDTH;
+        return paddleWidth;
     }
 
     public double getHeight() {
-        return PADDLE_HEIGHT;
+        return paddleHeight;
     }
 
     public double getSpeed() {
         return PADDLE_SPEED;
     }
 
-    public Rectangle getPaddle() {
-        return this.paddle;
+    public Rectangle getShape() {
+        return shape;
     }
     // getter setter END
 
     // update paddle position based on key press
     public void updatePosition(boolean isMovingLeft, boolean isMovingRight, double SCREEN_WIDTH) {
-        if (isMovingLeft && !isMovingRight && this.x >= 0) {
-            this.x -= PADDLE_SPEED;
-        } else if (isMovingRight && !isMovingLeft && this.x <= SCREEN_WIDTH - PADDLE_WIDTH) {
-            this.x += PADDLE_SPEED;
+        if (isMovingLeft && !isMovingRight && x >= 0) {
+            x -= PADDLE_SPEED;
+        } else if (isMovingRight && !isMovingLeft && x <= SCREEN_WIDTH - paddleWidth) {
+            x += PADDLE_SPEED;
         }
-        this.paddle.setX(this.x);
+        shape.setX(x);
     }
 }

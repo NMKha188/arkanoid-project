@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BrickSet {
+    // number of rows and number of bricks each row
     private static final int BRICK_ROW = 10;
     private static final int BRICKS_EACH_ROW = 12;
-
+    // BrickSet contains all Brick objects
     private final Brick[][] brickSet = new Brick[BRICK_ROW][BRICKS_EACH_ROW];
 
     // getter setter BEGIN
@@ -20,11 +21,11 @@ public class BrickSet {
     }
 
     public Brick[][] getBrickSet() {
-        return this.brickSet;
+        return brickSet;
     }
 
     public Brick getOneBrickAt(int i, int j) {
-        return this.brickSet[i][j];
+        return brickSet[i][j];
     }
     // getter setter END
 

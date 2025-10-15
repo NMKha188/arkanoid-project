@@ -9,7 +9,7 @@ public class Brick {
     private double y;
     private static final double BRICK_WIDTH = Main.getScreenWidth() / BrickSet.getBricksEachRow();
     private static final double BRICK_HEIGHT = BRICK_WIDTH / 2;
-    private final Rectangle brick;
+    private final Rectangle shape;
     // brick type
     private int type;
     // brick HP
@@ -18,19 +18,19 @@ public class Brick {
     public Brick(double x, double y, int type) {
         this.x = x;
         this.y = y;
-        this.brick = new Rectangle(this.x, this.y, BRICK_WIDTH, BRICK_HEIGHT);
-        this.brick.setStroke(Color.BLACK);
+        shape = new Rectangle(this.x, this.y, BRICK_WIDTH, BRICK_HEIGHT);
+        shape.setStroke(Color.BLACK);
         this.type = type;
         switch (type) {
             case 1:
-                this.hitPoints = 1;
-                this.brick.setFill(Color.YELLOW);
-                this.brick.setVisible(true);
+                hitPoints = 1;
+                shape.setFill(Color.YELLOW);
+                shape.setVisible(true);
                 break;
             case 2:
-                this.hitPoints = 3;
-                this.brick.setFill(Color.RED);
-                this.brick.setVisible(true);
+                hitPoints = 3;
+                shape.setFill(Color.RED);
+                shape.setVisible(true);
                 break;
             default:
 
@@ -39,7 +39,7 @@ public class Brick {
 
     // getter setter BEGIN
     public double getX() {
-        return this.x;
+        return x;
     }
 
     public void setX(double x) {
@@ -47,7 +47,7 @@ public class Brick {
     }
 
     public double getY() {
-        return this.y;
+        return y;
     }
 
     public void setY(double y) {
@@ -62,12 +62,12 @@ public class Brick {
         return BRICK_HEIGHT;
     }
 
-    public Rectangle getBrick() {
-        return this.brick;
+    public Rectangle getShape() {
+        return shape;
     }
 
     public int getType() {
-        return this.type;
+        return type;
     }
 
     public void setType(int type) {
@@ -75,7 +75,7 @@ public class Brick {
     }
 
     public int getHitPoints() {
-        return this.hitPoints;
+        return hitPoints;
     }
 
     public void setHitPoints(int hitPoints) {
@@ -83,14 +83,18 @@ public class Brick {
     }
 
     public void getHit(int hitPointsLoss) {
-        this.hitPoints -= hitPointsLoss;
-        if (this.hitPoints <= 0) {
+        hitPoints -= hitPointsLoss;
+        if (hitPoints == 2) {
+            shape.setFill(Color.DARKORANGE);
+        } else if (hitPoints == 1) {
+            shape.setFill(Color.YELLOW);
+        } else if (hitPoints <= 0) {
             this.setVisibility(false);
         }
     }
 
     public void setVisibility(boolean isShowed) {
-        this.brick.setVisible(isShowed);
+        shape.setVisible(isShowed);
     }
     // getter setter END
 }
