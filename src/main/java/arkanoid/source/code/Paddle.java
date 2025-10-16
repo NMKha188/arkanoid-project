@@ -12,9 +12,9 @@ public class Paddle {
     // paddle speed
     private final double PADDLE_SPEED = 3;
 
-    public Paddle(double SCREEN_WIDTH, double SCREEN_HEIGHT) {
-        x = (SCREEN_WIDTH - paddleWidth) / 2;
-        y = SCREEN_HEIGHT - 30;
+    public Paddle() {
+        x = (Main.getScreenWidth() - paddleWidth) / 2;
+        y = Main.getScreenHeight() - 30;
         this.shape = new Rectangle(this.x, this.y, paddleWidth, paddleHeight);
     }
 
@@ -53,10 +53,10 @@ public class Paddle {
     // getter setter END
 
     // update paddle position based on key press
-    public void updatePosition(boolean isMovingLeft, boolean isMovingRight, double SCREEN_WIDTH) {
-        if (isMovingLeft && !isMovingRight && x >= 0) {
+    public void updatePosition() {
+        if (Main.isMovingLeft() && !Main.isMovingRight() && x >= 0) {
             x -= PADDLE_SPEED;
-        } else if (isMovingRight && !isMovingLeft && x <= SCREEN_WIDTH - paddleWidth) {
+        } else if (Main.isMovingRight() && !Main.isMovingLeft() && x <= Main.getScreenWidth() - paddleWidth) {
             x += PADDLE_SPEED;
         }
         shape.setX(x);

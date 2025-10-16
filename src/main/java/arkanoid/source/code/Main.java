@@ -12,11 +12,15 @@ public class Main extends Application {
     private static final double SCREEN_HEIGHT = 640;
 
     // Check key press
-    private static boolean isMovingLeft = false;
-    private static boolean isMovingRight = false;
+    private static boolean movingLeft = false;
+    private static boolean movingRight = false;
+
+    // root and scene
+    private static Pane root = new Pane();
+    private static Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     // paddle
-    private final Paddle paddle = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
+    private final Paddle paddle = new Paddle();
 
     // ball
     private final Ball ball = new Ball();
@@ -25,16 +29,24 @@ public class Main extends Application {
     private final BrickSet brickSet = new BrickSet();
     String dataPath = "/arkanoid/resources/map1.txt";
 
-    // root and scene
-    Pane root = new Pane();
-    Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
-
     public static double getScreenWidth() {
         return SCREEN_WIDTH;
     }
 
     public static double getScreenHeight() {
         return SCREEN_HEIGHT;
+    }
+
+    public static boolean isMovingLeft() {
+        return movingLeft;
+    }
+
+    public static boolean isMovingRight() {
+        return movingRight;
+    }
+
+    public static Pane getRoot() {
+        return root;
     }
 
     @Override
@@ -59,10 +71,10 @@ public class Main extends Application {
         scene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
                 case LEFT:
-                    isMovingLeft = true;
+                    movingLeft = true;
                     break;
                 case RIGHT:
-                    isMovingRight = true;
+                    movingRight = true;
                     break;
                 default:
                     // blank
@@ -73,10 +85,10 @@ public class Main extends Application {
         scene.setOnKeyReleased(event -> {
             switch(event.getCode()) {
                 case LEFT:
-                    isMovingLeft = false;
+                    movingLeft = false;
                     break;
                 case RIGHT:
-                    isMovingRight = false;
+                    movingRight = false;
                     break;
                 case SPACE:
                     ball.setReleasedState(true);
@@ -89,8 +101,8 @@ public class Main extends Application {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                ball.updatePosition(SCREEN_WIDTH, SCREEN_HEIGHT, paddle, isMovingLeft, isMovingRight, brickSet);
-                paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
+                ball.updatePosition( paddle, brickSet);
+                paddle.updatePosition();
             }
         }.start();
     }
