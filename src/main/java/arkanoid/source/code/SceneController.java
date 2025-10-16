@@ -34,21 +34,20 @@ public class SceneController {
 
     private void startGame() {
         System.out.println("Starting game....");
-            try {
-                // Close the current menu stage
-                Stage currentStage = (Stage) playButton.getScene().getWindow();
-                currentStage.close();
+        try {
+            // Close the current menu stage
+            Stage currentStage = (Stage) playButton.getScene().getWindow();
+            currentStage.close();
 
-                // Start game
-                Main mainGame = new Main();
-                Stage gameStage = new Stage();
-                mainGame.start(gameStage);
+            // Start game
+            Main mainGame = new Main();
+            Stage gameStage = new Stage();
+            mainGame.start(gameStage);
 
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }
-

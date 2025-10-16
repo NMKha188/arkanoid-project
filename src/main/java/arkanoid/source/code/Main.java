@@ -37,23 +37,20 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Arkanoid - Game");
-
         brickSet.readData(dataPath);
 
-        root.getChildren().add(paddle.getPaddle());
-        root.getChildren().add(ball.getBall());
+        root.getChildren().add(paddle.getShape());
+        root.getChildren().add(ball.getShape());
         root.getChildren().add(ball.getLine());
         for (int i = 0; i < BrickSet.getBrickRow(); i++) {
             for (int j = 0; j < BrickSet.getBricksEachRow(); j++) {
                 if (brickSet.getOneBrickAt(i, j) != null) {
-                    root.getChildren().add(brickSet.getOneBrickAt(i, j).getBrick());
+                    root.getChildren().add(brickSet.getOneBrickAt(i, j).getShape());
                 }
             }
         }
 
         primaryStage.setScene(scene);
-        primaryStage.setResizable(false);//k cho keo gian screen
         primaryStage.show();
 
         // handle key press
@@ -90,8 +87,8 @@ public class Main extends Application {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
                 ball.updatePosition(SCREEN_WIDTH, SCREEN_HEIGHT, paddle, isMovingLeft, isMovingRight, brickSet);
+                paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
             }
         }.start();
     }
