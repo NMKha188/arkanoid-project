@@ -13,7 +13,7 @@ public class Menu extends Application {
         System.out.println("Resource URL: " + resourceUrl);
 
         if (resourceUrl == null) {
-            System.err.println("ERROR: sceneMenu.fxml not found");
+            System.err.println("ERROR: sceneMenu.fxml not found!");
             return;
         }
         Parent root = FXMLLoader.load(resourceUrl);
