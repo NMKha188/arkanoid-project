@@ -7,11 +7,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    // Screen size
     private static final double SCREEN_WIDTH = 560;
     private static final double SCREEN_HEIGHT = 640;
 
-    // Check key press
     private static boolean isMovingLeft = false;
     private static boolean isMovingRight = false;
 
@@ -39,6 +37,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        primaryStage.setTitle("Arkanoid - Game");
+
         brickSet.readData(dataPath);
 
         root.getChildren().add(paddle.getPaddle());
@@ -53,6 +53,7 @@ public class Main extends Application {
         }
 
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);//k cho keo gian screen
         primaryStage.show();
 
         // handle key press
