@@ -42,7 +42,12 @@ public class SceneController {
             // Start game
             InGameLogic mainGame = new InGameLogic();
             Stage gameStage = new Stage();
-            mainGame.start(gameStage);
+
+            Scene gameScene = mainGame.createGameScene(gameStage);
+            gameStage.setScene(gameScene);
+            gameStage.setTitle("Arkanoid - Game");
+            gameStage.setResizable(false);
+            gameStage.show();
 
         }
         catch (Exception e) {
