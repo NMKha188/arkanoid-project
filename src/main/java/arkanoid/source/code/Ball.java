@@ -120,12 +120,12 @@ public class Ball {
     // collide with top and side walls, fall to the bottom -> reset logic
     private void collideWithWalls() {
         // collide with the side walls
-        if (x <= BALL_RADIUS || x >= Main.getScreenWidth() - BALL_RADIUS) {
+        if (x <= BALL_RADIUS || x >= InGameLogic.getScreenWidth() - BALL_RADIUS) {
             Vx = -Vx;
             if (x <= BALL_RADIUS) {
                 x = BALL_RADIUS + 1;
             } else {
-                x = Main.getScreenWidth() - BALL_RADIUS - 1;
+                x = InGameLogic.getScreenWidth() - BALL_RADIUS - 1;
             }
             shape.setCenterX(x);
         }
@@ -138,7 +138,7 @@ public class Ball {
         }
 
         // fall to the bottom -> reset
-        if (y >= Main.getScreenHeight() + BALL_RADIUS) {
+        if (y >= InGameLogic.getScreenHeight() + BALL_RADIUS) {
             released = false;
             Vx = 0;
         }
@@ -158,9 +158,9 @@ public class Ball {
                 }
 
                 // effect from paddle speed
-                if (Main.isMovingLeft()) {
+                if (InGameLogic.isMovingLeft()) {
                     Vx = Vx * 0.7 - 0.3 * paddle.getSpeed();
-                } else if (Main.isMovingRight()) {
+                } else if (InGameLogic.isMovingRight()) {
                     Vx = Vx * 0.7 + 0.3 * paddle.getSpeed();
                 }
                 Vy = -Math.sqrt(Math.pow(BALL_SPEED, 2) - Math.pow(Vx, 2));

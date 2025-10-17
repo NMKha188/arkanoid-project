@@ -13,8 +13,8 @@ public class Paddle {
     private final double PADDLE_SPEED = 3;
 
     public Paddle() {
-        x = (Main.getScreenWidth() - paddleWidth) / 2;
-        y = Main.getScreenHeight() - 30;
+        x = (InGameLogic.getScreenWidth() - paddleWidth) / 2;
+        y = InGameLogic.getScreenHeight() - 30;
         this.shape = new Rectangle(this.x, this.y, paddleWidth, paddleHeight);
     }
 
@@ -54,9 +54,9 @@ public class Paddle {
 
     // update paddle position based on key press
     public void updatePosition() {
-        if (Main.isMovingLeft() && !Main.isMovingRight() && x >= 0) {
+        if (InGameLogic.isMovingLeft() && !InGameLogic.isMovingRight() && x >= 0) {
             x -= PADDLE_SPEED;
-        } else if (Main.isMovingRight() && !Main.isMovingLeft() && x <= Main.getScreenWidth() - paddleWidth) {
+        } else if (InGameLogic.isMovingRight() && !InGameLogic.isMovingLeft() && x <= InGameLogic.getScreenWidth() - paddleWidth) {
             x += PADDLE_SPEED;
         }
         shape.setX(x);

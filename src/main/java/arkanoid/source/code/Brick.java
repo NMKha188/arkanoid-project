@@ -7,7 +7,7 @@ public class Brick {
     // brick location and size
     private double x;
     private double y;
-    private static final double BRICK_WIDTH = Main.getScreenWidth() / BrickSet.getBricksEachRow();
+    private static final double BRICK_WIDTH = InGameLogic.getScreenWidth() / BrickSet.getBricksEachRow();
     private static final double BRICK_HEIGHT = BRICK_WIDTH / 2;
     private final Rectangle shape;
     // brick type

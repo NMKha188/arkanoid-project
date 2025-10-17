@@ -1,7 +1,6 @@
 package arkanoid.source.code;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BrickSet {
@@ -34,7 +33,7 @@ public class BrickSet {
     using title map method
      */
     public void readData(String path) {
-        InputStream inputStream = Main.class.getResourceAsStream(path);
+        InputStream inputStream = InGameLogic.class.getResourceAsStream(path);
         if (inputStream != null) {
             Scanner scanner = new Scanner(inputStream);
             for (int i = 0; i < BRICK_ROW; i++) {
