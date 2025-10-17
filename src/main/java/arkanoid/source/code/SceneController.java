@@ -40,7 +40,7 @@ public class SceneController {
             currentStage.close();
 
             // Start game
-            Main mainGame = new Main();
+            InGameLogic mainGame = new InGameLogic();
             Stage gameStage = new Stage();
             mainGame.start(gameStage);
 

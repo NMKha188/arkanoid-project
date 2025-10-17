@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Menu extends Application {
+public class GameEngine extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         java.net.URL resourceUrl = getClass().getResource("/arkanoid/resources/sceneMenu.fxml");
@@ -16,9 +16,11 @@ public class Menu extends Application {
             System.err.println("ERROR: sceneMenu.fxml not found");
             return;
         }
-        Parent root = FXMLLoader.load(resourceUrl);
 
-        Scene scene = new Scene(root, 560, 640);
+        FXMLLoader loader = new FXMLLoader(resourceUrl);
+        Parent menuRoot = loader.load();
+
+        Scene scene = new Scene(menuRoot, InGameLogic.getScreenWidth(), InGameLogic.getScreenHeight());
         primaryStage.setTitle("Arkanoid - Main Menu");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
