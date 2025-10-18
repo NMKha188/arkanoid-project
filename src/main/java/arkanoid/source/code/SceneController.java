@@ -37,17 +37,15 @@ public class SceneController {
         try {
             // Close the current menu stage
             Stage currentStage = (Stage) playButton.getScene().getWindow();
-            currentStage.close();
 
             // Start game
             InGameLogic mainGame = new InGameLogic();
-            Stage gameStage = new Stage();
 
-            Scene gameScene = mainGame.createGameScene(gameStage);
-            gameStage.setScene(gameScene);
-            gameStage.setTitle("Arkanoid - Game");
-            gameStage.setResizable(false);
-            gameStage.show();
+            Scene gameScene = mainGame.createGameScene(currentStage);
+            currentStage.setScene(gameScene);
+            currentStage.setTitle("Arkanoid - Game");
+            currentStage.setResizable(false);
+            currentStage.show();
 
         }
         catch (Exception e) {
