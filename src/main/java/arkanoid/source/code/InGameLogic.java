@@ -1,12 +1,11 @@
 package arkanoid.source.code;
 
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class InGameLogic{
     private static final double SCREEN_WIDTH = 560;
     private static final double SCREEN_HEIGHT = 640;
 
@@ -25,7 +24,6 @@ public class Main extends Application {
 
     // root and scene
     Pane root = new Pane();
-    Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     public static double getScreenWidth() {
         return SCREEN_WIDTH;
@@ -35,8 +33,7 @@ public class Main extends Application {
         return SCREEN_HEIGHT;
     }
 
-    @Override
-    public void start(Stage primaryStage) {
+    public Scene createGameScene(Stage primaryStage) {
         brickSet.readData(dataPath);
 
         root.getChildren().add(paddle.getShape());
@@ -50,11 +47,10 @@ public class Main extends Application {
             }
         }
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        Scene gameScene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // handle key press
-        scene.setOnKeyPressed(event -> {
+        gameScene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
                 case LEFT:
                     isMovingLeft = true;
@@ -68,7 +64,7 @@ public class Main extends Application {
         });
 
         // Handle key release
-        scene.setOnKeyReleased(event -> {
+        gameScene.setOnKeyReleased(event -> {
             switch(event.getCode()) {
                 case LEFT:
                     isMovingLeft = false;
@@ -91,9 +87,7 @@ public class Main extends Application {
                 paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
             }
         }.start();
-    }
 
-    public static void main(String[] args) {
-        launch(args);
+        return gameScene;
     }
 }
