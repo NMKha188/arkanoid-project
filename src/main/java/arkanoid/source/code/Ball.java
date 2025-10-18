@@ -118,14 +118,14 @@ public class Ball {
     }
 
     // collide with top and side walls, fall to the bottom -> reset logic
-    private void collideWithWalls(double SCREEN_WIDTH, double SCREEN_HEIGHT) {
+    private void collideWithWalls() {
         // collide with the side walls
-        if (x <= BALL_RADIUS || x >= SCREEN_WIDTH - BALL_RADIUS) {
+        if (x <= BALL_RADIUS || x >= InGameLogic.getScreenWidth() - BALL_RADIUS) {
             Vx = -Vx;
             if (x <= BALL_RADIUS) {
                 x = BALL_RADIUS + 1;
             } else {
-                x = SCREEN_WIDTH - BALL_RADIUS - 1;
+                x = InGameLogic.getScreenWidth() - BALL_RADIUS - 1;
             }
             shape.setCenterX(x);
         }
@@ -138,14 +138,14 @@ public class Ball {
         }
 
         // fall to the bottom -> reset
-        if (y >= SCREEN_HEIGHT + BALL_RADIUS) {
+        if (y >= InGameLogic.getScreenHeight() + BALL_RADIUS) {
             released = false;
             Vx = 0;
         }
     }
 
     // collide with paddle logic
-    private void collideWithPaddle(Paddle paddle, boolean isMovingLeft, boolean isMovingRight) {
+    private void collideWithPaddle(Paddle paddle) {
         if (this.checkCollision(paddle)) {
             // collide with the top surface of the paddle
             if (paddle.getX() <= x && x <= paddle.getX() + paddle.getWidth()) {
@@ -158,9 +158,9 @@ public class Ball {
                 }
 
                 // effect from paddle speed
-                if (isMovingLeft) {
+                if (InGameLogic.isMovingLeft()) {
                     Vx = Vx * 0.7 - 0.3 * paddle.getSpeed();
-                } else if (isMovingRight) {
+                } else if (InGameLogic.isMovingRight()) {
                     Vx = Vx * 0.7 + 0.3 * paddle.getSpeed();
                 }
                 Vy = -Math.sqrt(Math.pow(BALL_SPEED, 2) - Math.pow(Vx, 2));
@@ -327,16 +327,16 @@ public class Ball {
     }
 
     // update ball position: stick to the paddle; collide with the top, side walls; fall to the bottom -> reset; collide with paddle
-    public void updatePosition(double SCREEN_WIDTH, double SCREEN_HEIGHT, Paddle paddle, boolean isMovingLeft, boolean isMovingRight, BrickSet brickSet) {
+    public void updatePosition(Paddle paddle, BrickSet brickSet) {
         // not released, stick to the paddle
         if (!released) {
             this.initializeVelocity(paddle);
         } else {
             line.setVisible(false);
             //collide with top and side walls, fall to the bottom -> reset
-            this.collideWithWalls(SCREEN_WIDTH, SCREEN_HEIGHT);
+            this.collideWithWalls();
             // Collide with the paddle
-            this.collideWithPaddle(paddle, isMovingLeft, isMovingRight);
+            this.collideWithPaddle(paddle);
             // collide with bricks
             this.collideWithBrickSet(brickSet);
             // position change
