@@ -141,6 +141,7 @@ public class Ball {
         if (y >= InGameLogic.getScreenHeight() + BALL_RADIUS) {
             released = false;
             Vx = 0;
+            InGameStatus.loseLife();
         }
     }
 
