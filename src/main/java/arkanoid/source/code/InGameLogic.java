@@ -55,6 +55,7 @@ public class InGameLogic{
                 }
             }
         }
+        root.getChildren().add(InGameStatus.getGroup());
 
         // handle key press
         gameScene.setOnKeyPressed(event -> {

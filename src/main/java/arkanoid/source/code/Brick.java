@@ -90,6 +90,7 @@ public class Brick {
             shape.setFill(Color.YELLOW);
         } else if (hitPoints <= 0) {
             this.setVisibility(false);
+            InGameStatus.setScore(InGameStatus.getScore() + 1);
         }
     }
 
