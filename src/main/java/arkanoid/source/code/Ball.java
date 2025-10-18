@@ -283,7 +283,7 @@ public class Ball {
                         }
                         // change Vy and set new position
                         Vy = -Vy;
-                        if (y < currentBrick.getY() + Brick.getBrickHeight() / 2) {;
+                        if (y < currentBrick.getY() + Brick.getBrickHeight() / 2) {
                             y = currentBrick.getY() - BALL_RADIUS - 1;
                         } else {
                             y = currentBrick.getY() + Brick.getBrickHeight() + BALL_RADIUS + 1;
@@ -315,11 +315,6 @@ public class Ball {
                         currentBrick.getHit(1);
                         this.collideWithBrick(currentBrick);
                     }
-                    // delete temporary references
-                    leftBrick = null;
-                    rightBrick = null;
-                    topBrick = null;
-                    bottomBrick = null;
                 }
             }
         }

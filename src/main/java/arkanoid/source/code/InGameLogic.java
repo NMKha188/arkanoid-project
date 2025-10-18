@@ -9,11 +9,11 @@ public class InGameLogic{
     private static final double SCREEN_WIDTH = 560;
     private static final double SCREEN_HEIGHT = 640;
 
-    private static boolean isMovingLeft = false;
-    private static boolean isMovingRight = false;
+    private static boolean movingLeft = false;
+    private static boolean movingRight = false;
 
     // paddle
-    private final Paddle paddle = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
+    private final Paddle paddle = new Paddle();
 
     // ball
     private final Ball ball = new Ball();
@@ -22,8 +22,9 @@ public class InGameLogic{
     private final BrickSet brickSet = new BrickSet();
     String dataPath = "/arkanoid/resources/map1.txt";
 
-    // root and scene
-    Pane root = new Pane();
+    // root
+    private final Pane root = new Pane();
+    private final Scene gameScene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     public static double getScreenWidth() {
         return SCREEN_WIDTH;
@@ -31,6 +32,14 @@ public class InGameLogic{
 
     public static double getScreenHeight() {
         return SCREEN_HEIGHT;
+    }
+
+    public static boolean isMovingLeft() {
+        return movingLeft;
+    }
+
+    public static boolean isMovingRight() {
+        return movingRight;
     }
 
     public Scene createGameScene(Stage primaryStage) {
@@ -47,16 +56,14 @@ public class InGameLogic{
             }
         }
 
-        Scene gameScene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
-
         // handle key press
         gameScene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
                 case LEFT:
-                    isMovingLeft = true;
+                    movingLeft = true;
                     break;
                 case RIGHT:
-                    isMovingRight = true;
+                    movingRight = true;
                     break;
                 default:
                     // blank
@@ -67,10 +74,10 @@ public class InGameLogic{
         gameScene.setOnKeyReleased(event -> {
             switch(event.getCode()) {
                 case LEFT:
-                    isMovingLeft = false;
+                    movingLeft = false;
                     break;
                 case RIGHT:
-                    isMovingRight = false;
+                    movingRight = false;
                     break;
                 case SPACE:
                     ball.setReleasedState(true);
@@ -83,8 +90,8 @@ public class InGameLogic{
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                ball.updatePosition(SCREEN_WIDTH, SCREEN_HEIGHT, paddle, isMovingLeft, isMovingRight, brickSet);
-                paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
+                ball.updatePosition(paddle, brickSet);
+                paddle.updatePosition();
             }
         }.start();
 
