@@ -1,26 +1,19 @@
 package arkanoid.source.code;
 
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class InGameLogic extends Application {
-    // Screen size
+public class InGameLogic{
     private static final double SCREEN_WIDTH = 560;
     private static final double SCREEN_HEIGHT = 640;
 
-    // Check key press
-    private static boolean movingLeft = false;
-    private static boolean movingRight = false;
-
-    // root and scene
-    private static final Pane root = new Pane();
-    private static final Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
+    private static boolean isMovingLeft = false;
+    private static boolean isMovingRight = false;
 
     // paddle
-    private final Paddle paddle = new Paddle();
+    private final Paddle paddle = new Paddle(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     // ball
     private final Ball ball = new Ball();
@@ -28,6 +21,9 @@ public class InGameLogic extends Application {
     // brickSet
     private final BrickSet brickSet = new BrickSet();
     String dataPath = "/arkanoid/resources/map1.txt";
+
+    // root and scene
+    Pane root = new Pane();
 
     public static double getScreenWidth() {
         return SCREEN_WIDTH;
@@ -37,20 +33,7 @@ public class InGameLogic extends Application {
         return SCREEN_HEIGHT;
     }
 
-    public static boolean isMovingLeft() {
-        return movingLeft;
-    }
-
-    public static boolean isMovingRight() {
-        return movingRight;
-    }
-
-    public static Pane getRoot() {
-        return root;
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
+    public Scene createGameScene(Stage primaryStage) {
         brickSet.readData(dataPath);
 
         root.getChildren().add(paddle.getShape());
@@ -64,17 +47,16 @@ public class InGameLogic extends Application {
             }
         }
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        Scene gameScene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // handle key press
-        scene.setOnKeyPressed(event -> {
+        gameScene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
                 case LEFT:
-                    movingLeft = true;
+                    isMovingLeft = true;
                     break;
                 case RIGHT:
-                    movingRight = true;
+                    isMovingRight = true;
                     break;
                 default:
                     // blank
@@ -82,13 +64,13 @@ public class InGameLogic extends Application {
         });
 
         // Handle key release
-        scene.setOnKeyReleased(event -> {
+        gameScene.setOnKeyReleased(event -> {
             switch(event.getCode()) {
                 case LEFT:
-                    movingLeft = false;
+                    isMovingLeft = false;
                     break;
                 case RIGHT:
-                    movingRight = false;
+                    isMovingRight = false;
                     break;
                 case SPACE:
                     ball.setReleasedState(true);
@@ -101,13 +83,11 @@ public class InGameLogic extends Application {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                ball.updatePosition( paddle, brickSet);
-                paddle.updatePosition();
+                ball.updatePosition(SCREEN_WIDTH, SCREEN_HEIGHT, paddle, isMovingLeft, isMovingRight, brickSet);
+                paddle.updatePosition(isMovingLeft, isMovingRight, SCREEN_WIDTH);
             }
         }.start();
-    }
 
-    public static void main(String[] args) {
-        launch(args);
+        return gameScene;
     }
 }
