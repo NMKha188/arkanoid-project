@@ -1,5 +1,8 @@
 package arkanoid.source.code;
 
+import arkanoid.source.code.brick.Brick;
+import arkanoid.source.code.brick.BrickSet;
+import arkanoid.source.code.powerup.PowerUpList;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -85,6 +88,11 @@ public class Ball {
         return line;
     }
     // getter setter END
+
+    // check if ball is at bottom
+    public boolean isAtBottom() {
+        return y >= InGameLogic.getScreenHeight() + BALL_RADIUS;
+    }
 
     // stick to the paddle and initialize Vx Vy
     private void initializeVelocity(Paddle paddle) {
@@ -245,7 +253,7 @@ public class Ball {
     }
 
     // collide with brick set
-    private void collideWithBrickSet(BrickSet brickSet) {
+    private void collideWithBrickSet(BrickSet brickSet, PowerUpList powerUpList) {
         for (int i = 0; i < BrickSet.getBrickRow(); i++) {
             for (int j = 0; j < BrickSet.getBricksEachRow(); j++) {
                 Brick currentBrick = brickSet.getOneBrickAt(i, j);
@@ -276,15 +284,15 @@ public class Ball {
                             || (rightBrick != null && rightBrick.getHitPoints() > 0 && this.checkCollision(rightBrick))) {
                         // hit current brick and either left or right brick
                         if (leftBrick != null && this.checkCollision(leftBrick)) {
-                            leftBrick.getHit(1);
-                            currentBrick.getHit(1);
+                            leftBrick.getHit(1, powerUpList);
+                            currentBrick.getHit(1, powerUpList);
                         } else if (rightBrick != null && this.checkCollision(rightBrick)) {
-                            currentBrick.getHit(1);
-                            rightBrick.getHit(1);
+                            currentBrick.getHit(1, powerUpList);
+                            rightBrick.getHit(1, powerUpList);
                         }
                         // change Vy and set new position
                         Vy = -Vy;
-                        if (y < currentBrick.getY() + Brick.getBrickHeight() / 2) {
+                        if (y < currentBrick.getY() + Brick.getBrickHeight() / 2) {;
                             y = currentBrick.getY() - BALL_RADIUS - 1;
                         } else {
                             y = currentBrick.getY() + Brick.getBrickHeight() + BALL_RADIUS + 1;
@@ -296,11 +304,11 @@ public class Ball {
                             || (bottomBrick != null && bottomBrick.getHitPoints() > 0 && this.checkCollision(bottomBrick))) {
                         // hit current brick and either top or bottom brick
                         if (topBrick != null && this.checkCollision(topBrick)) {
-                            currentBrick.getHit(1);
-                            topBrick.getHit(1);
+                            currentBrick.getHit(1, powerUpList);
+                            topBrick.getHit(1, powerUpList);
                         } else if (bottomBrick != null && this.checkCollision(bottomBrick)) {
-                            currentBrick.getHit(1);
-                            bottomBrick.getHit(1);
+                            currentBrick.getHit(1, powerUpList);
+                            bottomBrick.getHit(1, powerUpList);
                         }
                         // change Vx and set new position
                         Vx = -Vx;
@@ -313,7 +321,7 @@ public class Ball {
                     }
                     // collide with only current brick
                     else {
-                        currentBrick.getHit(1);
+                        currentBrick.getHit(1, powerUpList);
                         this.collideWithBrick(currentBrick);
                     }
                 }
@@ -323,7 +331,7 @@ public class Ball {
     }
 
     // update ball position: stick to the paddle; collide with the top, side walls; fall to the bottom -> reset; collide with paddle
-    public void updatePosition(Paddle paddle, BrickSet brickSet) {
+    public void updatePosition(Paddle paddle, BrickSet brickSet, PowerUpList powerUpList) {
         // not released, stick to the paddle
         if (!released) {
             this.initializeVelocity(paddle);
@@ -334,7 +342,7 @@ public class Ball {
             // Collide with the paddle
             this.collideWithPaddle(paddle);
             // collide with bricks
-            this.collideWithBrickSet(brickSet);
+            this.collideWithBrickSet(brickSet, powerUpList);
             // position change
             x += Vx;
             y += Vy;

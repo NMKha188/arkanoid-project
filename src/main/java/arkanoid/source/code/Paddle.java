@@ -10,7 +10,7 @@ public class Paddle {
     private double paddleHeight = 15;
     private final Rectangle shape;
     // paddle speed
-    private final double PADDLE_SPEED = 3;
+    private double paddleSpeed = 3;
 
     public Paddle() {
         x = (InGameLogic.getScreenWidth() - paddleWidth) / 2;
@@ -25,6 +25,7 @@ public class Paddle {
 
     public void setX(double x) {
         this.x = x;
+        shape.setX(x);
     }
 
     public double getY() {
@@ -33,18 +34,33 @@ public class Paddle {
 
     public void setY(double y) {
         this.y = y;
+        shape.setY(y);
     }
 
     public double getWidth() {
         return paddleWidth;
     }
 
+    public void setWidth(double width) {
+        this.paddleWidth = width;
+        shape.setWidth(width);
+    }
+
     public double getHeight() {
         return paddleHeight;
     }
 
+    public void setHeight(double height) {
+        this.paddleHeight = height;
+        shape.setHeight(height);
+    }
+
     public double getSpeed() {
-        return PADDLE_SPEED;
+        return paddleSpeed;
+    }
+
+    public void setPaddleSpeed(double paddleSpeed) {
+        this.paddleSpeed = paddleSpeed;
     }
 
     public Rectangle getShape() {
@@ -55,9 +71,9 @@ public class Paddle {
     // update paddle position based on key press
     public void updatePosition() {
         if (InGameLogic.isMovingLeft() && !InGameLogic.isMovingRight() && x >= 0) {
-            x -= PADDLE_SPEED;
+            x -= paddleSpeed;
         } else if (InGameLogic.isMovingRight() && !InGameLogic.isMovingLeft() && x <= InGameLogic.getScreenWidth() - paddleWidth) {
-            x += PADDLE_SPEED;
+            x += paddleSpeed;
         }
         shape.setX(x);
     }

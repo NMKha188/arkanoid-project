@@ -1,4 +1,6 @@
-package arkanoid.source.code;
+package arkanoid.source.code.brick;
+
+import arkanoid.source.code.InGameLogic;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -28,6 +30,19 @@ public class BrickSet {
     }
     // getter setter END
 
+    private static Brick constructBrick(double x, double y, int type) {
+        Brick newBrick = null;
+        switch (type) {
+            case 1:
+                newBrick = new NormalBrick(x, y);
+                break;
+            case 2:
+                newBrick = new HardBrick(x, y);
+            default:
+        }
+        return newBrick;
+    }
+
     /*
     read 2-dimensional array data from a file path, turn that data into List of Brick objects
     using title map method
@@ -41,12 +56,10 @@ public class BrickSet {
                     if (!scanner.hasNextInt()) {
                         return;
                     }
-                    int number = scanner.nextInt();
-                    if (number == 0) {
-                        continue;
-                    }
-                    Brick brick = new Brick(j * Brick.getBrickWidth(), i * Brick.getBrickHeight(), number);
-                    brickSet[i][j] = brick;
+                    double x = j * Brick.getBrickWidth();
+                    double y = i * Brick.getBrickHeight();
+                    int type = scanner.nextInt();
+                    brickSet[i][j] = constructBrick(x, y, type);
                 }
             }
             scanner.close();

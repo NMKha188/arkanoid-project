@@ -1,40 +1,26 @@
-package arkanoid.source.code;
+package arkanoid.source.code.brick;
 
+import arkanoid.source.code.InGameLogic;
+import arkanoid.source.code.InGameStatus;
+import arkanoid.source.code.powerup.PowerUpList;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Brick {
+public abstract class Brick {
     // brick location and size
-    private double x;
-    private double y;
-    private static final double BRICK_WIDTH = InGameLogic.getScreenWidth() / BrickSet.getBricksEachRow();
-    private static final double BRICK_HEIGHT = BRICK_WIDTH / 2;
-    private final Rectangle shape;
-    // brick type
-    private int type;
+    protected double x;
+    protected double y;
+    protected static final double BRICK_WIDTH = InGameLogic.getScreenWidth() / BrickSet.getBricksEachRow();
+    protected static final double BRICK_HEIGHT = BRICK_WIDTH / 2;
+    protected final Rectangle shape;
     // brick HP
-    private int hitPoints;
+    protected int hitPoints;
 
-    public Brick(double x, double y, int type) {
+    public Brick(double x, double y) {
         this.x = x;
         this.y = y;
         shape = new Rectangle(this.x, this.y, BRICK_WIDTH, BRICK_HEIGHT);
         shape.setStroke(Color.BLACK);
-        this.type = type;
-        switch (type) {
-            case 1:
-                hitPoints = 1;
-                shape.setFill(Color.YELLOW);
-                shape.setVisible(true);
-                break;
-            case 2:
-                hitPoints = 3;
-                shape.setFill(Color.RED);
-                shape.setVisible(true);
-                break;
-            default:
-
-        }
     }
 
     // getter setter BEGIN
@@ -66,14 +52,6 @@ public class Brick {
         return shape;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
     public int getHitPoints() {
         return hitPoints;
     }
@@ -81,8 +59,9 @@ public class Brick {
     public void setHitPoints(int hitPoints) {
         this.hitPoints = hitPoints;
     }
+    // getter setter END
 
-    public void getHit(int hitPointsLoss) {
+    public void getHit(int hitPointsLoss, PowerUpList powerUpList) {
         hitPoints -= hitPointsLoss;
         if (hitPoints == 2) {
             shape.setFill(Color.DARKORANGE);
@@ -90,6 +69,7 @@ public class Brick {
             shape.setFill(Color.YELLOW);
         } else if (hitPoints <= 0) {
             this.setVisibility(false);
+            powerUpList.createPowerUp(this);
             InGameStatus.setScore(InGameStatus.getScore() + 1);
         }
     }
@@ -97,5 +77,4 @@ public class Brick {
     public void setVisibility(boolean isShowed) {
         shape.setVisible(isShowed);
     }
-    // getter setter END
 }
