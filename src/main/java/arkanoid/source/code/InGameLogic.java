@@ -104,9 +104,9 @@ public class InGameLogic {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                ball.updatePosition( paddle, brickSet, powerUpList);
-                paddle.updatePosition();
-                powerUpList.update(paddle);
+                paddle.update();
+                ball.update( paddle, brickSet, powerUpList);
+                powerUpList.update(paddle, ball, brickSet);
             }
         }.start();
 

@@ -3,6 +3,7 @@ package arkanoid.source.code;
 import arkanoid.source.code.brick.Brick;
 import arkanoid.source.code.brick.BrickSet;
 import arkanoid.source.code.powerup.PowerUpList;
+import arkanoid.source.code.powerup.ExplosiveBall;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -262,37 +263,35 @@ public class Ball {
                 }
                 if (currentBrick.getHitPoints() > 0 && this.checkCollision(currentBrick)) {
                     // create temporary references to left, right, top and bottom bricks of the current brick
-                    Brick leftBrick = null;
-                    Brick rightBrick = null;
-                    Brick topBrick = null;
-                    Brick bottomBrick = null;
-                    if (j - 1 >= 0) {
-                        leftBrick = brickSet.getOneBrickAt(i, j - 1);
-                    }
-                    if (j + 1 < BrickSet.getBricksEachRow()) {
-                        rightBrick = brickSet.getOneBrickAt(i, j + 1);
-                    }
-                    if (i - 1 >= 0) {
-                        topBrick = brickSet.getOneBrickAt(i - 1, j);
-                    }
-                    if (i + 1 < BrickSet.getBrickRow()) {
-                        bottomBrick = brickSet.getOneBrickAt(i + 1, j);
-                    }
+                    Brick leftBrick = brickSet.getOneBrickAt(i, j - 1);
+                    Brick rightBrick = brickSet.getOneBrickAt(i, j + 1);
+                    Brick topBrick = brickSet.getOneBrickAt(i - 1, j);
+                    Brick bottomBrick = brickSet.getOneBrickAt(i + 1, j);
 
                     // collide with current brick and either left or right brick
                     if ((leftBrick != null && leftBrick.getHitPoints() > 0 && this.checkCollision(leftBrick))
                             || (rightBrick != null && rightBrick.getHitPoints() > 0 && this.checkCollision(rightBrick))) {
                         // hit current brick and either left or right brick
                         if (leftBrick != null && this.checkCollision(leftBrick)) {
-                            leftBrick.getHit(1, powerUpList);
-                            currentBrick.getHit(1, powerUpList);
+                            if (ExplosiveBall.isInExplosiveMode()) {
+                                ExplosiveBall.explosiveDamage(brickSet, i, j - 1, powerUpList);
+                                ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
+                            } else {
+                                leftBrick.getHit(1, powerUpList);
+                                currentBrick.getHit(1, powerUpList);
+                            }
                         } else if (rightBrick != null && this.checkCollision(rightBrick)) {
-                            currentBrick.getHit(1, powerUpList);
-                            rightBrick.getHit(1, powerUpList);
+                            if (ExplosiveBall.isInExplosiveMode()) {
+                                ExplosiveBall.explosiveDamage(brickSet, i, j + 1, powerUpList);
+                                ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
+                            } else {
+                                rightBrick.getHit(1, powerUpList);
+                                currentBrick.getHit(1, powerUpList);
+                            }
                         }
                         // change Vy and set new position
                         Vy = -Vy;
-                        if (y < currentBrick.getY() + Brick.getBrickHeight() / 2) {;
+                        if (y < currentBrick.getY() + Brick.getBrickHeight() / 2) {
                             y = currentBrick.getY() - BALL_RADIUS - 1;
                         } else {
                             y = currentBrick.getY() + Brick.getBrickHeight() + BALL_RADIUS + 1;
@@ -304,9 +303,21 @@ public class Ball {
                             || (bottomBrick != null && bottomBrick.getHitPoints() > 0 && this.checkCollision(bottomBrick))) {
                         // hit current brick and either top or bottom brick
                         if (topBrick != null && this.checkCollision(topBrick)) {
-                            currentBrick.getHit(1, powerUpList);
-                            topBrick.getHit(1, powerUpList);
+                            if (ExplosiveBall.isInExplosiveMode()) {
+                                ExplosiveBall.explosiveDamage(brickSet, i - 1, j, powerUpList);
+                                ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
+                            } else {
+                                topBrick.getHit(1, powerUpList);
+                                currentBrick.getHit(1, powerUpList);
+                            }
                         } else if (bottomBrick != null && this.checkCollision(bottomBrick)) {
+                            if (ExplosiveBall.isInExplosiveMode()) {
+                                ExplosiveBall.explosiveDamage(brickSet, i, j + 1, powerUpList);
+                                ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
+                            } else {
+                                bottomBrick.getHit(1, powerUpList);
+                                currentBrick.getHit(1, powerUpList);
+                            }
                             currentBrick.getHit(1, powerUpList);
                             bottomBrick.getHit(1, powerUpList);
                         }
@@ -321,7 +332,11 @@ public class Ball {
                     }
                     // collide with only current brick
                     else {
-                        currentBrick.getHit(1, powerUpList);
+                        if (ExplosiveBall.isInExplosiveMode()) {
+                            ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
+                        } else {
+                            currentBrick.getHit(1, powerUpList);
+                        }
                         this.collideWithBrick(currentBrick);
                     }
                 }
@@ -331,7 +346,7 @@ public class Ball {
     }
 
     // update ball position: stick to the paddle; collide with the top, side walls; fall to the bottom -> reset; collide with paddle
-    public void updatePosition(Paddle paddle, BrickSet brickSet, PowerUpList powerUpList) {
+    public void update(Paddle paddle, BrickSet brickSet, PowerUpList powerUpList) {
         // not released, stick to the paddle
         if (!released) {
             this.initializeVelocity(paddle);

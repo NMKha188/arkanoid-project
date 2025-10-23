@@ -1,7 +1,9 @@
 package arkanoid.source.code.powerup;
 
+import arkanoid.source.code.Ball;
 import arkanoid.source.code.Paddle;
 import arkanoid.source.code.brick.Brick;
+import arkanoid.source.code.brick.BrickSet;
 
 import java.util.ArrayList;
 
@@ -23,7 +25,7 @@ public class PowerUpList {
         double x = brick.getX() + Brick.getBrickWidth() / 4;
         double y = brick.getY() + Brick.getBrickHeight() / 4;
 
-        switch ((int) (Math.random() * 2)) {
+        switch ((int) (Math.random() * 3)) {
             case 0:
                 // expand paddle
                 if ((int) (Math.random() * 100) <= ExpandPaddle.getProbability()) {
@@ -38,11 +40,17 @@ public class PowerUpList {
                     this.addPowerUpToList(speedUpPaddle);
                 }
                 break;
+            case 2:
+                // explosive ball
+                if ((int) (Math.random() * 100) <= ExplosiveBall.getProbability()) {
+                    PowerUp explosiveBall = new ExplosiveBall(x, y);
+                    this.addPowerUpToList(explosiveBall);
+                }
             default:
         }
     }
 
-    public void update(Paddle paddle) {
+    public void update(Paddle paddle, Ball ball, BrickSet brickSet) {
         for (int i = 0; i < powerUpList.size(); i++) {
             PowerUp powerUp = powerUpList.get(i);
             // fall down
@@ -55,11 +63,21 @@ public class PowerUpList {
             }
 
             if (powerUp.onDuration()) {
-                powerUp.applyEffect(paddle);
+                if (powerUp instanceof ExpandPaddle || powerUp instanceof SpeedUpPaddle) {
+                    powerUp.applyEffect(paddle);
+                }
+                if (powerUp instanceof ExplosiveBall) {
+                    powerUp.applyEffect(ball);
+                }
             }
 
             if (powerUp.runOutOfDuration()) {
-                powerUp.removeEffect(paddle);
+                if (powerUp instanceof ExpandPaddle || powerUp instanceof SpeedUpPaddle) {
+                    powerUp.removeEffect(paddle);
+                }
+                if (powerUp instanceof ExplosiveBall) {
+                    powerUp.removeEffect(ball);
+                }
                 this.removePowerUpFromList(i--);
             }
         }

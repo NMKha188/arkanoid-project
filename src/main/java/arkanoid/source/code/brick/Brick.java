@@ -63,14 +63,23 @@ public abstract class Brick {
 
     public void getHit(int hitPointsLoss, PowerUpList powerUpList) {
         hitPoints -= hitPointsLoss;
-        if (hitPoints == 2) {
-            shape.setFill(Color.DARKORANGE);
-        } else if (hitPoints == 1) {
-            shape.setFill(Color.YELLOW);
-        } else if (hitPoints <= 0) {
-            this.setVisibility(false);
-            powerUpList.createPowerUp(this);
-            InGameStatus.setScore(InGameStatus.getScore() + 1);
+        switch (hitPoints) {
+            case 4:
+                shape.setFill(Color.BLUE);
+                break;
+            case 3:
+                shape.setFill(Color.RED);
+                break;
+            case 2:
+                shape.setFill(Color.DARKORANGE);
+                break;
+            case 1:
+                shape.setFill(Color.YELLOW);
+                break;
+            default:
+                this.setVisibility(false);
+                powerUpList.createPowerUp(this);
+                InGameStatus.setScore(InGameStatus.getScore() + 1);
         }
     }
 

@@ -26,6 +26,9 @@ public class BrickSet {
     }
 
     public Brick getOneBrickAt(int i, int j) {
+        if (i < 0 || i >= BRICK_ROW || j < 0 || j >= BRICKS_EACH_ROW) {
+            return null;
+        }
         return brickSet[i][j];
     }
     // getter setter END

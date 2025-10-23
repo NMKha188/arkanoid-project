@@ -69,7 +69,7 @@ public class Paddle {
     // getter setter END
 
     // update paddle position based on key press
-    public void updatePosition() {
+    public void update() {
         if (InGameLogic.isMovingLeft() && !InGameLogic.isMovingRight() && x >= 0) {
             x -= paddleSpeed;
         } else if (InGameLogic.isMovingRight() && !InGameLogic.isMovingLeft() && x <= InGameLogic.getScreenWidth() - paddleWidth) {

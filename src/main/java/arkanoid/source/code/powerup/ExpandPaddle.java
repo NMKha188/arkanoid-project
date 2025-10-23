@@ -3,7 +3,6 @@ package arkanoid.source.code.powerup;
 import javafx.scene.paint.Color;
 import arkanoid.source.code.InGameLogic;
 import arkanoid.source.code.Paddle;
-
 import java.time.Duration;
 import java.time.Instant;
 
@@ -12,7 +11,7 @@ public class ExpandPaddle extends PowerUp {
     private static boolean alreadyRemoveEffect = false;
     private static final int PROBABILITY = 49; // 20% chance
     private static final long DURATION = 10;
-    private final double EXPANDED_LENGTH = 80;
+    private static final double EXPANDED_LENGTH = 80;
 
     public ExpandPaddle(double x, double y) {
         super(x, y);
