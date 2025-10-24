@@ -8,7 +8,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/21.0.8"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="arkanoid.source.code.SceneController"
+      fx:controller="arkanoid.source.code.gamecontroller.SceneController"
       alignment="CENTER"
       spacing="30"
       prefHeight="640"

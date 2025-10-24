@@ -1,37 +1,37 @@
-package arkanoid.source.code.brick;
+package arkanoid.source.code.gameplay.brick;
 
-import arkanoid.source.code.InGameLogic;
-
+import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gameplay.InGameLogic;
 import java.io.InputStream;
 import java.util.Scanner;
 
 public class BrickSet {
     // number of rows and number of bricks each row
-    private static final int BRICK_ROW = 10;
-    private static final int BRICKS_EACH_ROW = 12;
-    // BrickSet contains all Brick objects
-    private final Brick[][] brickSet = new Brick[BRICK_ROW][BRICKS_EACH_ROW];
+    private final int BRICKS_ROW = Config.BRICKS_ROW;
+    private final int BRICKS_PER_ROW = Config.BRICKS_PER_ROW;
+    // a matrix contains all Brick objects
+    private final Brick[][] brickSet = new Brick[BRICKS_ROW][BRICKS_PER_ROW];
 
     // getter setter BEGIN
-    public static int getBrickRow() {
-        return BRICK_ROW;
+    public int getBricksRow() {
+        return BRICKS_ROW;
     }
 
-    public static int getBricksEachRow() {
-        return BRICKS_EACH_ROW;
+    public int getBricksPerRow() {
+        return BRICKS_PER_ROW;
     }
 
     public Brick[][] getBrickSet() {
         return brickSet;
     }
 
+    // get a particular brick at (i, j) in the matrix
     public Brick getOneBrickAt(int i, int j) {
-        if (i < 0 || i >= BRICK_ROW || j < 0 || j >= BRICKS_EACH_ROW) {
+        if (i < 0 || i >= BRICKS_ROW || j < 0 || j >= BRICKS_PER_ROW) {
             return null;
         }
         return brickSet[i][j];
     }
-    // getter setter END
 
     private static Brick constructBrick(double x, double y, int type) {
         Brick newBrick = null;
@@ -54,13 +54,13 @@ public class BrickSet {
         InputStream inputStream = InGameLogic.class.getResourceAsStream(path);
         if (inputStream != null) {
             Scanner scanner = new Scanner(inputStream);
-            for (int i = 0; i < BRICK_ROW; i++) {
-                for (int j = 0; j < BRICKS_EACH_ROW; j++) {
+            for (int i = 0; i < BRICKS_ROW; i++) {
+                for (int j = 0; j < BRICKS_PER_ROW; j++) {
                     if (!scanner.hasNextInt()) {
                         return;
                     }
-                    double x = j * Brick.getBrickWidth();
-                    double y = i * Brick.getBrickHeight();
+                    double x = j * Config.BRICK_WIDTH;
+                    double y = i * Config.BRICK_HEIGHT;
                     int type = scanner.nextInt();
                     brickSet[i][j] = constructBrick(x, y, type);
                 }

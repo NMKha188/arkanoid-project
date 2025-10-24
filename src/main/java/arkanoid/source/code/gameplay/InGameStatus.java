@@ -1,10 +1,10 @@
-package arkanoid.source.code;
+package arkanoid.source.code.gameplay;
 
+import arkanoid.source.code.config.Config;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import arkanoid.source.code.brick.Brick;
 
 public class InGameStatus {
 
@@ -16,9 +16,9 @@ public class InGameStatus {
     private static final Group group = new Group(scoreText, livesText);
 
     private static final double SCORE_X = 0;
-    private static final double SCORE_Y = Brick.getBrickHeight();
-    private static final double LIVES_X = Brick.getBrickWidth()*3;
-    private static final double LIVES_Y = Brick.getBrickHeight();
+    private static final double SCORE_Y = Config.BRICK_HEIGHT;
+    private static final double LIVES_X = Config.BRICK_WIDTH * 3;
+    private static final double LIVES_Y = Config.BRICK_HEIGHT;
 
     static {
         scoreText.setFont(Font.font("Consolas", 24));

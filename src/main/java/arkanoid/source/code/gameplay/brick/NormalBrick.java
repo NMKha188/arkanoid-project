@@ -1,4 +1,4 @@
-package arkanoid.source.code.brick;
+package arkanoid.source.code.gameplay.brick;
 
 import javafx.scene.paint.Color;
 

@@ -1,39 +1,38 @@
-package arkanoid.source.code;
+package arkanoid.source.code.gameplay;
 
-import arkanoid.source.code.brick.Brick;
-import arkanoid.source.code.brick.BrickSet;
-import arkanoid.source.code.powerup.PowerUpList;
-import arkanoid.source.code.powerup.ExplosiveBall;
+import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gameplay.brick.Brick;
+import arkanoid.source.code.gameplay.brick.BrickSet;
+import arkanoid.source.code.gameplay.powerup.PowerUpList;
+import arkanoid.source.code.gameplay.powerup.ExplosiveBall;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 
-public class Ball {
+public class Ball implements GameObject {
     // ball center and radius
     private double x;
     private double y;
-    private final double BALL_RADIUS = 10;
+    private final double BALL_RADIUS = Config.BALL_RADIUS;
     private final Circle shape;
-    // x and y velocity
+    // velocity
+    private double ballSpeed = Config.BALL_SPEED;
     private double Vx;
     private double Vy;
-    // initialize Vx while sticking to the paddle
+    private final double MAX_VX = ballSpeed * 0.67;
     private double changeVx = 0.05;
-    private final double MAX_VX = 3;
-    // keep overall speed stable
-    private final double BALL_SPEED = 4.5;
+    // Vx representative line while sticking to the paddle (GUI for player to know which way will the ball fly after being released)
+    private final Line velocityRepresentativeLine;
     // check if ball is released or sticks to the paddle
     private boolean released;
-    // Vx representative line while sticking to the paddle (GUI for player to know which way will the ball fly after being released)
-    private final Line line;
 
     public Ball() {
         shape = new Circle(BALL_RADIUS);
         released = false;
-        line = new Line();
-        line.setStrokeWidth(5);
-        line.setStroke(Color.NAVY);
+        velocityRepresentativeLine = new Line();
+        velocityRepresentativeLine.setStrokeWidth(5);
+        velocityRepresentativeLine.setStroke(Color.NAVY);
     }
 
     // getter setter BEGIN
@@ -43,6 +42,7 @@ public class Ball {
 
     public void setX(double x) {
         this.x = x;
+        shape.setCenterX(this.x);
     }
 
     public double getY() {
@@ -51,30 +51,23 @@ public class Ball {
 
     public void setY(double y) {
         this.y = y;
+        shape.setCenterY(this.y);
     }
 
     public double getRadius() {
         return BALL_RADIUS;
     }
 
-    public double getVx() {
-        return Vx;
-    }
-
-    public void setVx(double Vx) {
-        this.Vx = Vx;
-    }
-
-    public double getVy() {
-        return Vy;
-    }
-
-    public void setVy(double Vy) {
-        this.Vy = Vy;
-    }
-
     public Circle getShape() {
         return shape;
+    }
+
+    public double getBallSpeed() {
+        return ballSpeed;
+    }
+
+    public void setBallSpeed(double ballSpeed) {
+        this.ballSpeed = ballSpeed;
     }
 
     public boolean getReleasedState() {
@@ -85,15 +78,10 @@ public class Ball {
         this.released = released;
     }
 
-    public Line getLine() {
-        return line;
+    public Line getvelocityRepresentativeLine() {
+        return velocityRepresentativeLine;
     }
     // getter setter END
-
-    // check if ball is at bottom
-    public boolean isAtBottom() {
-        return y >= InGameLogic.getScreenHeight() + BALL_RADIUS;
-    }
 
     // stick to the paddle and initialize Vx Vy
     private void initializeVelocity(Paddle paddle) {
@@ -102,18 +90,17 @@ public class Ball {
             changeVx = -changeVx;
         }
         Vx += changeVx;
-        Vy = -Math.sqrt(Math.pow(BALL_SPEED, 2) - Math.pow(Vx, 2));
+        Vy = -Math.sqrt(Math.pow(ballSpeed, 2) - Math.pow(Vx, 2));
 
         // stick to the paddle
         x = paddle.getX() + paddle.getWidth() / 2;
         y = paddle.getY() - BALL_RADIUS;
 
         // Vx representative line (GUI for player to know which way will the ball fly after being released)
-        line.setVisible(true);
-        line.setStartX(x);
-        line.setStartY(y + BALL_RADIUS + paddle.getHeight() + 5);
-        line.setEndX(x + Vx * ((paddle.getWidth() / 2) / MAX_VX));
-        line.setEndY(y + BALL_RADIUS + paddle.getHeight() + 5);
+        velocityRepresentativeLine.setStartX(x);
+        velocityRepresentativeLine.setStartY(y + BALL_RADIUS + paddle.getHeight() + 5);
+        velocityRepresentativeLine.setEndX(x + Vx * ((paddle.getWidth() / 2) / MAX_VX));
+        velocityRepresentativeLine.setEndY(y + BALL_RADIUS + paddle.getHeight() + 5);
     }
 
     // check collision with other Object
@@ -129,12 +116,12 @@ public class Ball {
     // collide with top and side walls, fall to the bottom -> reset logic
     private void collideWithWalls() {
         // collide with the side walls
-        if (x <= BALL_RADIUS || x >= InGameLogic.getScreenWidth() - BALL_RADIUS) {
+        if (x <= BALL_RADIUS || x >= InGameLogic.getGameplayScreenWidth() - BALL_RADIUS) {
             Vx = -Vx;
             if (x <= BALL_RADIUS) {
                 x = BALL_RADIUS + 1;
             } else {
-                x = InGameLogic.getScreenWidth() - BALL_RADIUS - 1;
+                x = InGameLogic.getGameplayScreenWidth() - BALL_RADIUS - 1;
             }
             shape.setCenterX(x);
         }
@@ -147,9 +134,10 @@ public class Ball {
         }
 
         // fall to the bottom -> reset
-        if (y >= InGameLogic.getScreenHeight() + BALL_RADIUS) {
+        if (y >= InGameLogic.getGameplayScreenHeight() + BALL_RADIUS) {
             released = false;
             Vx = 0;
+            velocityRepresentativeLine.setVisible(true);
             InGameStatus.loseLife();
         }
     }
@@ -173,7 +161,7 @@ public class Ball {
                 } else if (InGameLogic.isMovingRight()) {
                     Vx = Vx * 0.7 + 0.3 * paddle.getSpeed();
                 }
-                Vy = -Math.sqrt(Math.pow(BALL_SPEED, 2) - Math.pow(Vx, 2));
+                Vy = -Math.sqrt(Math.pow(ballSpeed, 2) - Math.pow(Vx, 2));
                 y = paddle.getY() - BALL_RADIUS - 1;
                 shape.setCenterY(y);
             }
@@ -194,56 +182,61 @@ public class Ball {
                 } else {
                     Vx = MAX_VX;
                 }
-                Vy = -Math.sqrt(Math.pow(BALL_SPEED, 2) - Math.pow(Vx, 2));
+                Vy = -Math.sqrt(Math.pow(ballSpeed, 2) - Math.pow(Vx, 2));
             }
         }
+    }
+
+    // private method for collision between ball and corner of brick
+    private double calculateRatioBetweenVxAndVy(Brick brick) {
+        // logic: Vx/Vy = dx/dy = k (k limit is between 0.75 and 1.25)-> Vx^2 + Vy^2 = ballSpeed -> Vx = ..., Vy = ...
+        double dx;
+        double dy;
+        if (x < brick.getX()) {
+            dx = Math.abs(x - brick.getX());
+        } else {
+            dx = Math.abs(x - (brick.getX()) + Config.BRICK_WIDTH);
+        }
+        if (y < brick.getY()) {
+            dy = Math.abs(y - brick.getY());
+        } else {
+            dy = Math.abs(y - (brick.getY() + Config.BRICK_HEIGHT));
+        }
+        double k = dx / dy;
+        if (k > 1.25) {
+            k = 1.25;
+        } else if (k < 0.75) {
+            k = 0.75;
+        }
+        return k;
     }
 
     // collide with only 1 brick logic (already check collision)
     private void collideWithBrick(Brick brick) {
         // collide with the top or bottom of the brick
-        if (x >= brick.getX() && x <= brick.getX() + Brick.getBrickWidth()) {
+        if (x >= brick.getX() && x <= brick.getX() + brick.getWidth()) {
             Vy = -Vy;
-            if (y < brick.getY() + Brick.getBrickHeight() / 2) {
+            if (y < brick.getY() + brick.getHeight() / 2) {
                 y = brick.getY() - BALL_RADIUS - 1;
             } else {
-                y = brick.getY() + Brick.getBrickHeight() + BALL_RADIUS + 1;
+                y = brick.getY() + brick.getHeight() + BALL_RADIUS + 1;
             }
             shape.setCenterY(y);
         }
         // collide with the sides of the brick
-        else if (y >= brick.getY() && y <= brick.getY() + Brick.getBrickHeight()) {
+        else if (y >= brick.getY() && y <= brick.getY() + brick.getHeight()) {
             Vx = -Vx;
-            if (x < brick.getX() + Brick.getBrickWidth() / 2) {
+            if (x < brick.getX() + brick.getWidth() / 2) {
                 x = brick.getX() - BALL_RADIUS - 1;
             } else {
-                x = brick.getX() + Brick.getBrickWidth() + BALL_RADIUS + 1;
+                x = brick.getX() + brick.getWidth() + BALL_RADIUS + 1;
             }
             shape.setCenterX(x);
         }
         // collide with corners of the brick
         else {
-            // calculate Vx and Vy, logic: Vx/Vy = dx/dy = k (k limit is between 0.75 and 1.25)-> Vx^2 + Vy^2 = BALL_SPEED -> Vx = ..., Vy = ...
-            double dx;
-            double dy;
-            if (x < brick.getX()) {
-                dx = Math.abs(x - brick.getX());
-            } else {
-                dx = Math.abs(x - (brick.getX()) + Brick.getBrickWidth());
-            }
-            if (y < brick.getY()) {
-                dy = Math.abs(y - brick.getY());
-            } else {
-                dy = Math.abs(y - (brick.getY() + Brick.getBrickHeight()));
-            }
-            double k = dx / dy;
-            if (k > 1.25) {
-                k = 1.25;
-            } else if (k < 0.75) {
-                k = 0.75;
-            }
-            Vy = BALL_SPEED / Math.sqrt(Math.pow(k, 2) + 1);
-            Vx = k * Vy;
+            Vy = ballSpeed / Math.sqrt(Math.pow(calculateRatioBetweenVxAndVy(brick), 2) + 1);
+            Vx = Math.sqrt(Math.pow(ballSpeed, 2) - Math.pow(Vy, 2));
             if (x < brick.getX()) {
                 Vx = -Vx;
             }
@@ -255,13 +248,13 @@ public class Ball {
 
     // collide with brick set
     private void collideWithBrickSet(BrickSet brickSet, PowerUpList powerUpList) {
-        for (int i = 0; i < BrickSet.getBrickRow(); i++) {
-            for (int j = 0; j < BrickSet.getBricksEachRow(); j++) {
+        for (int i = 0; i < brickSet.getBricksRow(); i++) {
+            for (int j = 0; j < brickSet.getBricksPerRow(); j++) {
                 Brick currentBrick = brickSet.getOneBrickAt(i, j);
                 if (currentBrick == null) {
                     continue;
                 }
-                if (currentBrick.getHitPoints() > 0 && this.checkCollision(currentBrick)) {
+                if (!currentBrick.isDestroyed() && this.checkCollision(currentBrick)) {
                     // create temporary references to left, right, top and bottom bricks of the current brick
                     Brick leftBrick = brickSet.getOneBrickAt(i, j - 1);
                     Brick rightBrick = brickSet.getOneBrickAt(i, j + 1);
@@ -269,8 +262,8 @@ public class Ball {
                     Brick bottomBrick = brickSet.getOneBrickAt(i + 1, j);
 
                     // collide with current brick and either left or right brick
-                    if ((leftBrick != null && leftBrick.getHitPoints() > 0 && this.checkCollision(leftBrick))
-                            || (rightBrick != null && rightBrick.getHitPoints() > 0 && this.checkCollision(rightBrick))) {
+                    if ((leftBrick != null && !leftBrick.isDestroyed() && this.checkCollision(leftBrick))
+                            || (rightBrick != null && !rightBrick.isDestroyed() && this.checkCollision(rightBrick))) {
                         // hit current brick and either left or right brick
                         if (leftBrick != null && this.checkCollision(leftBrick)) {
                             if (ExplosiveBall.isInExplosiveMode()) {
@@ -291,16 +284,16 @@ public class Ball {
                         }
                         // change Vy and set new position
                         Vy = -Vy;
-                        if (y < currentBrick.getY() + Brick.getBrickHeight() / 2) {
+                        if (y < currentBrick.getY() + Config.BRICK_HEIGHT / 2) {
                             y = currentBrick.getY() - BALL_RADIUS - 1;
                         } else {
-                            y = currentBrick.getY() + Brick.getBrickHeight() + BALL_RADIUS + 1;
+                            y = currentBrick.getY() + Config.BRICK_HEIGHT + BALL_RADIUS + 1;
                         }
                         shape.setCenterY(y);
                     }
                     // collide with current brick and either top or bottom brick
-                    else if (topBrick != null && topBrick.getHitPoints() > 0 && this.checkCollision(topBrick)
-                            || (bottomBrick != null && bottomBrick.getHitPoints() > 0 && this.checkCollision(bottomBrick))) {
+                    else if (topBrick != null && !topBrick.isDestroyed() && this.checkCollision(topBrick)
+                            || (bottomBrick != null && !bottomBrick.isDestroyed() && this.checkCollision(bottomBrick))) {
                         // hit current brick and either top or bottom brick
                         if (topBrick != null && this.checkCollision(topBrick)) {
                             if (ExplosiveBall.isInExplosiveMode()) {
@@ -323,10 +316,10 @@ public class Ball {
                         }
                         // change Vx and set new position
                         Vx = -Vx;
-                        if (x < currentBrick.getX() + Brick.getBrickWidth() / 2) {
+                        if (x < currentBrick.getX() + Config.BRICK_WIDTH / 2) {
                             x = currentBrick.getX() - BALL_RADIUS - 1;
                         } else {
-                            x = currentBrick.getX() + Brick.getBrickWidth() + BALL_RADIUS + 1;
+                            x = currentBrick.getX() + Config.BRICK_WIDTH + BALL_RADIUS + 1;
                         }
                         shape.setCenterX(x);
                     }
@@ -345,13 +338,16 @@ public class Ball {
 
     }
 
+    public void update() {
+    }
+
     // update ball position: stick to the paddle; collide with the top, side walls; fall to the bottom -> reset; collide with paddle
     public void update(Paddle paddle, BrickSet brickSet, PowerUpList powerUpList) {
         // not released, stick to the paddle
         if (!released) {
             this.initializeVelocity(paddle);
         } else {
-            line.setVisible(false);
+            velocityRepresentativeLine.setVisible(false);
             //collide with top and side walls, fall to the bottom -> reset
             this.collideWithWalls();
             // Collide with the paddle

@@ -1,10 +1,11 @@
-package arkanoid.source.code;
+package arkanoid.source.code.gamecontroller;
 
+import arkanoid.source.code.gameplay.InGameLogic;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import javafx.application.Platform;
 
 public class SceneController {
     @FXML

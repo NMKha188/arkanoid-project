@@ -1,6 +1,13 @@
-module arkanoid {
+module arkanoid.source.code {
     requires javafx.controls;
     requires javafx.fxml;
-    opens arkanoid.source.code to javafx.fxml;
-    exports arkanoid.source.code;
+    requires java.desktop;
+    requires javafx.graphics;
+    opens arkanoid.source.code.gamecontroller to javafx.fxml;
+    exports arkanoid.source.code.gameplay.brick;
+    exports arkanoid.source.code.gameplay.powerup;
+    exports arkanoid.source.code.gameplay;
+    opens arkanoid.source.code.gameplay to javafx.fxml;
+    exports arkanoid.source.code.gamecontroller;
+    //opens arkanoid.source.code.config to javafx.fxml;
 }
