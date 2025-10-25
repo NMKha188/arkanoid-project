@@ -9,6 +9,7 @@ public class Paddle extends RectangleGameObject {
     // constructor
     public Paddle() {
         super((InGameLogic.getGameplayScreenWidth() - Config.PADDLE_WIDTH) / 2, InGameLogic.getGameplayScreenHeight() - 30, Config.PADDLE_WIDTH, Config.PADDLE_HEIGHT);
+        Texture.applyTextureToPaddle(this.shape);
     }
 
     // getter setter BEGIN
