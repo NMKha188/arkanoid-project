@@ -26,7 +26,7 @@ public class InGameLogic {
     private static final PowerUpList powerUpList = new PowerUpList();
     // game pane and scene
     private static final Pane gameRoot = new Pane();
-    private static final Scene gameScene = new Scene(gameRoot, GAMEPLAY_SCREEN_WIDTH, GAMEPLAY_SCREEN_HEIGHT);
+    private static final Scene gameScene = new Scene(gameRoot, GAMEPLAY_SCREEN_WIDTH + Config.EXTRA, GAMEPLAY_SCREEN_HEIGHT + Config.EXTRA / 2);
 
     // getter setter BEGIN
     public static double getGameplayScreenWidth() {

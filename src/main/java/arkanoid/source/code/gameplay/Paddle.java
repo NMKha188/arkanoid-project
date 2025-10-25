@@ -8,7 +8,12 @@ public class Paddle extends RectangleGameObject {
 
     // constructor
     public Paddle() {
-        super((InGameLogic.getGameplayScreenWidth() - Config.PADDLE_WIDTH) / 2, InGameLogic.getGameplayScreenHeight() - 30, Config.PADDLE_WIDTH, Config.PADDLE_HEIGHT);
+        super(
+                Config.EXTRA / 2 + (InGameLogic.getGameplayScreenWidth() - Config.PADDLE_WIDTH) / 2,
+                Config.EXTRA / 4 + InGameLogic.getGameplayScreenHeight() - 30,
+                Config.PADDLE_WIDTH,
+                Config.PADDLE_HEIGHT
+        );
     }
 
     // getter setter BEGIN
@@ -23,9 +28,9 @@ public class Paddle extends RectangleGameObject {
 
     // update paddle position based on key press
     public void update() {
-        if (InGameLogic.isMovingLeft() && !InGameLogic.isMovingRight() && x >= 0) {
+        if (InGameLogic.isMovingLeft() && !InGameLogic.isMovingRight() && x >= Config.EXTRA / 2) {
             x -= paddleSpeed;
-        } else if (InGameLogic.isMovingRight() && !InGameLogic.isMovingLeft() && x <= InGameLogic.getGameplayScreenWidth() - width) {
+        } else if (InGameLogic.isMovingRight() && !InGameLogic.isMovingLeft() && x <= Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - width) {
             x += paddleSpeed;
         }
         shape.setX(x);

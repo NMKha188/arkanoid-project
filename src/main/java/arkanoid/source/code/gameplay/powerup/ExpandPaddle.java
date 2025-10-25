@@ -24,10 +24,10 @@ public class ExpandPaddle extends PowerUp {
             double expandedLength = Config.PADDLE_WIDTH * (EXPANDED_RATIO - 1);
             paddle.setWidth(paddle.getWidth() + expandedLength);
             paddle.setX(paddle.getX() - (expandedLength / 2));
-            if (paddle.getX() < 0) {
-                paddle.setX(0);
-            } else if (paddle.getX() + paddle.getWidth() > InGameLogic.getGameplayScreenWidth()) {
-                paddle.setX(InGameLogic.getGameplayScreenWidth() - paddle.getWidth());
+            if (paddle.getX() < Config.EXTRA / 2) {
+                paddle.setX(Config.EXTRA / 2);
+            } else if (paddle.getX() + paddle.getWidth() > Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth()) {
+                paddle.setX(Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - paddle.getWidth());
             }
         }
     }
