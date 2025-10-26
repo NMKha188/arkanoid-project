@@ -29,6 +29,7 @@ public class Ball implements GameObject {
 
     public Ball() {
         shape = new Circle(BALL_RADIUS);
+        Texture.applyTextureToBall(this.shape);
         released = false;
         velocityRepresentativeLine = new Line();
         velocityRepresentativeLine.setStrokeWidth(5);
