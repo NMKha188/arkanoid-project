@@ -1,7 +1,10 @@
-package arkanoid.source.code.powerup;
+package arkanoid.source.code.gameplay.powerup;
 
-import arkanoid.source.code.Paddle;
-import arkanoid.source.code.brick.Brick;
+import arkanoid.source.code.gameplay.Ball;
+import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gameplay.Paddle;
+import arkanoid.source.code.gameplay.brick.Brick;
+import arkanoid.source.code.gameplay.brick.BrickSet;
 
 import java.util.ArrayList;
 
@@ -20,33 +23,39 @@ public class PowerUpList {
 
     // create power up based on probability when a brick is destroyed : Associated with brick, this method is called in getHit() method of Brick
     public void createPowerUp(Brick brick) {
-        double x = brick.getX() + Brick.getBrickWidth() / 4;
-        double y = brick.getY() + Brick.getBrickHeight() / 4;
+        double x = brick.getX() + Config.BRICK_WIDTH / 4;
+        double y = brick.getY() + Config.BRICK_HEIGHT / 4;
 
-        switch ((int) (Math.random() * 2)) {
+        switch ((int) (Math.random() * 3)) {
             case 0:
                 // expand paddle
-                if ((int) (Math.random() * 100) <= ExpandPaddle.getProbability()) {
+                if ((int) (Math.random() * 100) <= Config.EXPAND_PADDLE_PROBABILITY) {
                     PowerUp expandPaddle = new ExpandPaddle(x, y);
                     this.addPowerUpToList(expandPaddle);
                 }
                 break;
             case 1:
                 // speed up paddle
-                if ((int) (Math.random() * 100) <= SpeedUpPaddle.getProbability()) {
+                if ((int) (Math.random() * 100) <= Config.SPEED_UP_PADDLE_PROBABILITY) {
                     PowerUp speedUpPaddle = new SpeedUpPaddle(x, y);
                     this.addPowerUpToList(speedUpPaddle);
                 }
                 break;
+            case 2:
+                // explosive ball
+                if ((int) (Math.random() * 100) <= Config.EXPLOSIVE_BALL_PROBABILITY) {
+                    PowerUp explosiveBall = new ExplosiveBall(x, y);
+                    this.addPowerUpToList(explosiveBall);
+                }
             default:
         }
     }
 
-    public void update(Paddle paddle) {
+    public void update(Paddle paddle, Ball ball, BrickSet brickSet) {
         for (int i = 0; i < powerUpList.size(); i++) {
             PowerUp powerUp = powerUpList.get(i);
             // fall down
-            powerUp.updatePosition();
+            powerUp.update();
             // paddle catch power up
             powerUp.caughtByPaddle(paddle);
             // fall to bottom without being caught by paddle
@@ -55,11 +64,21 @@ public class PowerUpList {
             }
 
             if (powerUp.onDuration()) {
-                powerUp.applyEffect(paddle);
+                if (powerUp instanceof ExpandPaddle || powerUp instanceof SpeedUpPaddle) {
+                    powerUp.applyEffect(paddle);
+                }
+                if (powerUp instanceof ExplosiveBall) {
+                    powerUp.applyEffect(ball);
+                }
             }
 
             if (powerUp.runOutOfDuration()) {
-                powerUp.removeEffect(paddle);
+                if (powerUp instanceof ExpandPaddle || powerUp instanceof SpeedUpPaddle) {
+                    powerUp.removeEffect(paddle);
+                }
+                if (powerUp instanceof ExplosiveBall) {
+                    powerUp.removeEffect(ball);
+                }
                 this.removePowerUpFromList(i--);
             }
         }

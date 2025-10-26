@@ -1,4 +1,6 @@
-package arkanoid.source.code;
+package arkanoid.source.code.gamecontroller;
+import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gameplay.InGameLogic;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +23,7 @@ public class GameEngine extends Application {
         FXMLLoader loader = new FXMLLoader(resourceUrl);
         Parent menuRoot = loader.load();
 
-        Scene scene = new Scene(menuRoot, InGameLogic.getScreenWidth(), InGameLogic.getScreenHeight());
+        Scene scene = new Scene(menuRoot, InGameLogic.getGameplayScreenWidth() + Config.EXTRA, InGameLogic.getGameplayScreenHeight() + Config.EXTRA / 2);
         primaryStage.setTitle("Arkanoid - Main Menu");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
