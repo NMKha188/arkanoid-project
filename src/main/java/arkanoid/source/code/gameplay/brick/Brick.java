@@ -3,7 +3,7 @@ package arkanoid.source.code.gameplay.brick;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.InGameStatus;
 import arkanoid.source.code.gameplay.RectangleGameObject;
-import arkanoid.source.code.gameplay.Texture;
+import arkanoid.source.code.graphic.Texture;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import javafx.scene.paint.Color;
 

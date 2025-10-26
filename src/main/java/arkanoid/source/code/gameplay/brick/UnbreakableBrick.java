@@ -1,6 +1,6 @@
 package arkanoid.source.code.gameplay.brick;
 
-import arkanoid.source.code.gameplay.Texture;
+import arkanoid.source.code.graphic.Texture;
 
 public class UnbreakableBrick extends Brick {
     public UnbreakableBrick(double x, double y) {

@@ -1,7 +1,6 @@
 package arkanoid.source.code.gameplay.brick;
 
-import arkanoid.source.code.gameplay.Texture;
-import javafx.scene.paint.Color;
+import arkanoid.source.code.graphic.Texture;
 
 public class NormalBrick extends Brick {
     public NormalBrick(double x, double y) {

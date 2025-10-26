@@ -1,6 +1,7 @@
 package arkanoid.source.code.gameplay;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.graphic.Texture;
 
 public class Paddle extends RectangleGameObject {
     // paddle speed
