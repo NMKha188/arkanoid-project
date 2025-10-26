@@ -59,7 +59,7 @@ public abstract class PowerUp extends RectangleGameObject {
     }
 
     public boolean isFallenToBottom() {
-        return effectStartTime == null && y >= InGameLogic.getGameplayScreenHeight();
+        return effectStartTime == null && y >= Config.EXTRA / 4 + InGameLogic.getGameplayScreenHeight();
     }
 
     public void caughtByPaddle(Paddle paddle) {

@@ -9,5 +9,4 @@ module arkanoid.source.code {
     exports arkanoid.source.code.gameplay;
     opens arkanoid.source.code.gameplay to javafx.fxml;
     exports arkanoid.source.code.gamecontroller;
-    //opens arkanoid.source.code.config to javafx.fxml;
 }

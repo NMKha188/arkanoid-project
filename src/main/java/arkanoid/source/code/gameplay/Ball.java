@@ -117,25 +117,25 @@ public class Ball implements GameObject {
     // collide with top and side walls, fall to the bottom -> reset logic
     private void collideWithWalls() {
         // collide with the side walls
-        if (x <= BALL_RADIUS || x >= InGameLogic.getGameplayScreenWidth() - BALL_RADIUS) {
+        if (x <= Config.EXTRA / 2 + BALL_RADIUS || x >= Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - BALL_RADIUS) {
             Vx = -Vx;
-            if (x <= BALL_RADIUS) {
-                x = BALL_RADIUS + 1;
+            if (x <= Config.EXTRA / 2 + BALL_RADIUS) {
+                x = Config.EXTRA / 2 + BALL_RADIUS + 1;
             } else {
-                x = InGameLogic.getGameplayScreenWidth() - BALL_RADIUS - 1;
+                x = Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - BALL_RADIUS - 1;
             }
             shape.setCenterX(x);
         }
 
         // collide with the top
-        if (y <= BALL_RADIUS) {
+        if (y <= Config.EXTRA / 4 + BALL_RADIUS) {
             Vy = -Vy;
-            y = BALL_RADIUS + 1;
+            y = Config.EXTRA / 4 + BALL_RADIUS + 1;
             shape.setCenterY(y);
         }
 
         // fall to the bottom -> reset
-        if (y >= InGameLogic.getGameplayScreenHeight() + BALL_RADIUS) {
+        if (y >= Config.EXTRA / 4 + InGameLogic.getGameplayScreenHeight() + BALL_RADIUS) {
             released = false;
             Vx = 0;
             velocityRepresentativeLine.setVisible(true);

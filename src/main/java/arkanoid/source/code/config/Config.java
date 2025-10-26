@@ -4,6 +4,7 @@ public class Config {
     // gameplay screen
     public static final double GAMEPLAY_SCREEN_WIDTH = 560;
     public static final double GAMEPLAY_SCREEN_HEIGHT = 640;
+    public static final double EXTRA = GAMEPLAY_SCREEN_WIDTH / 3;
 
     // paddle
     public static final double PADDLE_WIDTH = 80;
