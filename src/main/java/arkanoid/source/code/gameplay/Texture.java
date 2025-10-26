@@ -61,7 +61,7 @@ public class Texture {
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.DEFAULT,
-                    new BackgroundSize(InGameLogic.getGameplayScreenWidth(), InGameLogic.getGameplayScreenHeight(), false, false, false, false)
+                    new BackgroundSize(InGameLogic.getGameplayScreenWidth() + Config.EXTRA, InGameLogic.getGameplayScreenHeight() + Config.EXTRA / 2, false, false, false, false)
             );
             rootPane.setBackground(new Background(bgImage));
         }

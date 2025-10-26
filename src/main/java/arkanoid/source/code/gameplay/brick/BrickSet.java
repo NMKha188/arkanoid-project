@@ -41,6 +41,10 @@ public class BrickSet {
                 break;
             case 2:
                 newBrick = new HardBrick(x, y);
+                break;
+            case 3:
+                newBrick = new UnbreakableBrick(x, y);
+                break;
             default:
         }
         return newBrick;

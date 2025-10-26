@@ -21,7 +21,7 @@ public class InGameLogic {
     // ball
     private static Ball ball;
     // brickSet
-    private static final BrickSet brickSet = new BrickSet();
+    private static BrickSet brickSet;
     String dataPath = "/arkanoid/resources/map1.txt";
     // power ups
     private static final PowerUpList powerUpList = new PowerUpList();
@@ -88,6 +88,7 @@ public class InGameLogic {
         Texture.applyBackground(gameRoot);
         paddle = new Paddle();
         ball = new Ball();
+        brickSet = new BrickSet();
         brickSet.readData(dataPath);
 
         gameRoot.getChildren().add(paddle.getShape());

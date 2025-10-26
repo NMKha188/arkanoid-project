@@ -14,6 +14,7 @@ public class Paddle extends RectangleGameObject {
                 Config.PADDLE_WIDTH,
                 Config.PADDLE_HEIGHT
         );
+        Texture.applyTextureToPaddle(shape);
     }
 
     // getter setter BEGIN

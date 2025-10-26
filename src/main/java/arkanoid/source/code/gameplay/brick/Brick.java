@@ -40,7 +40,9 @@ public abstract class Brick extends RectangleGameObject {
             InGameStatus.setScore(InGameStatus.getScore() + 10);
             powerUpList.createPowerUp(this);
         } else {
-            Texture.applyTextureToBrick(this.shape, this.hitPoints);
+            if (!(this instanceof UnbreakableBrick)) {
+                Texture.applyTextureToBrick(this.shape, this.hitPoints);
+            }
         }
     }
 
