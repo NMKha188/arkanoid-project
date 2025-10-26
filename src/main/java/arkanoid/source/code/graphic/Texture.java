@@ -39,7 +39,7 @@ public class Texture {
             brickImages[7] = loadImage("/arkanoid/resources/brick7.png");
 
         } catch (Exception e) {
-            System.err.println("Lỗi nghiêm trọng khi tải textures:");
+            System.err.println("Error loading textures resources");
             e.printStackTrace();
         }
     }
@@ -49,7 +49,7 @@ public class Texture {
         if (stream != null) {
             return new Image(stream);
         } else {
-            System.err.println("Không thể tải resource: " + path);
+            System.err.println("Error while loading " + path);
             return null;
         }
     }
