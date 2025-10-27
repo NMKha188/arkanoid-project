@@ -59,8 +59,8 @@ public class BrickSet {
                     if (!scanner.hasNextInt()) {
                         return;
                     }
-                    double x = j * Config.BRICK_WIDTH;
-                    double y = i * Config.BRICK_HEIGHT;
+                    double x = Config.EXTRA / 2 + j * Config.BRICK_WIDTH;
+                    double y = Config.EXTRA / 4 + i * Config.BRICK_HEIGHT;
                     int type = scanner.nextInt();
                     brickSet[i][j] = constructBrick(x, y, type);
                 }
