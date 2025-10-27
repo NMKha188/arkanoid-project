@@ -45,6 +45,9 @@ public class BrickSet {
             case 3:
                 newBrick = new UnbreakableBrick(x, y);
                 break;
+            case 4:
+                newBrick = new ResonanceBrick(x, y);
+                break;
             default:
         }
         return newBrick;

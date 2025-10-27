@@ -3,6 +3,7 @@ package arkanoid.source.code.gameplay;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.brick.Brick;
 import arkanoid.source.code.gameplay.brick.BrickSet;
+import arkanoid.source.code.gameplay.brick.ResonanceBrick;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import arkanoid.source.code.gameplay.powerup.ExplosiveBall;
 import arkanoid.source.code.graphic.Texture;
@@ -272,6 +273,8 @@ public class Ball implements GameObject {
                                 ExplosiveBall.explosiveDamage(brickSet, i, j - 1, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else {
+                                ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j - 1);
+                                ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
                                 leftBrick.getHit(1, powerUpList);
                                 currentBrick.getHit(1, powerUpList);
                             }
@@ -280,6 +283,8 @@ public class Ball implements GameObject {
                                 ExplosiveBall.explosiveDamage(brickSet, i, j + 1, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else {
+                                ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j + 1);
+                                ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
                                 rightBrick.getHit(1, powerUpList);
                                 currentBrick.getHit(1, powerUpList);
                             }
@@ -302,19 +307,21 @@ public class Ball implements GameObject {
                                 ExplosiveBall.explosiveDamage(brickSet, i - 1, j, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else {
+                                ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i - 1, j);
+                                ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
                                 topBrick.getHit(1, powerUpList);
                                 currentBrick.getHit(1, powerUpList);
                             }
                         } else if (bottomBrick != null && this.checkCollision(bottomBrick)) {
                             if (ExplosiveBall.isInExplosiveMode()) {
-                                ExplosiveBall.explosiveDamage(brickSet, i, j + 1, powerUpList);
+                                ExplosiveBall.explosiveDamage(brickSet, i + 1, j, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else {
+                                ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i + 1, j);
+                                ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
                                 bottomBrick.getHit(1, powerUpList);
                                 currentBrick.getHit(1, powerUpList);
                             }
-                            currentBrick.getHit(1, powerUpList);
-                            bottomBrick.getHit(1, powerUpList);
                         }
                         // change Vx and set new position
                         Vx = -Vx;
@@ -330,6 +337,7 @@ public class Ball implements GameObject {
                         if (ExplosiveBall.isInExplosiveMode()) {
                             ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                         } else {
+                            ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
                             currentBrick.getHit(1, powerUpList);
                         }
                         this.collideWithBrick(currentBrick);
