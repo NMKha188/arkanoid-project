@@ -1,16 +1,20 @@
 package arkanoid.source.code.gameplay;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gamecontroller.GameOverScreen;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 public class InGameStatus {
 
     private static int score = 0;
     private static int lives = 3;
+    private static Stage primaryStage;
 
     private static final Text scoreText = new Text("Score: " + score);
     private static final Text livesText  = new Text("Lives: " + lives);
@@ -59,13 +63,14 @@ public class InGameStatus {
         return lives;
     }
 
+    public static void setPrimaryStage(Stage stage) {
+        primaryStage = stage;
+    }
     public static void loseLife() {
         if (lives > 0) lives--;
         updateTexts();
         if (lives == 0) {
-            System.out.println("You lose");
-            System.out.println("Your final score: " + score);
-            System.exit(0);
+            showGameOverScene();
         }
     }
 
@@ -77,5 +82,26 @@ public class InGameStatus {
     private static void updateTexts() {
         scoreText.setText("Score: " + score);
         livesText.setText("Lives: " + lives);
+    }
+
+    public static void resetGame() {
+        score = 0;
+        lives = 3;
+        updateTexts();
+    }
+
+    private static void showGameOverScene() {
+        // Use Platform.runLater to ensure this runs on the JavaFX Application Thread
+        Platform.runLater(() -> {
+            if (primaryStage != null) {
+                System.out.println("Switching to game over scene...");
+                GameOverScreen.switchToGameOverScene(score, primaryStage);
+            } else {
+                System.out.println("You lose");
+                System.out.println("Your final score: " + score);
+                System.out.println("ERROR: primaryStage is null!");
+                System.exit(0);
+            }
+        });
     }
 }

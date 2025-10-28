@@ -11,15 +11,14 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arkanoid.source.code.SceneController">
+<AnchorPane xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arkanoid.source.code.gamecontroller.SceneController">
    <children>
       <ImageView fitHeight="640.0" fitWidth="560.0" pickOnBounds="true">
          <image>
             <Image url="@background.png" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" prefHeight="640" prefWidth="560" spacing="30">
+      <VBox alignment="CENTER" spacing="30">
       
           <padding>
               <Insets bottom="50" left="50" right="50" top="50" />

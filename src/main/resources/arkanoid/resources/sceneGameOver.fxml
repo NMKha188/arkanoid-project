@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="arkanoid.source.code.GameOverScreen">
+            fx:controller="arkanoid.source.code.gamecontroller.GameOverScreen">
     <children>
         <ImageView fitHeight="640.0" fitWidth="560.0" pickOnBounds="true">
             <image>

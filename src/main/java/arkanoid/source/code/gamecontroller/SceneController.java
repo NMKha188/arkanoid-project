@@ -19,6 +19,7 @@ public class SceneController {
     private Button exitButton;
 
     private static Stage primaryStage;
+
     @FXML
     public void initialize() {
         playButton.setOnAction(e -> startGame());
@@ -48,8 +49,7 @@ public class SceneController {
             currentStage.setResizable(false);
             currentStage.show();
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
