@@ -111,6 +111,7 @@ public class InGameLogic {
             public void handle(long now) {
                 paddle.update();
                 ball.update( paddle, brickSet, powerUpList);
+                brickSet.update();
                 powerUpList.update(paddle, ball, brickSet);
             }
         }.start();

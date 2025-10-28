@@ -48,6 +48,9 @@ public class BrickSet {
             case 4:
                 newBrick = new ResonanceBrick(x, y);
                 break;
+            case 5:
+                newBrick = new RegenerativeBrick(x, y);
+                break;
             default:
         }
         return newBrick;
@@ -73,6 +76,16 @@ public class BrickSet {
                 }
             }
             scanner.close();
+        }
+    }
+
+    public void update() {
+        for (int i = 0; i < BRICKS_ROW; i++) {
+            for (int j = 0; j < BRICKS_PER_ROW; j++) {
+                if (getOneBrickAt(i, j) instanceof RegenerativeBrick) {
+                    ((RegenerativeBrick) getOneBrickAt(i, j)).regenerate();
+                }
+            }
         }
     }
 }
