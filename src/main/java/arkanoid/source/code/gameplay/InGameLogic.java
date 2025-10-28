@@ -7,6 +7,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import arkanoid.source.code.graphic.Texture;
 
 public class InGameLogic {
     // Screen size
@@ -16,11 +17,11 @@ public class InGameLogic {
     private static boolean movingLeft = false;
     private static boolean movingRight = false;
     // paddle
-    private static final Paddle paddle = new Paddle();
+    private static Paddle paddle;
     // ball
-    private static final Ball ball = new Ball();
+    private static Ball ball;
     // brickSet
-    private static final BrickSet brickSet = new BrickSet();
+    private static BrickSet brickSet;
     String dataPath = "/arkanoid/resources/map1.txt";
     // power ups
     private static final PowerUpList powerUpList = new PowerUpList();
@@ -83,6 +84,11 @@ public class InGameLogic {
     }
 
     public Scene createGameScene(Stage primaryStage) {
+        Texture.loadTextures();
+        Texture.applyBackground(gameRoot);
+        paddle = new Paddle();
+        ball = new Ball();
+        brickSet = new BrickSet();
         brickSet.readData(dataPath);
 
         gameRoot.getChildren().add(paddle.getShape());
@@ -105,6 +111,7 @@ public class InGameLogic {
             public void handle(long now) {
                 paddle.update();
                 ball.update( paddle, brickSet, powerUpList);
+                brickSet.update();
                 powerUpList.update(paddle, ball, brickSet);
             }
         }.start();

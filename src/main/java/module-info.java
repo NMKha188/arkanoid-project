@@ -10,4 +10,6 @@ module arkanoid.source.code {
     exports arkanoid.source.code.gameplay.powerup;
     exports arkanoid.source.code.gameplay;
     exports arkanoid.source.code.gamecontroller;
+    exports arkanoid.source.code.graphic;
+    opens arkanoid.source.code.graphic to javafx.fxml;
 }

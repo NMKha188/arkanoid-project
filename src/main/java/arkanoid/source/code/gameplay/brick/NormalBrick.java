@@ -1,11 +1,11 @@
 package arkanoid.source.code.gameplay.brick;
 
-import javafx.scene.paint.Color;
+import arkanoid.source.code.graphic.Texture;
 
 public class NormalBrick extends Brick {
     public NormalBrick(double x, double y) {
         super(x, y);
-        shape.setFill(Color.RED);
-        hitPoints = 3;
+        hitPoints = 1;
+        Texture.applyTextureToBrick(shape, hitPoints);
     }
 }

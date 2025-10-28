@@ -21,6 +21,8 @@ public class Config {
     // 1 brick
     public static final double BRICK_WIDTH = GAMEPLAY_SCREEN_WIDTH / BRICKS_PER_ROW;
     public static final double BRICK_HEIGHT = BRICK_WIDTH / 2;
+    // regenerative brick
+    public static final long REGENERATIVE_TIME = 10;
 
     // power up
     public static final double POWER_UP_WIDTH = BRICK_WIDTH / 2;
