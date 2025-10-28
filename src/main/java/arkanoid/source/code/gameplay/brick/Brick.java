@@ -14,7 +14,6 @@ public abstract class Brick extends RectangleGameObject {
     // constructor
     public Brick(double x, double y) {
         super(x, y, Config.BRICK_WIDTH, Config.BRICK_HEIGHT);
-        shape.setStroke(Color.BLACK);
     }
 
     // getter setter BEGIN
