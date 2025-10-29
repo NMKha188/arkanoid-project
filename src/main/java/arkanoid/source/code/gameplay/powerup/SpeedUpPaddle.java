@@ -2,6 +2,7 @@ package arkanoid.source.code.gameplay.powerup;
 
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.GameObject;
+import arkanoid.source.code.graphic.Texture;
 import javafx.scene.paint.Color;
 import arkanoid.source.code.gameplay.Paddle;
 
@@ -12,7 +13,7 @@ public class SpeedUpPaddle extends PowerUp {
 
     public SpeedUpPaddle(double x, double y) {
         super(x, y, Config.SPEED_UP_PADDLE_PROBABILITY, Config.SPEED_UP_PADDLE_DURATION);
-        shape.setFill(Color.BLUE);
+        Texture.applyTextureToPowerUp(shape, Texture.PowerUpType.SPEED_UP);
     }
 
     public void applyEffect(GameObject o) {

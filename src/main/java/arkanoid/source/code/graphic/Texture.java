@@ -20,7 +20,14 @@ public class Texture {
     private static Image backgroundImage;
     private static Image paddleImage;
     private static Image ballImage;
-
+    private static Image expandPaddleImage;
+    private static Image speedUpPaddleImage;
+    private static Image explosiveBallImage;
+    public enum PowerUpType {
+        EXPAND,
+        SPEED_UP,
+        EXPLOSIVE
+    }
     private static Image[] brickImages = new Image[8];
 
     public static void loadTextures() {
@@ -37,6 +44,9 @@ public class Texture {
             brickImages[5] = loadImage("/arkanoid/resources/brick5.png");
             brickImages[6] = loadImage("/arkanoid/resources/brick6.png");
             brickImages[7] = loadImage("/arkanoid/resources/brick7.png");
+            expandPaddleImage = loadImage("/arkanoid/resources/powerup_expandpaddle.png");
+            speedUpPaddleImage = loadImage("/arkanoid/resources/powerup_speedpaddle.png");
+            explosiveBallImage = loadImage("/arkanoid/resources/powerup_explosiveball.png");
 
         } catch (Exception e) {
             System.err.println("Error loading textures resources");
@@ -82,6 +92,35 @@ public class Texture {
     public static void applyTextureToBrick(Rectangle brickShape, int index) {
         if (index > 0 && index < brickImages.length && brickImages[index] != null) {
             brickShape.setFill(new ImagePattern(brickImages[index]));
+        }
+    }
+    public static Image getExpandPaddleImage() {
+        return expandPaddleImage;
+    }
+
+    public static Image getSpeedUpPaddleImage() {
+        return speedUpPaddleImage;
+    }
+
+    public static Image getExplosiveBallImage() {
+        return explosiveBallImage;
+    }
+    public static void applyTextureToPowerUp(Rectangle powerUpShape, PowerUpType type) {
+        Image texture = null;
+
+        switch (type) {
+            case EXPAND:
+                texture = expandPaddleImage;
+                break;
+            case SPEED_UP:
+                texture = speedUpPaddleImage;
+                break;
+            case EXPLOSIVE:
+                texture = explosiveBallImage;
+                break;
+        }
+        if (texture != null) {
+            powerUpShape.setFill(new ImagePattern(texture));
         }
     }
 }

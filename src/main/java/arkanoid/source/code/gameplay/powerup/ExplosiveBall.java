@@ -4,6 +4,7 @@ import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.brick.Brick;
 import arkanoid.source.code.gameplay.brick.BrickSet;
+import arkanoid.source.code.graphic.Texture;
 import javafx.scene.paint.Color;
 
 public class ExplosiveBall extends PowerUp {
@@ -15,7 +16,7 @@ public class ExplosiveBall extends PowerUp {
     // constructor
     public ExplosiveBall(double x, double y) {
         super(x, y, Config.EXPLOSIVE_BALL_PROBABILITY, Config.EXPLOSIVE_BALL_DURATION);
-        shape.setFill(Color.PURPLE);
+        Texture.applyTextureToPowerUp(shape, Texture.PowerUpType.EXPLOSIVE);
     }
 
     // getter setter BEGIN
