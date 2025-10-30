@@ -28,15 +28,13 @@ public class Ball implements GameObject {
     private double Vy;
     private double maxVx = ballSpeed * 0.67;
     private double changeVx = 0.05;
-    // check if ball is released or sticks to the paddle
-    private boolean released;
     // Vx representative line while sticking to the paddle (GUI for player to know which way will the ball fly after being released)
     //private final Line velocityRepresentativeLine;
 
     public Ball() {
         shape = new Circle(BALL_RADIUS);
         Texture.applyTextureToBall(shape);
-        released = false;
+
         /*velocityRepresentativeLine = new Line();
         velocityRepresentativeLine.setStrokeWidth(5);
         velocityRepresentativeLine.setStroke(Color.NAVY);*/
@@ -46,8 +44,11 @@ public class Ball implements GameObject {
         this();
         this.x = other.x;
         this.y = other.y;
+        this.ballSpeed = other.ballSpeed;
         this.Vx = Vx;
         this.Vy = Vy;
+        this.maxVx = other.maxVx;
+        this.changeVx = other.changeVx;
     }
 
     // getter setter BEGIN
@@ -116,19 +117,6 @@ public class Ball implements GameObject {
     public void setChangeVx(double changeVx) {
         this.changeVx = changeVx;
     }
-
-    public boolean isReleased() {
-        return released;
-    }
-
-    public void setReleased(boolean released) {
-        this.released = released;
-    }
-    /*
-    public Line getVelocityRepresentativeLine() {
-        return velocityRepresentativeLine;
-    }
-    */
     // getter setter END
 
     public void addShapeToGameRoot() {
@@ -143,27 +131,6 @@ public class Ball implements GameObject {
     // check if ball has fallen to bottom
     public boolean isAtBottom() {
         return (y >= Config.EXTRA / 4 + InGameLogic.getGameplayScreenHeight() + BALL_RADIUS);
-    }
-
-    // update ball position: stick to the paddle; collide with the top, side walls; fall to the bottom -> reset; collide with paddle
-    public void update(Paddle paddle, BrickSet brickSet, PowerUpList powerUpList) {
-        // not released, stick to the paddle, initialize velocity
-        if (!released) {
-            this.initializeVelocity(paddle);
-        } else {
-            //velocityRepresentativeLine.setVisible(false);
-            //collide with top and side walls, fall to the bottom -> reset
-            this.collideWithWalls();
-            // Collide with the paddle
-            this.collideWithPaddle(paddle);
-            // collide with bricks
-            this.collideWithBrickSet(brickSet, powerUpList);
-            // position change
-            x += Vx;
-            y += Vy;
-        }
-        shape.setCenterX(x);
-        shape.setCenterY(y);
     }
 
     // stick to the paddle and initialize Vx Vy
@@ -215,15 +182,6 @@ public class Ball implements GameObject {
             y = Config.EXTRA / 4 + BALL_RADIUS + 1;
             shape.setCenterY(y);
         }
-        /*
-        // fall to the bottom -> reset
-        if (y >= Config.EXTRA / 4 + InGameLogic.getGameplayScreenHeight() + BALL_RADIUS) {
-            released = false;
-            Vx = 0;
-            //velocityRepresentativeLine.setVisible(true);
-            InGameStatus.loseLife();
-        }
-        */
     }
 
     // collide with paddle logic

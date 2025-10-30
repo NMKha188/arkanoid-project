@@ -69,11 +69,13 @@ public class BallList implements GameObject {
                     }
                 }
                 ball.collideWithPaddle(paddle);
+
                 ball.collideWithBrickSet(brickSet, powerUpList);
+
                 ball.setX(ball.getX() + ball.getVx());
                 ball.setY(ball.getY() + ball.getVy());
-                ballList.getFirst().getShape().setCenterX(ballList.getFirst().getX());
-                ballList.getFirst().getShape().setCenterY(ballList.getFirst().getY());
+                ball.getShape().setCenterX(ball.getX());
+                ball.getShape().setCenterY(ball.getY());
             }
         }
 
