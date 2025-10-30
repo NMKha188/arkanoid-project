@@ -12,7 +12,7 @@ public class RegenerativeBrick extends Brick {
 
     public RegenerativeBrick(double x, double y) {
         super(x, y);
-        hitPoints = 3;
+        hitPoints = Config.REGENERATIVE_BRICK_HP;
         Texture.applyTextureToBrick(shape, hitPoints);
         hitMoment = null;
     }

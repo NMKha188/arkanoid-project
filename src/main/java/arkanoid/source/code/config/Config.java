@@ -13,7 +13,7 @@ public class Config {
 
     // ball
     public static final double BALL_RADIUS = 10;
-    public static final double BALL_SPEED = 4.5;
+    public static final double BALL_SPEED = 4;
 
     // 1 set of bricks
     public static final int BRICKS_ROW = 10;
@@ -36,7 +36,7 @@ public class Config {
     public static final long REGENERATIVE_TIME = 10;
 
     // power up
-    public static final double POWER_UP_WIDTH = BRICK_WIDTH / 2;
+    public static final double POWER_UP_WIDTH = BRICK_WIDTH * 0.5;
     public static final double POWER_UP_HEIGHT = POWER_UP_WIDTH / 2;
     public static final double POWER_UP_FALLING_SPEED = 1;
     // power up: expand paddle
@@ -54,6 +54,8 @@ public class Config {
     // power up: explosive ball
     public static final int EXPLOSIVE_BALL_PROBABILITY = 49;
     public static final long EXPLOSIVE_BALL_DURATION = 5;
+    // power up: triple ball
+    public static final int TRIPLE_BALL_PROBABILITY = 49;
     // power up: life
     public static final int LIFE_PROBABILITY = 49;
 }

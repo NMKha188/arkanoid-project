@@ -26,7 +26,7 @@ public abstract class Brick extends RectangleGameObject {
     }
     // getter setter END
 
-    // brick has been destroyed by ball
+    // check if brick has been destroyed by ball
     public boolean isDestroyed() {
         return hitPoints <= 0;
     }
@@ -38,15 +38,15 @@ public abstract class Brick extends RectangleGameObject {
         }
         hitPoints -= hitPointsLoss;
         if (isDestroyed()) {
-            shape.setVisible(false);
+            this.removeShapeFromGameRoot();
             InGameStatus.setScore(InGameStatus.getScore() + 10);
             powerUpList.createPowerUp(this);
         } else {
-            Texture.applyTextureToBrick(this.shape, this.hitPoints);
+            Texture.applyTextureToBrick(shape, hitPoints);
         }
     }
 
     public void update() {
-        //blank
+        // none
     }
 }

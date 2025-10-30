@@ -69,9 +69,9 @@ public class InGameStatus {
         if (lives > 0) lives--;
         updateTexts();
         if (lives == 0) {
-            System.out.println("You lose");
+            /*System.out.println("You lose");
             System.out.println("Your final score: " + score);
-            System.exit(0);
+            System.exit(0);*/
         }
     }
 

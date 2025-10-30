@@ -1,11 +1,12 @@
 package arkanoid.source.code.gameplay.brick;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.InGameLogic;
 import java.io.InputStream;
 import java.util.Scanner;
 
-public class BrickSet {
+public class BrickSet implements GameObject {
     // number of rows and number of bricks each row
     private final int BRICKS_ROW = Config.BRICKS_ROW;
     private final int BRICKS_PER_ROW = Config.BRICKS_PER_ROW;
@@ -76,6 +77,26 @@ public class BrickSet {
                 }
             }
             scanner.close();
+        }
+    }
+
+    public void addShapeToGameRoot() {
+        for (int i = 0; i < BRICKS_ROW; i++) {
+            for (int j = 0; j < BRICKS_PER_ROW; j++) {
+                if (this.getOneBrickAt(i, j) != null) {
+                    this.getOneBrickAt(i, j).addShapeToGameRoot();
+                }
+            }
+        }
+    }
+
+    public void removeShapeFromGameRoot() {
+        for (int i = 0; i < BRICKS_ROW; i++) {
+            for (int j = 0; j < BRICKS_PER_ROW; j++) {
+                if (this.getOneBrickAt(i, j) != null) {
+                    this.getOneBrickAt(i, j).removeShapeFromGameRoot();
+                }
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-package arkanoid.source.code.gameplay;
+package arkanoid.source.code.gameplay.ball;
 
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.GameObject;
@@ -21,7 +21,7 @@ public class Ball implements GameObject {
     private double x;
     private double y;
     private final double BALL_RADIUS = Config.BALL_RADIUS;
-    private Circle shape;
+    private final Circle shape;
     // velocity
     private double ballSpeed = Config.BALL_SPEED;
     private double Vx;
@@ -31,15 +31,23 @@ public class Ball implements GameObject {
     // check if ball is released or sticks to the paddle
     private boolean released;
     // Vx representative line while sticking to the paddle (GUI for player to know which way will the ball fly after being released)
-    private Line velocityRepresentativeLine;
+    //private final Line velocityRepresentativeLine;
 
     public Ball() {
         shape = new Circle(BALL_RADIUS);
         Texture.applyTextureToBall(shape);
         released = false;
-        velocityRepresentativeLine = new Line();
+        /*velocityRepresentativeLine = new Line();
         velocityRepresentativeLine.setStrokeWidth(5);
-        velocityRepresentativeLine.setStroke(Color.NAVY);
+        velocityRepresentativeLine.setStroke(Color.NAVY);*/
+    }
+
+    public Ball(Ball other, double Vx, double Vy) {
+        this();
+        this.x = other.x;
+        this.y = other.y;
+        this.Vx = Vx;
+        this.Vy = Vy;
     }
 
     // getter setter BEGIN
@@ -109,26 +117,32 @@ public class Ball implements GameObject {
         this.changeVx = changeVx;
     }
 
-    public boolean getReleasedState() {
+    public boolean isReleased() {
         return released;
     }
 
-    public void setReleasedState(boolean released) {
+    public void setReleased(boolean released) {
         this.released = released;
     }
-
-    public Line getvelocityRepresentativeLine() {
+    /*
+    public Line getVelocityRepresentativeLine() {
         return velocityRepresentativeLine;
     }
+    */
     // getter setter END
 
     public void addShapeToGameRoot() {
         InGameLogic.getRoot().getChildren().add(shape);
-        InGameLogic.getRoot().getChildren().add(velocityRepresentativeLine);
+        //InGameLogic.getRoot().getChildren().add(velocityRepresentativeLine);
     }
 
     public void removeShapeFromGameRoot() {
         InGameLogic.getRoot().getChildren().remove(shape);
+    }
+
+    // check if ball has fallen to bottom
+    public boolean isAtBottom() {
+        return (y >= Config.EXTRA / 4 + InGameLogic.getGameplayScreenHeight() + BALL_RADIUS);
     }
 
     // update ball position: stick to the paddle; collide with the top, side walls; fall to the bottom -> reset; collide with paddle
@@ -137,7 +151,7 @@ public class Ball implements GameObject {
         if (!released) {
             this.initializeVelocity(paddle);
         } else {
-            velocityRepresentativeLine.setVisible(false);
+            //velocityRepresentativeLine.setVisible(false);
             //collide with top and side walls, fall to the bottom -> reset
             this.collideWithWalls();
             // Collide with the paddle
@@ -153,7 +167,7 @@ public class Ball implements GameObject {
     }
 
     // stick to the paddle and initialize Vx Vy
-    private void initializeVelocity(Paddle paddle) {
+    public void initializeVelocity(Paddle paddle) {
         // initialize Vx Vy
         if (Vx >= maxVx || Vx <= -maxVx) {
             changeVx = -changeVx;
@@ -166,10 +180,10 @@ public class Ball implements GameObject {
         y = paddle.getY() - BALL_RADIUS;
 
         // Vx representative line (GUI for player to know which way will the ball fly after being released)
-        velocityRepresentativeLine.setStartX(x);
+        /*velocityRepresentativeLine.setStartX(x);
         velocityRepresentativeLine.setStartY(y + BALL_RADIUS + paddle.getHeight() + 5);
         velocityRepresentativeLine.setEndX(x + Vx * ((paddle.getWidth() / 2) / maxVx));
-        velocityRepresentativeLine.setEndY(y + BALL_RADIUS + paddle.getHeight() + 5);
+        velocityRepresentativeLine.setEndY(y + BALL_RADIUS + paddle.getHeight() + 5);*/
     }
 
     // check collision with other Game Objects
@@ -183,7 +197,7 @@ public class Ball implements GameObject {
     }
 
     // collide with top and side walls, fall to the bottom -> reset logic
-    private void collideWithWalls() {
+    public void collideWithWalls() {
         // collide with the side walls
         if (x <= Config.EXTRA / 2 + BALL_RADIUS || x >= Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - BALL_RADIUS) {
             Vx = -Vx;
@@ -201,18 +215,19 @@ public class Ball implements GameObject {
             y = Config.EXTRA / 4 + BALL_RADIUS + 1;
             shape.setCenterY(y);
         }
-
+        /*
         // fall to the bottom -> reset
         if (y >= Config.EXTRA / 4 + InGameLogic.getGameplayScreenHeight() + BALL_RADIUS) {
             released = false;
             Vx = 0;
-            velocityRepresentativeLine.setVisible(true);
+            //velocityRepresentativeLine.setVisible(true);
             InGameStatus.loseLife();
         }
+        */
     }
 
     // collide with paddle logic
-    private void collideWithPaddle(Paddle paddle) {
+    public void collideWithPaddle(Paddle paddle) {
         if (this.checkCollision(paddle)) {
             // collide with the top surface of the paddle
             if (paddle.getX() <= x && x <= paddle.getX() + paddle.getWidth()) {
@@ -257,7 +272,7 @@ public class Ball implements GameObject {
     }
 
     // collide with brick set
-    private void collideWithBrickSet(BrickSet brickSet, PowerUpList powerUpList) {
+    public void collideWithBrickSet(BrickSet brickSet, PowerUpList powerUpList) {
         for (int i = 0; i < brickSet.getBricksRow(); i++) {
             for (int j = 0; j < brickSet.getBricksPerRow(); j++) {
                 Brick currentBrick = brickSet.getOneBrickAt(i, j);

@@ -1,8 +1,9 @@
 package arkanoid.source.code.gameplay.powerup;
 
 import arkanoid.source.code.config.Config;
-import arkanoid.source.code.gameplay.Ball;
+import arkanoid.source.code.gameplay.ball.Ball;
 import arkanoid.source.code.gameplay.GameObject;
+import arkanoid.source.code.gameplay.ball.BallList;
 import javafx.scene.paint.Color;
 
 public class SlowBall extends PowerUp {
@@ -19,12 +20,15 @@ public class SlowBall extends PowerUp {
         if (!alreadyApplyEffect) {
             alreadyApplyEffect = true;
             alreadyRemoveEffect = false;
-            Ball ball = (Ball) o;
-            ball.setBallSpeed(ball.getBallSpeed() * SLOW_RATIO);
-            ball.setVx(ball.getVx() * SLOW_RATIO);
-            ball.setVy(ball.getVy() * SLOW_RATIO);
-            ball.setMaxVx(ball.getMaxVx() * SLOW_RATIO);
-            ball.setChangeVx(ball.getChangeVx() * SLOW_RATIO);
+
+            BallList ballList = (BallList) o;
+            for (Ball ball :  ballList.getBallList()) {
+                ball.setBallSpeed(ball.getBallSpeed() * SLOW_RATIO);
+                ball.setVx(ball.getVx() * SLOW_RATIO);
+                ball.setVy(ball.getVy() * SLOW_RATIO);
+                ball.setMaxVx(ball.getMaxVx() * SLOW_RATIO);
+                ball.setChangeVx(ball.getChangeVx() * SLOW_RATIO);
+            }
         }
     }
 
@@ -32,12 +36,15 @@ public class SlowBall extends PowerUp {
         if (!alreadyRemoveEffect) {
             alreadyApplyEffect = false;
             alreadyRemoveEffect = true;
-            Ball ball = (Ball) o;
-            ball.setBallSpeed(ball.getBallSpeed() / SLOW_RATIO);
-            ball.setVx(ball.getVx() / SLOW_RATIO);
-            ball.setVy(ball.getVy() / SLOW_RATIO);
-            ball.setMaxVx(ball.getMaxVx() / SLOW_RATIO);
-            ball.setChangeVx(ball.getChangeVx() / SLOW_RATIO);
+
+            BallList ballList = (BallList) o;
+            for (Ball ball :  ballList.getBallList()) {
+                ball.setBallSpeed(ball.getBallSpeed() / SLOW_RATIO);
+                ball.setVx(ball.getVx() / SLOW_RATIO);
+                ball.setVy(ball.getVy() / SLOW_RATIO);
+                ball.setMaxVx(ball.getMaxVx() / SLOW_RATIO);
+                ball.setChangeVx(ball.getChangeVx() / SLOW_RATIO);
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.brick.Brick;
 import arkanoid.source.code.gameplay.brick.BrickSet;
+import arkanoid.source.code.gameplay.brick.ResonanceBrick;
 import javafx.scene.paint.Color;
 
 public class ExplosiveBall extends PowerUp {
@@ -36,6 +37,7 @@ public class ExplosiveBall extends PowerUp {
             if (brick == null || brick.isDestroyed()) {
                 continue;
             }
+            ResonanceBrick.resonanceHit(1, powerUpList, brickSet, iTemporary, jTemporary);
             if (t == 0) {
                 brick.getHit(3, powerUpList);
             } else if (t <= 4) {
