@@ -1,6 +1,7 @@
 package arkanoid.source.code.gameplay;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gamecontroller.GameEngine;
 import arkanoid.source.code.gamecontroller.GameOverScreen;
 import javafx.application.Platform;
 import javafx.scene.Group;

@@ -49,12 +49,14 @@ public class InGameLogic {
     public static Pane getRoot() {
         return gameRoot;
     }
+
     // getter setter END
+    private static AnimationTimer gameTimer;
 
     private void handleKeyInput() {
         // handle key press
         gameScene.setOnKeyPressed(event -> {
-            switch(event.getCode()) {
+            switch (event.getCode()) {
                 case LEFT:
                     movingLeft = true;
                     break;
@@ -68,7 +70,7 @@ public class InGameLogic {
 
         // Handle key release
         gameScene.setOnKeyReleased(event -> {
-            switch(event.getCode()) {
+            switch (event.getCode()) {
                 case LEFT:
                     movingLeft = false;
                     break;
@@ -104,18 +106,28 @@ public class InGameLogic {
         gameRoot.getChildren().add(InGameStatus.getGroup());
 
         this.handleKeyInput();
-
+        if (gameTimer != null) {
+            gameTimer.stop();
+        }
         // animation control
-        new AnimationTimer() {
+        gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 paddle.update();
-                ball.update( paddle, brickSet, powerUpList);
+                ball.update(paddle, brickSet, powerUpList);
                 brickSet.update();
                 powerUpList.update(paddle, ball, brickSet);
             }
-        }.start();
+        };
 
+        gameTimer.start();
         return gameScene;
+    }
+
+    public static void stopGame() {
+        if (gameTimer != null) {
+            gameTimer.stop();
+            gameTimer = null;
+        }
     }
 }

@@ -30,11 +30,17 @@ public class GameEngine extends Application {
         primaryStage.setResizable(false);
 
         primaryStage.setOnCloseRequest(e -> {
+            System.out.println("Closing game...");
             Platform.exit();
             System.exit(0);
         });
 
         primaryStage.show();
+    }
+
+    public static void clearPane() {
+        InGameLogic.stopGame();
+        InGameLogic.getRoot().getChildren().clear();
     }
 
     public static void main(String[] args) {

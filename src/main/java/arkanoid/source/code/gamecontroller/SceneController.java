@@ -18,20 +18,20 @@ public class SceneController {
     @FXML
     private Button exitButton;
 
-    private static Stage primaryStage;
+//    private static Stage primaryStage;
 
     @FXML
     public void initialize() {
-        playButton.setOnAction(e -> startGame());
+        playButton.setOnAction(e -> {
+            GameEngine.clearPane();
+            startGame();
+        });
         exitButton.setOnAction(e -> {
+            System.out.println("Closing game...");
             Platform.exit();
             System.exit(0);
         });
 
-    }
-
-    public static void setPrimaryStage(Stage stage) {
-        primaryStage = stage;
     }
 
     private void startGame() {
@@ -63,9 +63,4 @@ public class SceneController {
             e.printStackTrace();
         }
     }
-
-    private static Stage getActiveStage() {
-        return primaryStage;
-    }
-
 }

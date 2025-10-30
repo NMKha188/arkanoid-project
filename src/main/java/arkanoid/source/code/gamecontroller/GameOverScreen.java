@@ -31,6 +31,7 @@ public class GameOverScreen {
     private void initialize() {
         mainMenuButton.setOnAction(e -> switchToMainMenu());
         exitButton.setOnAction(e -> {
+            System.out.println("Closing game...");
             Platform.exit();
             System.exit(0);
         });
@@ -59,13 +60,8 @@ public class GameOverScreen {
         }
     }
 
-    private static Stage getActiveStage() {
-        return primaryStage;
-    }
-
     public static void switchToGameOverScene(int finalScore, Stage stage) {
         try {
-            System.out.println("Closing game...");
             java.net.URL resourceUrl = GameOverScreen.class.getResource("/arkanoid/resources/sceneGameOver.fxml");
             FXMLLoader loader = new FXMLLoader(resourceUrl);
             Scene gameOverScene = new Scene(loader.load(), InGameLogic.getGameplayScreenWidth() + Config.EXTRA, InGameLogic.getGameplayScreenHeight() + Config.EXTRA / 2);
