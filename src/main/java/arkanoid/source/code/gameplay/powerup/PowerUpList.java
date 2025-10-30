@@ -23,8 +23,8 @@ public class PowerUpList {
 
     // create power up based on probability when a brick is destroyed : Associated with brick, this method is called in getHit() method of Brick
     public void createPowerUp(Brick brick) {
-        double x = brick.getX() + Config.BRICK_WIDTH / 4;
-        double y = brick.getY() + Config.BRICK_HEIGHT / 4;
+        double x = brick.getX() + Config.BRICK_WIDTH * 0.05;
+        double y = brick.getY() + Config.BRICK_HEIGHT * 0.05;
 
         switch ((int) (Math.random() * 3)) {
             case 0:

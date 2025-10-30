@@ -20,11 +20,15 @@ public abstract class PowerUp extends RectangleGameObject {
     protected Instant effectStartTime;
 
     // constructor
-    public PowerUp(double x, double y, int probability, long duration) {
+    public PowerUp(double x, double y, int probability) {
         super(x, y, Config.POWER_UP_WIDTH, Config.POWER_UP_HEIGHT);
         this.probability = probability;
-        this.duration = duration;
         this.effectStartTime = null;
+    }
+
+    public PowerUp(double x, double y, int probability, long duration) {
+        this(x, y, probability);
+        this.duration = duration;
     }
 
     // getter setter BEGIN
@@ -65,7 +69,7 @@ public abstract class PowerUp extends RectangleGameObject {
     public void caughtByPaddle(Paddle paddle) {
         if (effectStartTime == null && Shape.intersect(shape, paddle.getShape()).getBoundsInLocal().getHeight() > 0) {
             effectStartTime = Instant.now();
-            shape.setVisible(false);
+            this.removeShapeFromRoot();
         }
     }
 

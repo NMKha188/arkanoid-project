@@ -59,6 +59,12 @@ public class InGameStatus {
         return lives;
     }
 
+    public static void recoverLife() {
+        System.out.println("recover life");
+        lives++;
+        updateTexts();;
+    }
+
     public static void loseLife() {
         if (lives > 0) lives--;
         updateTexts();

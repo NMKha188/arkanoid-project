@@ -18,10 +18,21 @@ public class Config {
     // 1 set of bricks
     public static final int BRICKS_ROW = 10;
     public static final int BRICKS_PER_ROW = 12;
+    // brick set data path
+    public static final String MAP1_DATA_PATH = "/arkanoid/resources/map1.txt";
     // 1 brick
     public static final double BRICK_WIDTH = GAMEPLAY_SCREEN_WIDTH / BRICKS_PER_ROW;
     public static final double BRICK_HEIGHT = BRICK_WIDTH / 2;
+    // normal brick
+    public static final int NORMAL_BRICK_HP = 1;
+    // hard brick
+    public static final int HARD_BRICK_HP = 5;
+    // unbreakable brick
+    //
+    // resonance brick
+    //
     // regenerative brick
+    public static final int REGENERATIVE_BRICK_HP = 3;
     public static final long REGENERATIVE_TIME = 10;
 
     // power up
@@ -36,7 +47,13 @@ public class Config {
     public static final int SPEED_UP_PADDLE_PROBABILITY = 49;
     public static final long SPEED_UP_PADDLE_DURATION = 10;
     public static final double SPEED_UP_RATIO = 1.5;
+    // power up: slow ball
+    public static final int SLOW_BALL_PROBABILITY = 49;
+    public static final long SLOW_BALL_DURATION = 10;
+    public static final double SLOW_RATIO = 0.67;
     // power up: explosive ball
     public static final int EXPLOSIVE_BALL_PROBABILITY = 49;
     public static final long EXPLOSIVE_BALL_DURATION = 5;
+    // power up: life
+    public static final int LIFE_PROBABILITY = 49;
 }
