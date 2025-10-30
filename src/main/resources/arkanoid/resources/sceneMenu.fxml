@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arkanoid.source.code.gamecontroller.SceneController">
+<AnchorPane fx:id="rootPane" prefHeight="746.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arkanoid.source.code.gamecontroller.SceneController">
     <children>
-        <!-- Background Image - Will be sized programmatically -->
-        <ImageView fx:id="backgroundImage" pickOnBounds="true" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+        <!-- Background Image -->
+        <ImageView fx:id="backgroundImage" fitHeight="${rootPane.height}" fitWidth="${rootPane.width}" pickOnBounds="true" preserveRatio="false" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
             <image>
                 <Image url="@background.png" />
             </image>
@@ -23,12 +23,12 @@
                 <Insets bottom="50" left="50" right="50" top="50" />
             </padding>
             <VBox alignment="CENTER" prefHeight="200.0" spacing="10">
-                <ImageView fitHeight="160.0" fitWidth="547.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@Arkanoid-logo.png" />
-                    </image>
-                </ImageView>
-                <Label text="Classic Arcade Game" textFill="#ecf0f1">
+            <ImageView fitHeight="150.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Arkanoid-logo.png" />
+               </image>
+            </ImageView>
+                <Label text="Classic Arcade Game" textFill="WHITE">
                     <font>
                         <Font name="System Italic" size="36.0" />
                     </font>
@@ -40,20 +40,20 @@
 
             <!-- Menu Buttons -->
             <VBox alignment="CENTER" spacing="15">
-                <Button fx:id="playButton" focusTraversable="false" prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: #27ae60; -fx-background-radius: 50;" text="PLAY GAME" textFill="WHITE">
+                <Button fx:id="playButton" focusTraversable="false" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #e8db60; -fx-background-radius: 40;" text="PLAY GAME" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="22.0" />
+                        <Font name="System Bold" size="30.0" />
                     </font>
                 </Button>
 
-                <Button fx:id="exitButton" focusTraversable="false" prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: #e74c3c; -fx-background-radius: 2505;" text="EXIT" textFill="WHITE">
+                <Button fx:id="exitButton" focusTraversable="false" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #d72922; -fx-background-radius: 40;" text="EXIT" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="22.0" />
+                        <Font name="System Bold" size="30.0" />
                     </font>
                 </Button>
-                <Button focusTraversable="false" prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: #ffffff; -fx-background-radius: 50;" text="INSTRUCTIONS">
+                <Button focusTraversable="false" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #ffffff; -fx-background-radius: 40;" text="INSTRUCTIONS">
                     <font>
-                        <Font name="System Bold" size="22.0" />
+                        <Font name="System Bold" size="30.0" />
                     </font>
                 </Button>
             </VBox>
