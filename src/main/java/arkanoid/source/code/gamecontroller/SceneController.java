@@ -23,7 +23,7 @@ public class SceneController {
     @FXML
     public void initialize() {
         playButton.setOnAction(e -> {
-            GameEngine.clearPane();
+//            GameEngine.clearPane();
             startGame();
         });
         exitButton.setOnAction(e -> {

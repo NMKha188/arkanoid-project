@@ -38,10 +38,10 @@ public class GameEngine extends Application {
         primaryStage.show();
     }
 
-    public static void clearPane() {
-        InGameLogic.stopGame();
-        InGameLogic.getRoot().getChildren().clear();
-    }
+//    public static void clearPane() {
+////        InGameLogic.stopGame();
+//        InGameLogic.getRoot().getChildren().clear();
+//    }
 
     public static void main(String[] args) {
         launch(args);
