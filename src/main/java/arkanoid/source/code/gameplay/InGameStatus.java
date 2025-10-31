@@ -18,18 +18,18 @@ public class InGameStatus {
     private static Stage primaryStage;
 
     private static final Text scoreText = new Text("Score: " + score);
-    private static final Text livesText  = new Text("Lives: " + lives);
+    private static final Text livesText = new Text("Lives: " + lives);
 
-    private static final Rectangle topRec = new Rectangle(0,0,Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA,Config.BRICK_HEIGHT*2);
-    private static final Rectangle downRec = new Rectangle(0,Config.GAMEPLAY_SCREEN_HEIGHT+Config.EXTRA/2-Config.BRICK_HEIGHT*2,Config.GAMEPLAY_SCREEN_WIDTH+ Config.EXTRA,Config.BRICK_HEIGHT*2);
-    private static final Rectangle leftRec = new Rectangle(0,0,Config.BRICK_WIDTH*(Config.EXTRA/(2*Config.BRICK_WIDTH)),Config.GAMEPLAY_SCREEN_HEIGHT+Config.EXTRA/2);
-    private static final Rectangle rightRec = new Rectangle(Config.GAMEPLAY_SCREEN_WIDTH+Config.EXTRA-Config.BRICK_WIDTH*(Config.EXTRA/(2*Config.BRICK_WIDTH)),0,Config.BRICK_WIDTH*(Config.EXTRA/(2*Config.BRICK_WIDTH)),Config.GAMEPLAY_SCREEN_HEIGHT+Config.EXTRA/2);
+    private static final Rectangle topRec = new Rectangle(0, 0, Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA, Config.BRICK_HEIGHT * 2);
+    private static final Rectangle downRec = new Rectangle(0, Config.GAMEPLAY_SCREEN_HEIGHT + Config.EXTRA / 2 - Config.BRICK_HEIGHT * 2, Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA, Config.BRICK_HEIGHT * 2);
+    private static final Rectangle leftRec = new Rectangle(0, 0, Config.BRICK_WIDTH * (Config.EXTRA / (2 * Config.BRICK_WIDTH)), Config.GAMEPLAY_SCREEN_HEIGHT + Config.EXTRA / 2);
+    private static final Rectangle rightRec = new Rectangle(Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA - Config.BRICK_WIDTH * (Config.EXTRA / (2 * Config.BRICK_WIDTH)), 0, Config.BRICK_WIDTH * (Config.EXTRA / (2 * Config.BRICK_WIDTH)), Config.GAMEPLAY_SCREEN_HEIGHT + Config.EXTRA / 2);
 
     private static final Group group = new Group(topRec, downRec, leftRec, rightRec, scoreText, livesText);
 
-    private static final double SCORE_X = Config.BRICK_WIDTH*((Config.EXTRA/(2*Config.BRICK_WIDTH))+2);
+    private static final double SCORE_X = Config.BRICK_WIDTH * ((Config.EXTRA / (2 * Config.BRICK_WIDTH)) + 2);
     private static final double SCORE_Y = Config.BRICK_HEIGHT;
-    private static final double LIVES_X = Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA - SCORE_X - Config.BRICK_WIDTH*2;
+    private static final double LIVES_X = Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA - SCORE_X - Config.BRICK_WIDTH * 2;
     private static final double LIVES_Y = Config.BRICK_HEIGHT;
 
     static {
@@ -67,11 +67,14 @@ public class InGameStatus {
     public static void setPrimaryStage(Stage stage) {
         primaryStage = stage;
     }
+
     public static void recoverLife() {
         System.out.println("recover life");
         lives++;
-        updateTexts();;
+        updateTexts();
+        ;
     }
+
     public static void loseLife() {
         if (lives > 0) lives--;
         updateTexts();
@@ -110,6 +113,7 @@ public class InGameStatus {
             }
         });
     }
+
     public static void addGroupToGameRoot() {
         InGameLogic.getRoot().getChildren().add(InGameStatus.getGroup());
     }

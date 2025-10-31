@@ -39,7 +39,7 @@ public class GameEngine extends Application {
     }
 
 //    public static void clearPane() {
-////        InGameLogic.stopGame();
+//        InGameLogic.stopGame();
 //        InGameLogic.getRoot().getChildren().clear();
 //    }
 
