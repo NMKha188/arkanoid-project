@@ -20,10 +20,10 @@ public class InGameStatus {
     private static final Text scoreText = new Text("Score: " + score);
     private static final Text livesText = new Text("Lives: " + lives);
 
-    private static final Rectangle topRec = new Rectangle(0, 0, Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA, Config.BRICK_HEIGHT * 2);
-    private static final Rectangle downRec = new Rectangle(0, Config.GAMEPLAY_SCREEN_HEIGHT + Config.EXTRA / 2 - Config.BRICK_HEIGHT * 2, Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA, Config.BRICK_HEIGHT * 2);
-    private static final Rectangle leftRec = new Rectangle(0, 0, Config.BRICK_WIDTH * (Config.EXTRA / (2 * Config.BRICK_WIDTH)), Config.GAMEPLAY_SCREEN_HEIGHT + Config.EXTRA / 2);
-    private static final Rectangle rightRec = new Rectangle(Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA - Config.BRICK_WIDTH * (Config.EXTRA / (2 * Config.BRICK_WIDTH)), 0, Config.BRICK_WIDTH * (Config.EXTRA / (2 * Config.BRICK_WIDTH)), Config.GAMEPLAY_SCREEN_HEIGHT + Config.EXTRA / 2);
+    private static final Rectangle topRec = new Rectangle(0, 0, Config.EXTRA +  Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4);
+    private static final Rectangle downRec = new Rectangle(0, Config.EXTRA / 4 + Config.GAMEPLAY_SCREEN_HEIGHT, Config.EXTRA + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4);
+    private static final Rectangle leftRec = new Rectangle(0, Config.EXTRA / 4, Config.EXTRA / 2, Config.GAMEPLAY_SCREEN_HEIGHT);
+    private static final Rectangle rightRec = new Rectangle(Config.EXTRA / 2 + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4, Config.EXTRA / 2, Config.GAMEPLAY_SCREEN_HEIGHT);
 
     private static final Group group = new Group(topRec, downRec, leftRec, rightRec, scoreText, livesText);
 
