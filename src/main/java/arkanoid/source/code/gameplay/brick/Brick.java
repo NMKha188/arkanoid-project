@@ -8,15 +8,12 @@ import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import javafx.scene.paint.Color;
 
 public abstract class Brick extends RectangleGameObject {
-    // brick HP
     protected int hitPoints;
 
-    // constructor
     public Brick(double x, double y) {
         super(x, y, Config.BRICK_WIDTH, Config.BRICK_HEIGHT);
     }
 
-    // getter setter BEGIN
     public int getHitPoints() {
         return hitPoints;
     }
@@ -24,9 +21,7 @@ public abstract class Brick extends RectangleGameObject {
     public void setHitPoints(int hitPoints) {
         this.hitPoints = hitPoints;
     }
-    // getter setter END
 
-    // brick has been destroyed by ball
     public boolean isDestroyed() {
         return hitPoints <= 0;
     }
@@ -38,15 +33,43 @@ public abstract class Brick extends RectangleGameObject {
         }
         hitPoints -= hitPointsLoss;
         if (isDestroyed()) {
-            shape.setVisible(false);
+            this.removeShapeFromGameRoot();
             InGameStatus.setScore(InGameStatus.getScore() + 10);
             powerUpList.createPowerUp(this);
         } else {
-            Texture.applyTextureToBrick(this.shape, this.hitPoints);
+            Texture.applyTextureToBrick(shape, hitPoints);
         }
     }
 
     public void update() {
-        //blank
+    }
+
+    // reset HP
+    public void reset() {
+        switch (this) {
+            case NormalBrick normalBrick -> {
+                hitPoints = Config.NORMAL_BRICK_HP;
+                Texture.applyTextureToBrick(shape, hitPoints);
+            }
+            case HardBrick hardBrick -> {
+                hitPoints = Config.HARD_BRICK_HP;
+                Texture.applyTextureToBrick(shape, hitPoints);
+            }
+            case RegenerativeBrick regenerativeBrick -> {
+                hitPoints = Config.REGENERATIVE_BRICK_HP;
+                Texture.applyTextureToBrick(shape, hitPoints);
+                regenerativeBrick.setHitMoment(null);
+            }
+            case UnbreakableBrick unbreakableBrick -> {
+                hitPoints = Integer.MAX_VALUE;
+                Texture.applyTextureToBrick(shape, 6);
+            }
+            case ResonanceBrick resonanceBrick -> {
+                hitPoints = 1;
+                Texture.applyTextureToBrick(shape, 7);
+            }
+            default -> {
+            }
+        }
     }
 }

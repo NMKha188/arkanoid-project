@@ -5,12 +5,13 @@ import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.graphic.Texture;
 import javafx.scene.paint.Color;
 import arkanoid.source.code.gameplay.InGameLogic;
-import arkanoid.source.code.gameplay.Paddle;
+import arkanoid.source.code.gameplay.paddle.Paddle;
 
 public class ExpandPaddle extends PowerUp {
-    private static boolean alreadyApplyEffect = false;
-    private static boolean alreadyRemoveEffect = false;
-    private final double EXPANDED_RATIO = Config.EXPAND_PADDLE_EXPANDED_RATIO;
+    private static boolean alreadyApplyEffect = false; // prevent over applying effect
+    private static boolean alreadyRemoveEffect = false; // prevent over removing effect
+
+    private final double EXPANDED_RATIO = Config.EXPAND_PADDLE_EXPANDED_RATIO; // expand ratio
 
     public ExpandPaddle(double x, double y) {
         super(x, y, Config.EXPAND_PADDLE_PROBABILITY, Config.EXPAND_PADDLE_DURATION);
