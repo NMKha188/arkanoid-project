@@ -1,13 +1,13 @@
-package arkanoid.source.code.gameplay;
+package arkanoid.source.code.gameplay.paddle;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gameplay.InGameLogic;
+import arkanoid.source.code.gameplay.RectangleGameObject;
 import arkanoid.source.code.graphic.Texture;
 
 public class Paddle extends RectangleGameObject {
-    // paddle speed
     private double paddleSpeed = Config.PADDLE_SPEED;
 
-    // constructor
     public Paddle() {
         super(
                 Config.EXTRA / 2 + (InGameLogic.getGameplayScreenWidth() - Config.PADDLE_WIDTH) / 2,
@@ -18,7 +18,6 @@ public class Paddle extends RectangleGameObject {
         Texture.applyTextureToPaddle(shape);
     }
 
-    // getter setter BEGIN
     public double getSpeed() {
         return paddleSpeed;
     }
@@ -26,7 +25,6 @@ public class Paddle extends RectangleGameObject {
     public void setPaddleSpeed(double paddleSpeed) {
         this.paddleSpeed = paddleSpeed;
     }
-    // getter setter END
 
     // update paddle position based on key press
     public void update() {
@@ -36,5 +34,10 @@ public class Paddle extends RectangleGameObject {
             x += paddleSpeed;
         }
         shape.setX(x);
+    }
+
+    public void reset() {
+        x = Config.EXTRA / 2 + (InGameLogic.getGameplayScreenWidth() - Config.PADDLE_WIDTH) / 2;
+        y = Config.EXTRA / 4 + InGameLogic.getGameplayScreenHeight() - 30;
     }
 }

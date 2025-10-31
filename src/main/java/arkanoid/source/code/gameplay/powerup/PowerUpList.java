@@ -1,15 +1,25 @@
 package arkanoid.source.code.gameplay.powerup;
 
+import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.config.Config;
-import arkanoid.source.code.gameplay.Paddle;
+import arkanoid.source.code.gameplay.paddle.Paddle;
 import arkanoid.source.code.gameplay.brick.Brick;
 import arkanoid.source.code.gameplay.brick.BrickSet;
 
 import java.util.ArrayList;
 
-public class PowerUpList {
+public class PowerUpList implements GameObject {
     private final ArrayList<PowerUp> powerUpList = new ArrayList<>();
+
+    public void addShapeToGameRoot() {
+    }
+
+    public void removeShapeFromGameRoot() {
+        for (PowerUp powerUp : powerUpList) {
+            powerUp.removeShapeFromRoot();
+        }
+    }
 
     private void addPowerUpToList(PowerUp powerUp) {
         powerUpList.add(powerUp);
@@ -27,52 +37,57 @@ public class PowerUpList {
         double y = brick.getY() + (brick.getHeight() - Config.POWER_UP_HEIGHT) / 2;
 
         switch ((int) (Math.random() * 6)) {
-            case 0:
+            case 0 -> {
                 // expand paddle
                 if ((int) (Math.random() * 100) <= Config.EXPAND_PADDLE_PROBABILITY) {
                     PowerUp expandPaddle = new ExpandPaddle(x, y);
                     this.addPowerUpToList(expandPaddle);
                 }
-                break;
-            case 1:
+            }
+            case 1 -> {
                 // speed up paddle
                 if ((int) (Math.random() * 100) <= Config.SPEED_UP_PADDLE_PROBABILITY) {
                     PowerUp speedUpPaddle = new SpeedUpPaddle(x, y);
                     this.addPowerUpToList(speedUpPaddle);
                 }
-                break;
-            case 2:
+            }
+            case 2 -> {
                 // slow ball
                 if ((int) (Math.random() * 100) <= Config.SLOW_BALL_PROBABILITY) {
                     PowerUp slowBall = new SlowBall(x, y);
                     this.addPowerUpToList(slowBall);
                 }
-                break;
-            case 3:
+            }
+            case 3 -> {
                 // explosive ball
                 if ((int) (Math.random() * 100) <= Config.EXPLOSIVE_BALL_PROBABILITY) {
                     PowerUp explosiveBall = new ExplosiveBall(x, y);
                     this.addPowerUpToList(explosiveBall);
                 }
-                break;
-            case 4:
+            }
+            case 4 -> {
                 // triple ball
                 if ((int) (Math.random() * 100) <= Config.TRIPLE_BALL_PROBABILITY) {
                     PowerUp tripleBall = new TripleBall(x, y);
                     this.addPowerUpToList(tripleBall);
                 }
-                break;
-            case 5:
+            }
+            case 5 -> {
                 // life
-                if ((int) (Math.random() * 100) <= Config.LIFE_PROBABILITY) {
-                    PowerUp life = new Life(x, y);
-                    this.addPowerUpToList(life);
+                if ((int) (Math.random() * 100) <= Config.LIVE_PROBABILITY) {
+                    PowerUp live = new Live(x, y);
+                    this.addPowerUpToList(live);
                 }
-                break;
-            default:
+            }
+            default -> {
+            }
         }
     }
 
+    public void update() {
+    }
+
+    // update all power up state
     public void update(Paddle paddle, BallList ballList, BrickSet brickSet) {
         for (int i = 0; i < powerUpList.size(); i++) {
             PowerUp powerUp = powerUpList.get(i);
@@ -85,7 +100,7 @@ public class PowerUpList {
                 this.removePowerUpFromList(i--);
             }
 
-            if (powerUp.getEffectStartTime() != null && (powerUp instanceof Life || powerUp instanceof TripleBall)) {
+            if (powerUp.getEffectStartTime() != null && (powerUp instanceof Live || powerUp instanceof TripleBall)) {
                 powerUp.applyEffect(ballList);
                 this.removePowerUpFromList(i--);
             } else {
@@ -109,5 +124,24 @@ public class PowerUpList {
                 }
             }
         }
+    }
+
+    public void reset() {
+    }
+
+    // remove all power up effect, clear all power up
+    public void reset(Paddle paddle, BallList ballList) {
+        for (PowerUp powerUp : powerUpList) {
+            if (powerUp.onDuration()) {
+                if (powerUp instanceof ExpandPaddle || powerUp instanceof SpeedUpPaddle) {
+                    powerUp.removeEffect(paddle);
+                }
+                if (powerUp instanceof SlowBall || powerUp instanceof ExplosiveBall) {
+                    powerUp.removeEffect(ballList);
+                }
+            }
+        }
+        this.removeShapeFromGameRoot();
+        powerUpList.clear();
     }
 }

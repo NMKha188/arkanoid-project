@@ -5,9 +5,9 @@ import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.InGameStatus;
 import javafx.scene.paint.Color;
 
-public class Life extends PowerUp {
-    public Life(double x, double y) {
-        super(x, y, Config.LIFE_PROBABILITY);
+public class Live extends PowerUp {
+    public Live(double x, double y) {
+        super(x, y, Config.LIVE_PROBABILITY);
         shape.setFill(Color.PINK);
     }
 
@@ -16,6 +16,5 @@ public class Life extends PowerUp {
     }
 
     public void removeEffect(GameObject o) {
-        // none
     }
 }

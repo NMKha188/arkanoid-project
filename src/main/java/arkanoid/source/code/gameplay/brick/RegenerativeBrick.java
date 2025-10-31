@@ -7,8 +7,8 @@ import java.time.Duration;
 import java.time.Instant;
 
 public class RegenerativeBrick extends Brick {
-    private Instant hitMoment;
-    private static final long REGENERATE_TIME = Config.REGENERATIVE_TIME;
+    private Instant hitMoment; // the last moment this brick get hit
+    private static final long REGENERATE_TIME = Config.REGENERATIVE_TIME; // time taken to regenerate after the last hit
 
     public RegenerativeBrick(double x, double y) {
         super(x, y);
@@ -17,15 +17,26 @@ public class RegenerativeBrick extends Brick {
         hitMoment = null;
     }
 
-    private boolean isAtFullHealth() {
-        return hitPoints == 3;
+    public Instant getHitMoment() {
+        return hitMoment;
     }
 
+    public void setHitMoment(Instant hitMoment) {
+        this.hitMoment = hitMoment;
+    }
+
+    // check if brick is at full HP
+    private boolean isAtFullHealth() {
+        return hitPoints == Config.REGENERATIVE_BRICK_HP;
+    }
+
+    // specialized get hit method
     public void getHit(int hitPointsLoss, PowerUpList powerUpList) {
         super.getHit(hitPointsLoss, powerUpList);
-        hitMoment = Instant.now();
+        hitMoment = Instant.now(); // store the last get hit moment
     }
 
+    // regenerate HP
     public void regenerate() {
         if (isDestroyed() || isAtFullHealth()) {
             hitMoment = null;

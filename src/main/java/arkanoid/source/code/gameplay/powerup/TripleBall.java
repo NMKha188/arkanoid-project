@@ -27,6 +27,7 @@ public class TripleBall extends PowerUp {
         newBalls.clear();
     }
 
+    // split current ball to create 2 new balls and add to newBalls (temporary list)
     private void splitBall(Ball ball, ArrayList<Ball> newBalls) {
         double Vx = ball.getVx();
         double Vy = ball.getVy();
@@ -41,6 +42,5 @@ public class TripleBall extends PowerUp {
     }
 
     public void removeEffect(GameObject o) {
-        // none
     }
 }

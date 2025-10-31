@@ -7,9 +7,10 @@ import arkanoid.source.code.gameplay.ball.BallList;
 import javafx.scene.paint.Color;
 
 public class SlowBall extends PowerUp {
-    private static boolean alreadyApplyEffect = false;
-    private static boolean alreadyRemoveEffect = false;
-    private final double SLOW_RATIO = Config.SLOW_RATIO;
+    private static boolean alreadyApplyEffect = false; // prevent over applying effect
+    private static boolean alreadyRemoveEffect = false; // prevent over removing effect
+
+    private final double SLOW_RATIO = Config.SLOW_RATIO; // slow ratio
 
     public SlowBall(double x, double y) {
         super(x, y, Config.SLOW_BALL_PROBABILITY, Config.SLOW_BALL_DURATION);

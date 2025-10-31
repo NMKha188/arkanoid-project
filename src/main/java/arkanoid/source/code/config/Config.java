@@ -56,6 +56,6 @@ public class Config {
     public static final long EXPLOSIVE_BALL_DURATION = 5;
     // power up: triple ball
     public static final int TRIPLE_BALL_PROBABILITY = 49;
-    // power up: life
-    public static final int LIFE_PROBABILITY = 49;
+    // power up: live
+    public static final int LIVE_PROBABILITY = 49;
 }

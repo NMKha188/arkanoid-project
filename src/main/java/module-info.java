@@ -13,4 +13,6 @@ module arkanoid.source.code {
     opens arkanoid.source.code.graphic to javafx.fxml;
     exports arkanoid.source.code.gameplay.ball;
     opens arkanoid.source.code.gameplay.ball to javafx.fxml;
+    exports arkanoid.source.code.gameplay.paddle;
+    opens arkanoid.source.code.gameplay.paddle to javafx.fxml;
 }

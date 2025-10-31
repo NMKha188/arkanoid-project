@@ -3,43 +3,44 @@ package arkanoid.source.code.gameplay.ball;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.InGameLogic;
-import arkanoid.source.code.gameplay.InGameStatus;
-import arkanoid.source.code.gameplay.Paddle;
+import arkanoid.source.code.gameplay.paddle.Paddle;
 import arkanoid.source.code.gameplay.brick.Brick;
 import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.brick.ResonanceBrick;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import arkanoid.source.code.gameplay.powerup.ExplosiveBall;
 import arkanoid.source.code.graphic.Texture;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 
 public class Ball implements GameObject {
-    // ball center and radius
     private double x;
     private double y;
     private final double BALL_RADIUS = Config.BALL_RADIUS;
     private final Circle shape;
-    // velocity
+
     private double ballSpeed = Config.BALL_SPEED;
     private double Vx;
     private double Vy;
     private double maxVx = ballSpeed * 0.67;
     private double changeVx = 0.05;
+
     // Vx representative line while sticking to the paddle (GUI for player to know which way will the ball fly after being released)
     //private final Line velocityRepresentativeLine;
+
 
     public Ball() {
         shape = new Circle(BALL_RADIUS);
         Texture.applyTextureToBall(shape);
 
-        /*velocityRepresentativeLine = new Line();
+        /*
+        velocityRepresentativeLine = new Line();
         velocityRepresentativeLine.setStrokeWidth(5);
-        velocityRepresentativeLine.setStroke(Color.NAVY);*/
+        velocityRepresentativeLine.setStroke(Color.NAVY);
+         */
     }
 
+    // this constructor copy characteristics from another ball, except Vx and Vy
     public Ball(Ball other, double Vx, double Vy) {
         this();
         this.x = other.x;
@@ -51,7 +52,6 @@ public class Ball implements GameObject {
         this.changeVx = other.changeVx;
     }
 
-    // getter setter BEGIN
     public double getX() {
         return x;
     }
@@ -117,11 +117,9 @@ public class Ball implements GameObject {
     public void setChangeVx(double changeVx) {
         this.changeVx = changeVx;
     }
-    // getter setter END
 
     public void addShapeToGameRoot() {
         InGameLogic.getRoot().getChildren().add(shape);
-        //InGameLogic.getRoot().getChildren().add(velocityRepresentativeLine);
     }
 
     public void removeShapeFromGameRoot() {
@@ -133,8 +131,12 @@ public class Ball implements GameObject {
         return (y >= Config.EXTRA / 4 + InGameLogic.getGameplayScreenHeight() + BALL_RADIUS);
     }
 
-    // stick to the paddle and initialize Vx Vy
+    // stick to the paddle and initialize Vx Vy (has not been released)
     public void initializeVelocity(Paddle paddle) {
+        // stick to the paddle
+        x = paddle.getX() + paddle.getWidth() / 2;
+        y = paddle.getY() - BALL_RADIUS;
+
         // initialize Vx Vy
         if (Vx >= maxVx || Vx <= -maxVx) {
             changeVx = -changeVx;
@@ -142,15 +144,13 @@ public class Ball implements GameObject {
         Vx += changeVx;
         Vy = -Math.sqrt(Math.pow(ballSpeed, 2) - Math.pow(Vx, 2));
 
-        // stick to the paddle
-        x = paddle.getX() + paddle.getWidth() / 2;
-        y = paddle.getY() - BALL_RADIUS;
-
         // Vx representative line (GUI for player to know which way will the ball fly after being released)
-        /*velocityRepresentativeLine.setStartX(x);
+        /*
+        velocityRepresentativeLine.setStartX(x);
         velocityRepresentativeLine.setStartY(y + BALL_RADIUS + paddle.getHeight() + 5);
         velocityRepresentativeLine.setEndX(x + Vx * ((paddle.getWidth() / 2) / maxVx));
-        velocityRepresentativeLine.setEndY(y + BALL_RADIUS + paddle.getHeight() + 5);*/
+        velocityRepresentativeLine.setEndY(y + BALL_RADIUS + paddle.getHeight() + 5);
+        */
     }
 
     // check collision with other Game Objects
@@ -163,7 +163,7 @@ public class Ball implements GameObject {
         return false;
     }
 
-    // collide with top and side walls, fall to the bottom -> reset logic
+    // collide with top and side walls
     public void collideWithWalls() {
         // collide with the side walls
         if (x <= Config.EXTRA / 2 + BALL_RADIUS || x >= Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - BALL_RADIUS) {
@@ -229,7 +229,7 @@ public class Ball implements GameObject {
         }
     }
 
-    // collide with brick set
+    // collide with brick set (all bricks appear on the screen)
     public void collideWithBrickSet(BrickSet brickSet, PowerUpList powerUpList) {
         for (int i = 0; i < brickSet.getBricksRow(); i++) {
             for (int j = 0; j < brickSet.getBricksPerRow(); j++) {
@@ -366,7 +366,7 @@ public class Ball implements GameObject {
         }
     }
 
-    // collide with only 1 brick logic (already check collision)
+    // collide with only 1 brick logic (already check collision) (private method used for collide with brick set)
     private void collideWithBrick(Brick brick) {
         // collide with the top or bottom of the brick
         if (x >= brick.getX() && x <= brick.getX() + brick.getWidth()) {
@@ -426,6 +426,12 @@ public class Ball implements GameObject {
     }
 
     public void update() {
-        // none
+        x += Vx;
+        y += Vy;
+        shape.setCenterX(x);
+        shape.setCenterY(y);
+    }
+
+    public void reset() {
     }
 }
