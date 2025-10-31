@@ -19,7 +19,7 @@ public class Config {
     public static final int BRICKS_ROW = 10;
     public static final int BRICKS_PER_ROW = 12;
     // brick set data path
-    public static final String MAP1_DATA_PATH = "/arkanoid/resources/map1.txt";
+    public static final String MAP1_DATA_PATH = "/arkanoid/resources/map/map1.txt";
     // 1 brick
     public static final double BRICK_WIDTH = GAMEPLAY_SCREEN_WIDTH / BRICKS_PER_ROW;
     public static final double BRICK_HEIGHT = BRICK_WIDTH / 2;
@@ -36,7 +36,7 @@ public class Config {
     public static final long REGENERATIVE_TIME = 10;
 
     // power up
-    public static final double POWER_UP_WIDTH = BRICK_WIDTH * 0.5;
+    public static final double POWER_UP_WIDTH = BRICK_WIDTH * 0.9;
     public static final double POWER_UP_HEIGHT = POWER_UP_WIDTH / 2;
     public static final double POWER_UP_FALLING_SPEED = 1;
     // power up: expand paddle

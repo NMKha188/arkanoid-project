@@ -1,10 +1,12 @@
 package arkanoid.source.code.gameplay.powerup;
 
 import arkanoid.source.code.config.Config;
-import arkanoid.source.code.gameplay.Ball;
 import arkanoid.source.code.gameplay.GameObject;
+import arkanoid.source.code.gameplay.ball.Ball;
+import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.gameplay.brick.Brick;
 import arkanoid.source.code.gameplay.brick.BrickSet;
+import arkanoid.source.code.gameplay.brick.ResonanceBrick;
 import arkanoid.source.code.graphic.Texture;
 
 public class ExplosiveBall extends PowerUp {
@@ -24,8 +26,10 @@ public class ExplosiveBall extends PowerUp {
 
     public void applyEffect(GameObject o) {
         inExplosiveMode = true;
-        if (o instanceof Ball) {
-            Texture.applyExplosiveTextureToBall(((Ball) o).getShape());
+        if (o instanceof BallList) {
+            for (Ball ball : ((BallList) o).getBallList()) {
+                Texture.applyExplosiveTextureToBall(ball.getShape());
+            }
         }
     }
 
@@ -51,8 +55,10 @@ public class ExplosiveBall extends PowerUp {
 
     public void removeEffect(GameObject o) {
         inExplosiveMode = false;
-        if (o instanceof Ball) {
-            Texture.applyTextureToBall(((Ball) o).getShape());
+        if (o instanceof BallList) {
+            for (Ball ball : ((BallList) o).getBallList()) {
+                Texture.applyTextureToBall(ball.getShape());
+            }
         }
     }
 }

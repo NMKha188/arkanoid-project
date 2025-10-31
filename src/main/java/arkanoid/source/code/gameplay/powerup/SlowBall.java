@@ -4,6 +4,7 @@ import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.ball.Ball;
 import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.ball.BallList;
+import arkanoid.source.code.graphic.Texture;
 import javafx.scene.paint.Color;
 
 public class SlowBall extends PowerUp {
@@ -14,7 +15,7 @@ public class SlowBall extends PowerUp {
 
     public SlowBall(double x, double y) {
         super(x, y, Config.SLOW_BALL_PROBABILITY, Config.SLOW_BALL_DURATION);
-        shape.setFill(Color.GRAY);
+        Texture.applyTextureToPowerUp(shape, Texture.PowerUpType.SLOWBALL);
     }
 
     public void applyEffect(GameObject o) {

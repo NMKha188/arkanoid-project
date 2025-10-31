@@ -3,7 +3,6 @@ package arkanoid.source.code.gameplay.powerup;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.graphic.Texture;
-import javafx.scene.paint.Color;
 import arkanoid.source.code.gameplay.InGameLogic;
 import arkanoid.source.code.gameplay.paddle.Paddle;
 
