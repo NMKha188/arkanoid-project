@@ -103,7 +103,9 @@ public class InGameLogic {
 
     public static Scene createGameScene(Stage primaryStage) {
         reset();
+
         handleKeyInput();
+
         if (gameTimer != null) {
             gameTimer.stop();
         }
@@ -128,7 +130,7 @@ public class InGameLogic {
         }
     }
 
-    public static void reset() {
+    private static void reset() {
         paddle.reset();
         ballList.reset();
         brickSet.reset();

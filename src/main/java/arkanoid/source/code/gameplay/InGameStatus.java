@@ -49,8 +49,6 @@ public class InGameStatus {
         rightRec.setFill(Color.BLUE);
     }
 
-    // getter setter BEGIN
-
     public static int getScore() {
         return score;
     }
@@ -69,10 +67,8 @@ public class InGameStatus {
     }
 
     public static void recoverLife() {
-        System.out.println("recover life");
         lives++;
         updateTexts();
-        ;
     }
 
     public static void loseLife() {
@@ -86,7 +82,6 @@ public class InGameStatus {
     public static Group getGroup() {
         return group;
     }
-    // getter setter END
 
     private static void updateTexts() {
         scoreText.setText("Score: " + score);
@@ -100,7 +95,6 @@ public class InGameStatus {
     }
 
     private static void showGameOverScene() {
-        // Use Platform.runLater to ensure this runs on the JavaFX Application Thread
         Platform.runLater(() -> {
             if (primaryStage != null) {
                 InGameLogic.stopGame();
