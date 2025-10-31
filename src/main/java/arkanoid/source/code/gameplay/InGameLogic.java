@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import arkanoid.source.code.graphic.Texture;
-import org.w3c.dom.Text;
 
 public class InGameLogic {
     private static final double GAMEPLAY_SCREEN_WIDTH = Config.GAMEPLAY_SCREEN_WIDTH;
@@ -21,7 +20,9 @@ public class InGameLogic {
 
     private static boolean movingLeft = false;
     private static boolean movingRight = false;
+
     private static AnimationTimer gameTimer;
+
     static {
         Texture.loadTextures();
     }
