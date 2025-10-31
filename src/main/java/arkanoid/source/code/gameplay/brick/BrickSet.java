@@ -115,7 +115,11 @@ public class BrickSet implements GameObject {
         this.removeShapeFromGameRoot();
         for (int i = 0; i < BRICKS_ROW; i++) {
             for (int j = 0; j < BRICKS_PER_ROW; j++) {
-                this.getOneBrickAt(i, j).reset();
+                Brick brick = this.getOneBrickAt(i, j);
+                // ADD NULL CHECK HERE
+                if (brick != null) {
+                    brick.reset();
+                }
             }
         }
         this.addShapeToGameRoot();

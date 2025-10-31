@@ -101,6 +101,7 @@ public class InGameLogic {
     }
 
     public Scene createGameScene(Stage primaryStage) {
+        reset();
         this.handleKeyInput();
 
         new AnimationTimer() {

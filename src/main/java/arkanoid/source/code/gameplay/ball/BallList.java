@@ -90,5 +90,6 @@ public class BallList implements GameObject {
         Ball firstBall = new Ball();
         ballList.add(firstBall);
         released = false;
+        this.addShapeToGameRoot();
     }
 }
