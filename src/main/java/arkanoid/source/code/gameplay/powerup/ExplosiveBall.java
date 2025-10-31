@@ -4,30 +4,29 @@ import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.brick.Brick;
 import arkanoid.source.code.gameplay.brick.BrickSet;
+import arkanoid.source.code.gameplay.brick.ResonanceBrick;
 import javafx.scene.paint.Color;
 
 public class ExplosiveBall extends PowerUp {
-    private static boolean inExplosiveMode = false;
-
+    private static boolean inExplosiveMode = false; // turn on/off explosive mode
+    // arrays for flood fill technique
     private static final int[] di = {0, -1, 0, 1, 0, -1, 1, -1, 1};
     private static final int[] dj = {0, 0, -1, 0, 1, -1, -1, 1, 1};
 
-    // constructor
     public ExplosiveBall(double x, double y) {
         super(x, y, Config.EXPLOSIVE_BALL_PROBABILITY, Config.EXPLOSIVE_BALL_DURATION);
         shape.setFill(Color.PURPLE);
     }
 
-    // getter setter BEGIN
     public static boolean isInExplosiveMode() {
         return inExplosiveMode;
     }
-    // getter setter END
 
     public void applyEffect(GameObject o) {
         inExplosiveMode = true;
     }
 
+    // static method called to deal explosive damage
     public static void explosiveDamage(BrickSet brickSet, int i, int j, PowerUpList powerUpList) {
         for (int t = 0; t < di.length; t++) {
             int iTemporary = i + di[t];
@@ -36,6 +35,7 @@ public class ExplosiveBall extends PowerUp {
             if (brick == null || brick.isDestroyed()) {
                 continue;
             }
+            ResonanceBrick.resonanceHit(1, powerUpList, brickSet, iTemporary, jTemporary);
             if (t == 0) {
                 brick.getHit(3, powerUpList);
             } else if (t <= 4) {

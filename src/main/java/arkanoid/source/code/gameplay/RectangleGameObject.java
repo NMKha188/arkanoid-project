@@ -1,5 +1,6 @@
 package arkanoid.source.code.gameplay;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 public abstract class RectangleGameObject implements GameObject {
@@ -9,7 +10,6 @@ public abstract class RectangleGameObject implements GameObject {
     protected double height;
     protected Rectangle shape;
 
-    // constructor
     public RectangleGameObject(double x, double y, double width, double height) {
         this.x = x;
         this.y = y;
@@ -18,7 +18,6 @@ public abstract class RectangleGameObject implements GameObject {
         this.shape = new Rectangle(this.x, this.y, this.width, this.height);
     }
 
-    // getter setter BEGIN
     public double getX() {
         return x;
     }
@@ -58,5 +57,16 @@ public abstract class RectangleGameObject implements GameObject {
     public Rectangle getShape() {
         return shape;
     }
-    // getter setter END
+
+    public void addShapeToGameRoot() {
+        InGameLogic.getRoot().getChildren().add(shape);
+    }
+
+    public void removeShapeFromGameRoot() {
+        InGameLogic.getRoot().getChildren().remove(shape);
+    }
+
+    public abstract void update();
+
+    public abstract void reset();
 }

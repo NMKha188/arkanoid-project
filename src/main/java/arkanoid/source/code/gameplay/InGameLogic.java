@@ -1,35 +1,52 @@
 package arkanoid.source.code.gameplay;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.gameplay.brick.BrickSet;
+import arkanoid.source.code.gameplay.paddle.Paddle;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import arkanoid.source.code.graphic.Texture;
+import org.w3c.dom.Text;
 
 public class InGameLogic {
-    // Screen size
     private static final double GAMEPLAY_SCREEN_WIDTH = Config.GAMEPLAY_SCREEN_WIDTH;
     private static final double GAMEPLAY_SCREEN_HEIGHT = Config.GAMEPLAY_SCREEN_HEIGHT;
-    // Check key press
-    private static boolean movingLeft = false;
-    private static boolean movingRight = false;
-    // paddle
-    private static Paddle paddle;
-    // ball
-    private static Ball ball;
-    // brickSet
-    private static BrickSet brickSet;
-    String dataPath = "/arkanoid/resources/map1.txt";
-    // power ups
-    private static final PowerUpList powerUpList = new PowerUpList();
-    // game pane and scene
+
     private static final Pane gameRoot = new Pane();
     private static final Scene gameScene = new Scene(gameRoot, GAMEPLAY_SCREEN_WIDTH + Config.EXTRA, GAMEPLAY_SCREEN_HEIGHT + Config.EXTRA / 2);
 
-    // getter setter BEGIN
+    private static boolean movingLeft = false;
+    private static boolean movingRight = false;
+
+    static {
+        Texture.loadTextures();
+    }
+
+    private static final Paddle paddle = new Paddle();
+
+    private static final BallList ballList = new BallList();
+
+    private static final BrickSet brickSet = new BrickSet();
+
+    private static final PowerUpList powerUpList = new PowerUpList();
+
+    static {
+        Texture.applyBackground(gameRoot);
+
+        paddle.addShapeToGameRoot();
+
+        ballList.addShapeToGameRoot();
+
+        brickSet.readData(Config.MAP1_DATA_PATH);
+        brickSet.addShapeToGameRoot();
+
+        InGameStatus.addGroupToGameRoot();
+    }
+
     public static double getGameplayScreenWidth() {
         return GAMEPLAY_SCREEN_WIDTH;
     }
@@ -50,84 +67,52 @@ public class InGameLogic {
         return gameRoot;
     }
 
-    // getter setter END
-    private static AnimationTimer gameTimer;
-
     private void handleKeyInput() {
         // handle key press
         gameScene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case LEFT:
+            switch(event.getCode()) {
+                case LEFT -> {
                     movingLeft = true;
-                    break;
-                case RIGHT:
+                }
+                case RIGHT -> {
                     movingRight = true;
-                    break;
-                default:
-                    // blank
+                }
+                default -> {
+                }
             }
         });
 
         // Handle key release
         gameScene.setOnKeyReleased(event -> {
-            switch (event.getCode()) {
-                case LEFT:
+            switch(event.getCode()) {
+                case LEFT -> {
                     movingLeft = false;
-                    break;
-                case RIGHT:
+                }
+                case RIGHT -> {
                     movingRight = false;
-                    break;
-                case SPACE:
-                    ball.setReleasedState(true);
-                default:
-                    // blank
+                }
+                case SPACE -> {
+                    ballList.setReleased(true);
+                }
+                default -> {
+                }
             }
         });
     }
 
     public Scene createGameScene(Stage primaryStage) {
-        Texture.loadTextures();
-        Texture.applyBackground(gameRoot);
-        paddle = new Paddle();
-        ball = new Ball();
-        brickSet = new BrickSet();
-        brickSet.readData(dataPath);
-
-        gameRoot.getChildren().add(paddle.getShape());
-        gameRoot.getChildren().add(ball.getShape());
-        gameRoot.getChildren().add(ball.getvelocityRepresentativeLine());
-        for (int i = 0; i < brickSet.getBricksRow(); i++) {
-            for (int j = 0; j < brickSet.getBricksPerRow(); j++) {
-                if (brickSet.getOneBrickAt(i, j) != null) {
-                    gameRoot.getChildren().add(brickSet.getOneBrickAt(i, j).getShape());
-                }
-            }
-        }
-        gameRoot.getChildren().add(InGameStatus.getGroup());
-
         this.handleKeyInput();
-        if (gameTimer != null) {
-            gameTimer.stop();
-        }
-        // animation control
-        gameTimer = new AnimationTimer() {
+
+        new AnimationTimer() {
             @Override
             public void handle(long now) {
                 paddle.update();
-                ball.update(paddle, brickSet, powerUpList);
+                ballList.update(paddle, brickSet, powerUpList);
                 brickSet.update();
-                powerUpList.update(paddle, ball, brickSet);
+                powerUpList.update(paddle, ballList, brickSet);
             }
-        };
+        }.start();
 
-        gameTimer.start();
         return gameScene;
-    }
-
-    public static void stopGame() {
-        if (gameTimer != null) {
-            gameTimer.stop();
-            gameTimer = null;
-        }
     }
 }
