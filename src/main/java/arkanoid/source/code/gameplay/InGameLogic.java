@@ -21,7 +21,7 @@ public class InGameLogic {
 
     private static boolean movingLeft = false;
     private static boolean movingRight = false;
-
+    private static AnimationTimer gameTimer;
     static {
         Texture.loadTextures();
     }
@@ -67,7 +67,7 @@ public class InGameLogic {
         return gameRoot;
     }
 
-    private void handleKeyInput() {
+    private static void handleKeyInput() {
         // handle key press
         gameScene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
@@ -100,11 +100,13 @@ public class InGameLogic {
         });
     }
 
-    public Scene createGameScene(Stage primaryStage) {
+    public static Scene createGameScene(Stage primaryStage) {
         reset();
-        this.handleKeyInput();
-
-        new AnimationTimer() {
+        handleKeyInput();
+        if (gameTimer != null) {
+            gameTimer.stop();
+        }
+        gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 paddle.update();
@@ -112,9 +114,17 @@ public class InGameLogic {
                 brickSet.update();
                 powerUpList.update(paddle, ballList, brickSet);
             }
-        }.start();
+        };
+        gameTimer.start();
 
         return gameScene;
+    }
+
+    public static void stopGame() {
+        if (gameTimer != null) {
+            gameTimer.stop();
+            gameTimer = null;
+        }
     }
 
     public static void reset() {

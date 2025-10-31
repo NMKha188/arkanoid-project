@@ -23,7 +23,6 @@ public class SceneController {
     @FXML
     public void initialize() {
         playButton.setOnAction(e -> {
-//            GameEngine.clearPane();
             startGame();
         });
         exitButton.setOnAction(e -> {
@@ -40,10 +39,7 @@ public class SceneController {
             // Close the current menu stage
             Stage currentStage = (Stage) playButton.getScene().getWindow();
 
-            // Start game
-            InGameLogic mainGame = new InGameLogic();
-
-            Scene gameScene = mainGame.createGameScene(currentStage);
+            Scene gameScene = InGameLogic.createGameScene(currentStage);
             currentStage.setScene(gameScene);
             currentStage.setTitle("Arkanoid - Game");
             currentStage.setResizable(false);

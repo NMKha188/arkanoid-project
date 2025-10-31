@@ -103,6 +103,7 @@ public class InGameStatus {
         // Use Platform.runLater to ensure this runs on the JavaFX Application Thread
         Platform.runLater(() -> {
             if (primaryStage != null) {
+                InGameLogic.stopGame();
                 System.out.println("Switching to game over scene...");
                 GameOverScreen.switchToGameOverScene(score, primaryStage);
             } else {
