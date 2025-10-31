@@ -20,7 +20,22 @@ public class Texture {
     private static Image backgroundImage;
     private static Image paddleImage;
     private static Image ballImage;
+    private static Image expandPaddleImage;
+    private static Image speedUpPaddleImage;
+    private static Image explosiveBallImage;
+    private static Image bongnoImage;
+    private static Image slowBallImage;
+    private static Image tripleBallImage;
+    private static Image healthImage;
+    public enum PowerUpType {
+        EXPAND,
+        SPEED_UP,
+        EXPLOSIVEBALL,
+        SLOWBALL,
+        TRIPLEBALL,
+        HEALTH
 
+    }
     private static Image[] brickImages = new Image[8];
 
     public static void loadTextures() {
@@ -37,6 +52,13 @@ public class Texture {
             brickImages[5] = loadImage("/arkanoid/resources/brick5.png");
             brickImages[6] = loadImage("/arkanoid/resources/brick6.png");
             brickImages[7] = loadImage("/arkanoid/resources/brick7.png");
+            expandPaddleImage = loadImage("/arkanoid/resources/powerup_expandpaddle.png");
+            speedUpPaddleImage = loadImage("/arkanoid/resources/powerup_speedpaddle.png");
+            explosiveBallImage = loadImage("/arkanoid/resources/powerup_explosiveball.png");
+            bongnoImage = loadImage("/arkanoid/resources/explosiveball.png");
+            slowBallImage = loadImage("/arkanoid/resources/powerup_slowball.png");
+            tripleBallImage = loadImage("/arkanoid/resources/powerup_tripleball.png");
+            healthImage = loadImage("/arkanoid/resources/powerup_health.png");
 
         } catch (Exception e) {
             System.err.println("Error loading textures resources");
@@ -73,6 +95,12 @@ public class Texture {
         }
     }
 
+    public static void applyExplosiveTextureToBall(Circle ballShape) {
+        if (bongnoImage != null) {
+            ballShape.setFill(new ImagePattern(bongnoImage));
+        }
+    }
+
     public static void applyTextureToPaddle(Rectangle paddleShape) {
         if (paddleImage != null) {
             paddleShape.setFill(new ImagePattern(paddleImage));
@@ -82,6 +110,55 @@ public class Texture {
     public static void applyTextureToBrick(Rectangle brickShape, int index) {
         if (index > 0 && index < brickImages.length && brickImages[index] != null) {
             brickShape.setFill(new ImagePattern(brickImages[index]));
+        }
+    }
+    public static Image getExpandPaddleImage() {
+        return expandPaddleImage;
+    }
+
+    public static Image getSpeedUpPaddleImage() {
+        return speedUpPaddleImage;
+    }
+
+    public static Image getExplosiveBallImage() {
+        return explosiveBallImage;
+    }
+    public static Image getSlowBallImage() {
+        return slowBallImage;
+    }
+
+    public static Image getTripleBallImage() {
+        return tripleBallImage;
+    }
+
+    public static Image getHealthImage() {
+        return healthImage;
+    }
+    public static void applyTextureToPowerUp(Rectangle powerUpShape, PowerUpType type) {
+        Image texture = null;
+
+        switch (type) {
+            case EXPAND:
+                texture = expandPaddleImage;
+                break;
+            case SPEED_UP:
+                texture = speedUpPaddleImage;
+                break;
+            case EXPLOSIVEBALL:
+                texture = explosiveBallImage;
+                break;
+            case SLOWBALL:
+                texture = slowBallImage;
+                break;
+            case TRIPLEBALL:
+                texture = tripleBallImage;
+                break;
+            case HEALTH:
+                texture = healthImage;
+                break;
+        }
+        if (texture != null) {
+            powerUpShape.setFill(new ImagePattern(texture));
         }
     }
 }

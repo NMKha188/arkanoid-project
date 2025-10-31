@@ -1,11 +1,11 @@
 package arkanoid.source.code.gameplay.powerup;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gameplay.Ball;
 import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.brick.Brick;
 import arkanoid.source.code.gameplay.brick.BrickSet;
-import arkanoid.source.code.gameplay.brick.ResonanceBrick;
-import javafx.scene.paint.Color;
+import arkanoid.source.code.graphic.Texture;
 
 public class ExplosiveBall extends PowerUp {
     private static boolean inExplosiveMode = false; // turn on/off explosive mode
@@ -15,7 +15,7 @@ public class ExplosiveBall extends PowerUp {
 
     public ExplosiveBall(double x, double y) {
         super(x, y, Config.EXPLOSIVE_BALL_PROBABILITY, Config.EXPLOSIVE_BALL_DURATION);
-        shape.setFill(Color.PURPLE);
+        Texture.applyTextureToPowerUp(shape, Texture.PowerUpType.EXPLOSIVEBALL);
     }
 
     public static boolean isInExplosiveMode() {
@@ -24,6 +24,9 @@ public class ExplosiveBall extends PowerUp {
 
     public void applyEffect(GameObject o) {
         inExplosiveMode = true;
+        if (o instanceof Ball) {
+            Texture.applyExplosiveTextureToBall(((Ball) o).getShape());
+        }
     }
 
     // static method called to deal explosive damage
@@ -48,5 +51,8 @@ public class ExplosiveBall extends PowerUp {
 
     public void removeEffect(GameObject o) {
         inExplosiveMode = false;
+        if (o instanceof Ball) {
+            Texture.applyTextureToBall(((Ball) o).getShape());
+        }
     }
 }
