@@ -1,6 +1,7 @@
 package arkanoid.source.code.gamecontroller;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.InGameLogic;
+import arkanoid.source.code.gameplay.InGameStatus;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -11,8 +12,9 @@ import javafx.stage.Stage;
 public class GameEngine extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
+        InGameStatus.setPrimaryStage(primaryStage);
+
         java.net.URL resourceUrl = getClass().getResource("/arkanoid/resources/sceneMenu.fxml");
-        System.out.println("Resource URL: " + resourceUrl);
 
         if (resourceUrl == null) {
             System.err.println("ERROR: sceneMenu.fxml not found");
@@ -28,12 +30,18 @@ public class GameEngine extends Application {
         primaryStage.setResizable(false);
 
         primaryStage.setOnCloseRequest(e -> {
+            System.out.println("Closing game...");
             Platform.exit();
             System.exit(0);
         });
 
         primaryStage.show();
     }
+
+//    public static void clearPane() {
+//        InGameLogic.stopGame();
+//        InGameLogic.getRoot().getChildren().clear();
+//    }
 
     public static void main(String[] args) {
         launch(args);
