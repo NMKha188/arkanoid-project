@@ -115,4 +115,11 @@ public class InGameLogic {
 
         return gameScene;
     }
+
+    public static void reset() {
+        paddle.reset();
+        ballList.reset();
+        brickSet.reset();
+        powerUpList.reset(paddle, ballList);
+    }
 }
