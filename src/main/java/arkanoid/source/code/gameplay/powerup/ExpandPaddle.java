@@ -2,7 +2,7 @@ package arkanoid.source.code.gameplay.powerup;
 
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.GameObject;
-import javafx.scene.paint.Color;
+import arkanoid.source.code.graphic.Texture;
 import arkanoid.source.code.gameplay.InGameLogic;
 import arkanoid.source.code.gameplay.paddle.Paddle;
 
@@ -14,7 +14,7 @@ public class ExpandPaddle extends PowerUp {
 
     public ExpandPaddle(double x, double y) {
         super(x, y, Config.EXPAND_PADDLE_PROBABILITY, Config.EXPAND_PADDLE_DURATION);
-        shape.setFill(Color.GREEN);
+        Texture.applyTextureToPowerUp(shape, Texture.PowerUpType.EXPAND);
     }
 
     public void applyEffect(GameObject o) {

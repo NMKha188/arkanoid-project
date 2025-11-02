@@ -4,6 +4,7 @@ import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.ball.Ball;
 import arkanoid.source.code.gameplay.ball.BallList;
+import arkanoid.source.code.graphic.Texture;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class TripleBall extends PowerUp {
     public TripleBall(double x, double y) {
         super(x, y, Config.EXPLOSIVE_BALL_PROBABILITY, Config.EXPLOSIVE_BALL_DURATION);
-        shape.setFill(Color.ORANGE);
+        Texture.applyTextureToPowerUp(shape, Texture.PowerUpType.TRIPLEBALL);
     }
 
     public void applyEffect(GameObject o) {

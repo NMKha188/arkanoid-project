@@ -116,7 +116,6 @@ public class BrickSet implements GameObject {
         for (int i = 0; i < BRICKS_ROW; i++) {
             for (int j = 0; j < BRICKS_PER_ROW; j++) {
                 Brick brick = this.getOneBrickAt(i, j);
-                // ADD NULL CHECK HERE
                 if (brick != null) {
                     brick.reset();
                 }
