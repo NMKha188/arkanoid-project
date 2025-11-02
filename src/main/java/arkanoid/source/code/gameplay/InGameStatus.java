@@ -3,6 +3,7 @@ package arkanoid.source.code.gameplay;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gamecontroller.GameEngine;
 import arkanoid.source.code.gamecontroller.GameOverScreen;
+import arkanoid.source.code.graphic.Texture;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -43,10 +44,7 @@ public class InGameStatus {
         livesText.setX(LIVES_X);
         livesText.setY(LIVES_Y);
 
-        topRec.setFill(Color.BLUE);
-        downRec.setFill(Color.BLUE);
-        leftRec.setFill(Color.BLUE);
-        rightRec.setFill(Color.BLUE);
+        Texture.applyBorderTextures(topRec, downRec, leftRec, rightRec);
     }
 
     public static int getScore() {

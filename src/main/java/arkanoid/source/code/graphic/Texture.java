@@ -27,6 +27,10 @@ public class Texture {
     private static Image slowBallImage;
     private static Image tripleBallImage;
     private static Image liveImage;
+    private static Image topRegImage;
+    private static Image downRegImage;
+    private static Image leftRegImage;
+    private static Image rightRegImage;
     public enum PowerUpType {
         EXPAND,
         SPEED_UP,
@@ -41,24 +45,28 @@ public class Texture {
     public static void loadTextures() {
         try {
             backgroundImage = loadImage("/arkanoid/resources/background.png");
-            paddleImage = loadImage("/arkanoid/resources/paddle/paddle.png");
-            ballImage = loadImage("/arkanoid/resources/ball/ball.png");
+            paddleImage = loadImage("/arkanoid/resources/paddle.png");
+            ballImage = loadImage("/arkanoid/resources/ball.png");
 
             brickImages[0] = null;
-            brickImages[1] = loadImage("/arkanoid/resources/brick/brick1.png");
-            brickImages[2] = loadImage("/arkanoid/resources/brick/brick2.png");
-            brickImages[3] = loadImage("/arkanoid/resources/brick/brick3.png");
-            brickImages[4] = loadImage("/arkanoid/resources/brick/brick4.png");
-            brickImages[5] = loadImage("/arkanoid/resources/brick/brick5.png");
-            brickImages[6] = loadImage("/arkanoid/resources/brick/brick6.png");
-            brickImages[7] = loadImage("/arkanoid/resources/brick/brick7.png");
-            expandPaddleImage = loadImage("/arkanoid/resources/powerup/powerup_expandpaddle.png");
-            speedUpPaddleImage = loadImage("/arkanoid/resources/powerup/powerup_speedpaddle.png");
-            explosiveBallImage = loadImage("/arkanoid/resources/powerup/powerup_explosiveball.png");
-            bongnoImage = loadImage("/arkanoid/resources/ball/explosiveball.png");
-            slowBallImage = loadImage("/arkanoid/resources/powerup/powerup_slowball.png");
-            tripleBallImage = loadImage("/arkanoid/resources/powerup/powerup_tripleball.png");
-            liveImage = loadImage("/arkanoid/resources/powerup/powerup_live.png");
+            brickImages[1] = loadImage("/arkanoid/resources/brick1.png");
+            brickImages[2] = loadImage("/arkanoid/resources/brick2.png");
+            brickImages[3] = loadImage("/arkanoid/resources/brick3.png");
+            brickImages[4] = loadImage("/arkanoid/resources/brick4.png");
+            brickImages[5] = loadImage("/arkanoid/resources/brick5.png");
+            brickImages[6] = loadImage("/arkanoid/resources/brick6.png");
+            brickImages[7] = loadImage("/arkanoid/resources/brick7.png");
+            expandPaddleImage = loadImage("/arkanoid/resources/powerup_expandpaddle.png");
+            speedUpPaddleImage = loadImage("/arkanoid/resources/powerup_speedpaddle.png");
+            explosiveBallImage = loadImage("/arkanoid/resources/powerup_explosiveball.png");
+            bongnoImage = loadImage("/arkanoid/resources/explosiveball.png");
+            slowBallImage = loadImage("/arkanoid/resources/powerup_slowball.png");
+            tripleBallImage = loadImage("/arkanoid/resources/powerup_tripleball.png");
+            liveImage = loadImage("/arkanoid/resources/powerup_live.png");
+            topRegImage = loadImage("/arkanoid/resources/topReg.png");
+            downRegImage = loadImage("/arkanoid/resources/downReg.png");
+            leftRegImage = loadImage("/arkanoid/resources/leftReg.png");
+            rightRegImage = loadImage("/arkanoid/resources/rightReg.png");
 
         } catch (Exception e) {
             System.err.println("Error loading textures resources");
@@ -131,7 +139,7 @@ public class Texture {
         return tripleBallImage;
     }
 
-    public static Image getHealthImage() {
+    public static Image getLiveImage() {
         return liveImage;
     }
     public static void applyTextureToPowerUp(Rectangle powerUpShape, PowerUpType type) {
@@ -159,6 +167,20 @@ public class Texture {
         }
         if (texture != null) {
             powerUpShape.setFill(new ImagePattern(texture));
+        }
+    }
+    public static void applyBorderTextures(Rectangle top, Rectangle bottom, Rectangle left, Rectangle right) {
+        if (topRegImage != null) {
+            top.setFill(new ImagePattern(topRegImage));
+        }
+        if (downRegImage != null) {
+            bottom.setFill(new ImagePattern(downRegImage));
+        }
+        if (leftRegImage != null) {
+            left.setFill(new ImagePattern(leftRegImage));
+        }
+        if (rightRegImage != null) {
+            right.setFill(new ImagePattern(rightRegImage));
         }
     }
 }
