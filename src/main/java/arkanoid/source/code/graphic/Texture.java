@@ -125,24 +125,22 @@ public class Texture {
             topRec.setFill(new ImagePattern(topRecImage));
         }
     }
-
     public static void applyTextureToDownRec(Rectangle downRec) {
         if (downRecImage != null) {
             downRec.setFill(new ImagePattern(downRecImage));
         }
     }
-
     public static void applyTextureToLeftRec(Rectangle leftRec) {
         if (leftRecImage != null) {
             leftRec.setFill(new ImagePattern(leftRecImage));
         }
     }
-
     public static void applyTextureToRightRec(Rectangle rightRec) {
         if (rightRecImage != null) {
             rightRec.setFill(new ImagePattern(rightRecImage));
         }
     }
+
     public static Image getExpandPaddleImage() {
         return expandPaddleImage;
     }
