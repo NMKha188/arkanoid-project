@@ -27,10 +27,6 @@ public class Texture {
     private static Image slowBallImage;
     private static Image tripleBallImage;
     private static Image liveImage;
-    private static Image topRecImage;
-    private static Image downRecImage;
-    private static Image leftRecImage;
-    private static Image rightRecImage;
     public enum PowerUpType {
         EXPAND,
         SPEED_UP,
@@ -63,10 +59,6 @@ public class Texture {
             slowBallImage = loadImage("/arkanoid/resources/powerup/powerup_slowball.png");
             tripleBallImage = loadImage("/arkanoid/resources/powerup/powerup_tripleball.png");
             liveImage = loadImage("/arkanoid/resources/powerup/powerup_live.png");
-            topRecImage = loadImage("/arkanoid/resources/topRec.png");
-            downRecImage = loadImage("/arkanoid/resources/downRec.png");
-            leftRecImage = loadImage("/arkanoid/resources/leftRec.png");
-            rightRecImage = loadImage("/arkanoid/resources/rightRec.png");
 
         } catch (Exception e) {
             System.err.println("Error loading textures resources");
@@ -118,26 +110,6 @@ public class Texture {
     public static void applyTextureToBrick(Rectangle brickShape, int index) {
         if (index > 0 && index < brickImages.length && brickImages[index] != null) {
             brickShape.setFill(new ImagePattern(brickImages[index]));
-        }
-    }
-    public static void applyTextureToTopRec(Rectangle topRec) {
-        if (topRecImage != null) {
-            topRec.setFill(new ImagePattern(topRecImage));
-        }
-    }
-    public static void applyTextureToDownRec(Rectangle downRec) {
-        if (downRecImage != null) {
-            downRec.setFill(new ImagePattern(downRecImage));
-        }
-    }
-    public static void applyTextureToLeftRec(Rectangle leftRec) {
-        if (leftRecImage != null) {
-            leftRec.setFill(new ImagePattern(leftRecImage));
-        }
-    }
-    public static void applyTextureToRightRec(Rectangle rightRec) {
-        if (rightRecImage != null) {
-            rightRec.setFill(new ImagePattern(rightRecImage));
         }
     }
 
