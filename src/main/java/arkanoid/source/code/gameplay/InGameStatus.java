@@ -44,7 +44,10 @@ public class InGameStatus {
         livesText.setX(LIVES_X);
         livesText.setY(LIVES_Y);
 
-        Texture.applyBorderTextures(topRec, downRec, leftRec, rightRec);
+        Texture.applyTextureToTopRec(topRec);
+        Texture.applyTextureToDownRec(downRec);
+        Texture.applyTextureToLeftRec(leftRec);
+        Texture.applyTextureToRightRec(rightRec);
     }
 
     public static int getScore() {
