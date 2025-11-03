@@ -8,6 +8,7 @@ import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle; // <-- IMPORT MỚI
 import javafx.stage.Stage;
 import arkanoid.source.code.graphic.Texture;
 
@@ -22,6 +23,8 @@ public class InGameLogic {
     private static boolean movingRight = false;
 
     private static AnimationTimer gameTimer;
+
+    private static Rectangle downRec;
 
     static {
         Texture.loadTextures();
@@ -46,6 +49,16 @@ public class InGameLogic {
         brickSet.addShapeToGameRoot();
 
         InGameStatus.addGroupToGameRoot();
+
+        double borderHeight = 55;
+        double borderWidth = GAMEPLAY_SCREEN_WIDTH + GAMEPLAY_SCREEN_WIDTH / 3;
+        double borderY = 680;
+
+        downRec = new Rectangle(0, borderY, borderWidth, borderHeight);
+
+        Texture.applyAndPlayAnimation(downRec);
+
+        gameRoot.getChildren().add(downRec);
     }
 
     public static double getGameplayScreenWidth() {
@@ -128,6 +141,8 @@ public class InGameLogic {
             gameTimer.stop();
             gameTimer = null;
         }
+
+        Texture.stopAnimation();
     }
 
     private static void reset() {

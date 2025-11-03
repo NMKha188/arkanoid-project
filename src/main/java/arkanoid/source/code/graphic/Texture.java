@@ -2,6 +2,9 @@ package arkanoid.source.code.graphic;
 
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.InGameLogic;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -12,7 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-
+import javafx.util.Duration;
 import java.io.InputStream;
 
 public class Texture {
@@ -27,6 +30,8 @@ public class Texture {
     private static Image slowBallImage;
     private static Image tripleBallImage;
     private static Image liveImage;
+    private static Image[] downRecImages = new Image[14];
+    private static Timeline borderAnimation;
     public enum PowerUpType {
         EXPAND,
         SPEED_UP,
@@ -59,6 +64,10 @@ public class Texture {
             slowBallImage = loadImage("/arkanoid/resources/powerup/powerup_slowball.png");
             tripleBallImage = loadImage("/arkanoid/resources/powerup/powerup_tripleball.png");
             liveImage = loadImage("/arkanoid/resources/powerup/powerup_live.png");
+            for (int i = 0; i < downRecImages.length; i++) {
+                String path = "/arkanoid/resources/downRec" + (i + 1) + ".png";
+                downRecImages[i] = loadImage(path);
+            }
 
         } catch (Exception e) {
             System.err.println("Error loading textures resources");
@@ -160,6 +169,44 @@ public class Texture {
         }
         if (texture != null) {
             powerUpShape.setFill(new ImagePattern(texture));
+        }
+    }
+    public static void applyAndPlayAnimation(Rectangle borderShape) {
+        if (downRecImages == null || downRecImages[0] == null) {
+            System.err.println("DownRec animation frames not loaded!");
+            return;
+        }
+
+        if (borderAnimation != null) {
+            borderAnimation.stop();
+        }
+
+        borderShape.setFill(new ImagePattern(downRecImages[0]));
+
+        borderAnimation = new Timeline();
+        borderAnimation.setCycleCount(Animation.INDEFINITE);
+        double frameDuration = 150;
+
+        for (int i = 0; i < downRecImages.length; i++) {
+            final int frameIndex = i;
+            KeyFrame kf = new KeyFrame(
+                    Duration.millis(frameDuration * (i + 1)),
+                    e -> {
+                        if (borderShape != null && borderShape.getScene() != null) {
+                            borderShape.setFill(new ImagePattern(downRecImages[frameIndex]));
+                        }
+                    }
+            );
+            borderAnimation.getKeyFrames().add(kf);
+        }
+
+        borderAnimation.play();
+    }
+
+    public static void stopAnimation() {
+        if (borderAnimation != null) {
+            borderAnimation.stop();
+            borderAnimation = null;
         }
     }
 }
