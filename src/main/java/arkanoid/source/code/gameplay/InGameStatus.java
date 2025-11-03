@@ -11,8 +11,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
 import java.io.InputStream;
 
 public class InGameStatus {
@@ -36,11 +34,6 @@ public class InGameStatus {
     private static final double LIVES_X = Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA - SCORE_X - Config.BRICK_WIDTH * 2;
     private static final double LIVES_Y = Config.BRICK_HEIGHT;
 
-    private static Image topRecImage;
-    private static Image downRecImage;
-    private static Image leftRecImage;
-    private static Image rightRecImage;
-
     static {
         scoreText.setFont(Font.font("Consolas", 25));
         scoreText.setFill(Color.BLACK);
@@ -52,47 +45,13 @@ public class InGameStatus {
         livesText.setX(LIVES_X);
         livesText.setY(LIVES_Y);
 
-        try {
-            String topPath = "/arkanoid/resources/topRec.png";
-            String downPath = "/arkanoid/resources/downRec.png";
-            String leftPath = "/arkanoid/resources/leftRec.png";
-            String rightPath = "/arkanoid/resources/rightRec.png";
-
-            topRecImage = loadImage(topPath);
-            downRecImage = loadImage(downPath);
-            leftRecImage = loadImage(leftPath);
-            rightRecImage = loadImage(rightPath);
-
-            if (topRecImage != null) {
-                topRec.setFill(new ImagePattern(topRecImage));
-            }
-
-            if (downRecImage != null) {
-                downRec.setFill(new ImagePattern(downRecImage));
-            }
-
-            if (leftRecImage != null) {
-                leftRec.setFill(new ImagePattern(leftRecImage));
-            }
-
-            if (rightRecImage != null) {
-                rightRec.setFill(new ImagePattern(rightRecImage));
-            }
-
-        } catch (Exception e) {
-            System.err.println("Error loading border textures in InGameStatus");
-            e.printStackTrace();
-        }
     }
 
-    private static Image loadImage(String path) {
-        InputStream stream = InGameLogic.class.getResourceAsStream(path);
-        if (stream != null) {
-            return new Image(stream);
-        } else {
-            System.err.println("Error while loading " + path + " (from InGameStatus)");
-            return null;
-        }
+    public static void applyBorderTextures() {
+        Texture.applyTextureToTopRec(topRec);
+        Texture.applyTextureToDownRec(downRec);
+        Texture.applyTextureToLeftRec(leftRec);
+        Texture.applyTextureToRightRec(rightRec);
     }
 
     public static int getScore() {

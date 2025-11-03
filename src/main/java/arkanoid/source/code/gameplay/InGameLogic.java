@@ -26,10 +26,6 @@ public class InGameLogic {
 
     private static Rectangle downRec;
 
-    static {
-        Texture.loadTextures();
-    }
-
     private static final Paddle paddle = new Paddle();
 
     private static final BallList ballList = new BallList();
@@ -47,6 +43,8 @@ public class InGameLogic {
 
         brickSet.readData(Config.MAP1_DATA_PATH);
         brickSet.addShapeToGameRoot();
+
+        InGameStatus.applyBorderTextures();
 
         InGameStatus.addGroupToGameRoot();
 

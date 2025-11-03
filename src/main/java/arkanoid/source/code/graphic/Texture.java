@@ -32,6 +32,10 @@ public class Texture {
     private static Image liveImage;
     private static Image[] downRecImages = new Image[14];
     private static Timeline borderAnimation;
+    private static Image topRecImage;
+    private static Image downRecImage;
+    private static Image leftRecImage;
+    private static Image rightRecImage;
     public enum PowerUpType {
         EXPAND,
         SPEED_UP,
@@ -43,7 +47,7 @@ public class Texture {
     }
     private static Image[] brickImages = new Image[8];
 
-    public static void loadTextures() {
+    static {
         try {
             backgroundImage = loadImage("/arkanoid/resources/background.png");
             paddleImage = loadImage("/arkanoid/resources/paddle/paddle.png");
@@ -64,6 +68,10 @@ public class Texture {
             slowBallImage = loadImage("/arkanoid/resources/powerup/powerup_slowball.png");
             tripleBallImage = loadImage("/arkanoid/resources/powerup/powerup_tripleball.png");
             liveImage = loadImage("/arkanoid/resources/powerup/powerup_live.png");
+            topRecImage = loadImage("/arkanoid/resources/topRec.png");
+            downRecImage = loadImage("/arkanoid/resources/downRec.png");
+            leftRecImage = loadImage("/arkanoid/resources/leftRec.png");
+            rightRecImage = loadImage("/arkanoid/resources/rightRec.png");
             for (int i = 0; i < downRecImages.length; i++) {
                 String path = "/arkanoid/resources/downRec" + (i + 1) + ".png";
                 downRecImages[i] = loadImage(path);
@@ -107,6 +115,30 @@ public class Texture {
     public static void applyExplosiveTextureToBall(Circle ballShape) {
         if (bongnoImage != null) {
             ballShape.setFill(new ImagePattern(bongnoImage));
+        }
+    }
+
+    public static void applyTextureToTopRec(Rectangle topRec) {
+        if (topRecImage != null) {
+            topRec.setFill(new ImagePattern(topRecImage));
+        }
+    }
+
+    public static void applyTextureToDownRec(Rectangle downRec) {
+        if (downRecImage != null) {
+            downRec.setFill(new ImagePattern(downRecImage));
+        }
+    }
+
+    public static void applyTextureToLeftRec(Rectangle leftRec) {
+        if (leftRecImage != null) {
+            leftRec.setFill(new ImagePattern(leftRecImage));
+        }
+    }
+
+    public static void applyTextureToRightRec(Rectangle rightRec) {
+        if (rightRecImage != null) {
+            rightRec.setFill(new ImagePattern(rightRecImage));
         }
     }
 
