@@ -8,7 +8,7 @@ import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle; // <-- IMPORT MỚI
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import arkanoid.source.code.graphic.Texture;
 
