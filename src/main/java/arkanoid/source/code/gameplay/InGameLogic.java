@@ -3,6 +3,7 @@ package arkanoid.source.code.gameplay;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.gameplay.brick.BrickSet;
+import arkanoid.source.code.gameplay.brick.Map;
 import arkanoid.source.code.gameplay.paddle.Paddle;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import javafx.animation.AnimationTimer;
@@ -22,16 +23,12 @@ public class InGameLogic {
     private static boolean movingRight = false;
 
     private static AnimationTimer gameTimer;
-    private static int level = 0;
-    static {
-        Texture.loadTextures();
-    }
 
     private static final Paddle paddle = new Paddle();
 
     private static final BallList ballList = new BallList();
 
-    private static final BrickSet brickSet = new BrickSet();
+    private static BrickSet brickSet = Map.getMap(1);
 
     private static final PowerUpList powerUpList = new PowerUpList();
 
@@ -40,10 +37,10 @@ public class InGameLogic {
 
         paddle.addShapeToGameRoot();
 
-        ballList.addShapeToGameRoot();
-
-        brickSet.readData(Config.MAP1_DATA_PATH);
         brickSet.addShapeToGameRoot();
+
+        ballList.addShapeToGameRoot();
+        ballList.addVelocityRepresentativeLineToGameRoot();
 
         InGameStatus.addGroupToGameRoot();
     }
@@ -94,6 +91,7 @@ public class InGameLogic {
                 }
                 case SPACE -> {
                     ballList.setReleased(true);
+                    ballList.hideVelocityRepresentativeLine();
                 }
                 default -> {
                 }
@@ -102,7 +100,8 @@ public class InGameLogic {
     }
 
     public static Scene createGameScene(Stage primaryStage) {
-        level++;
+        reset();
+
         handleKeyInput();
 
         if (gameTimer != null) {
@@ -129,8 +128,7 @@ public class InGameLogic {
         }
     }
 
-    public static void reset() {
-        level = 0;
+    private static void reset() {
         paddle.reset();
         ballList.reset();
         brickSet.reset();

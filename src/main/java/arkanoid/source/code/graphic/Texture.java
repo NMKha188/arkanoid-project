@@ -16,17 +16,19 @@ import javafx.scene.shape.Rectangle;
 import java.io.InputStream;
 
 public class Texture {
-
     private static Image backgroundImage;
+
     private static Image paddleImage;
-    private static Image ballImage;
-    private static Image expandPaddleImage;
-    private static Image speedUpPaddleImage;
+    private static Image normalBallImage;
     private static Image explosiveBallImage;
-    private static Image bongnoImage;
-    private static Image slowBallImage;
-    private static Image tripleBallImage;
-    private static Image liveImage;
+    private static Image[] brickImages = new Image[8];
+
+    private static Image expandPaddlePowerUPImage;
+    private static Image speedUpPaddlePowerUpImage;
+    private static Image explosiveBallPowerUpImage;
+    private static Image slowBallPowerUpImage;
+    private static Image tripleBallPowerUpImage;
+    private static Image livePowerUpImage;
     public enum PowerUpType {
         EXPAND,
         SPEED_UP,
@@ -34,15 +36,15 @@ public class Texture {
         SLOWBALL,
         TRIPLEBALL,
         LIVE
-
     }
-    private static Image[] brickImages = new Image[8];
 
-    public static void loadTextures() {
+    static {
         try {
             backgroundImage = loadImage("/arkanoid/resources/background.png");
+
             paddleImage = loadImage("/arkanoid/resources/paddle/paddle.png");
-            ballImage = loadImage("/arkanoid/resources/ball/ball.png");
+            normalBallImage = loadImage("/arkanoid/resources/ball/ball.png");
+            explosiveBallImage = loadImage("/arkanoid/resources/ball/explosiveball.png");
 
             brickImages[0] = null;
             brickImages[1] = loadImage("/arkanoid/resources/brick/brick1.png");
@@ -52,14 +54,13 @@ public class Texture {
             brickImages[5] = loadImage("/arkanoid/resources/brick/brick5.png");
             brickImages[6] = loadImage("/arkanoid/resources/brick/brick6.png");
             brickImages[7] = loadImage("/arkanoid/resources/brick/brick7.png");
-            expandPaddleImage = loadImage("/arkanoid/resources/powerup/powerup_expandpaddle.png");
-            speedUpPaddleImage = loadImage("/arkanoid/resources/powerup/powerup_speedpaddle.png");
-            explosiveBallImage = loadImage("/arkanoid/resources/powerup/powerup_explosiveball.png");
-            bongnoImage = loadImage("/arkanoid/resources/ball/explosiveball.png");
-            slowBallImage = loadImage("/arkanoid/resources/powerup/powerup_slowball.png");
-            tripleBallImage = loadImage("/arkanoid/resources/powerup/powerup_tripleball.png");
-            liveImage = loadImage("/arkanoid/resources/powerup/powerup_live.png");
 
+            expandPaddlePowerUPImage = loadImage("/arkanoid/resources/powerup/powerup_expandpaddle.png");
+            speedUpPaddlePowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_speedpaddle.png");
+            explosiveBallPowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_explosiveball.png");
+            slowBallPowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_slowball.png");
+            tripleBallPowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_tripleball.png");
+            livePowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_live.png");
         } catch (Exception e) {
             System.err.println("Error loading textures resources");
             e.printStackTrace();
@@ -89,21 +90,21 @@ public class Texture {
         }
     }
 
+    public static void applyTextureToPaddle(Rectangle paddleShape) {
+        if (paddleImage != null) {
+            paddleShape.setFill(new ImagePattern(paddleImage));
+        }
+    }
+
     public static void applyTextureToBall(Circle ballShape) {
-        if (ballImage != null) {
-            ballShape.setFill(new ImagePattern(ballImage));
+        if (normalBallImage != null) {
+            ballShape.setFill(new ImagePattern(normalBallImage));
         }
     }
 
     public static void applyExplosiveTextureToBall(Circle ballShape) {
-        if (bongnoImage != null) {
-            ballShape.setFill(new ImagePattern(bongnoImage));
-        }
-    }
-
-    public static void applyTextureToPaddle(Rectangle paddleShape) {
-        if (paddleImage != null) {
-            paddleShape.setFill(new ImagePattern(paddleImage));
+        if (explosiveBallImage != null) {
+            ballShape.setFill(new ImagePattern(explosiveBallImage));
         }
     }
 
@@ -112,49 +113,28 @@ public class Texture {
             brickShape.setFill(new ImagePattern(brickImages[index]));
         }
     }
-    public static Image getExpandPaddleImage() {
-        return expandPaddleImage;
-    }
 
-    public static Image getSpeedUpPaddleImage() {
-        return speedUpPaddleImage;
-    }
-
-    public static Image getExplosiveBallImage() {
-        return explosiveBallImage;
-    }
-    public static Image getSlowBallImage() {
-        return slowBallImage;
-    }
-
-    public static Image getTripleBallImage() {
-        return tripleBallImage;
-    }
-
-    public static Image getHealthImage() {
-        return liveImage;
-    }
     public static void applyTextureToPowerUp(Rectangle powerUpShape, PowerUpType type) {
         Image texture = null;
 
         switch (type) {
             case EXPAND:
-                texture = expandPaddleImage;
+                texture = expandPaddlePowerUPImage;
                 break;
             case SPEED_UP:
-                texture = speedUpPaddleImage;
+                texture = speedUpPaddlePowerUpImage;
                 break;
             case EXPLOSIVEBALL:
-                texture = explosiveBallImage;
+                texture = explosiveBallPowerUpImage;
                 break;
             case SLOWBALL:
-                texture = slowBallImage;
+                texture = slowBallPowerUpImage;
                 break;
             case TRIPLEBALL:
-                texture = tripleBallImage;
+                texture = tripleBallPowerUpImage;
                 break;
             case LIVE:
-                texture = liveImage;
+                texture = livePowerUpImage;
                 break;
         }
         if (texture != null) {
