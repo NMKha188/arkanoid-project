@@ -3,6 +3,7 @@ package arkanoid.source.code.gameplay;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.gameplay.brick.BrickSet;
+import arkanoid.source.code.gameplay.brick.Map;
 import arkanoid.source.code.gameplay.paddle.Paddle;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import javafx.animation.AnimationTimer;
@@ -23,15 +24,11 @@ public class InGameLogic {
 
     private static AnimationTimer gameTimer;
 
-    static {
-        Texture.loadTextures();
-    }
-
     private static final Paddle paddle = new Paddle();
 
     private static final BallList ballList = new BallList();
 
-    private static final BrickSet brickSet = new BrickSet();
+    private static BrickSet brickSet = Map.getMap(1);
 
     private static final PowerUpList powerUpList = new PowerUpList();
 
@@ -40,10 +37,10 @@ public class InGameLogic {
 
         paddle.addShapeToGameRoot();
 
-        ballList.addShapeToGameRoot();
-
-        brickSet.readData(Config.MAP1_DATA_PATH);
         brickSet.addShapeToGameRoot();
+
+        ballList.addShapeToGameRoot();
+        ballList.addVelocityRepresentativeLineToGameRoot();
 
         InGameStatus.addGroupToGameRoot();
     }
@@ -94,6 +91,7 @@ public class InGameLogic {
                 }
                 case SPACE -> {
                     ballList.setReleased(true);
+                    ballList.hideVelocityRepresentativeLine();
                 }
                 default -> {
                 }

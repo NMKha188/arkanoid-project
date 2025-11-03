@@ -25,19 +25,9 @@ public class Ball implements GameObject {
     private double maxVx = ballSpeed * 0.67;
     private double changeVx = 0.05;
 
-    // Vx representative line while sticking to the paddle (GUI for player to know which way will the ball fly after being released)
-    //private final Line velocityRepresentativeLine;
-
-
     public Ball() {
         shape = new Circle(BALL_RADIUS);
         Texture.applyTextureToBall(shape);
-
-        /*
-        velocityRepresentativeLine = new Line();
-        velocityRepresentativeLine.setStrokeWidth(5);
-        velocityRepresentativeLine.setStroke(Color.NAVY);
-         */
     }
 
     // this constructor copy characteristics from another ball, except Vx and Vy
@@ -143,14 +133,6 @@ public class Ball implements GameObject {
         }
         Vx += changeVx;
         Vy = -Math.sqrt(Math.pow(ballSpeed, 2) - Math.pow(Vx, 2));
-
-        // Vx representative line (GUI for player to know which way will the ball fly after being released)
-        /*
-        velocityRepresentativeLine.setStartX(x);
-        velocityRepresentativeLine.setStartY(y + BALL_RADIUS + paddle.getHeight() + 5);
-        velocityRepresentativeLine.setEndX(x + Vx * ((paddle.getWidth() / 2) / maxVx));
-        velocityRepresentativeLine.setEndY(y + BALL_RADIUS + paddle.getHeight() + 5);
-        */
     }
 
     // check collision with other Game Objects
@@ -258,13 +240,13 @@ public class Ball implements GameObject {
                                 if (leftBrick instanceof ResonanceBrick) {
                                     ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j - 1);
                                 } else { // others
-                                    leftBrick.getHit(1, powerUpList);
+                                    leftBrick.getHit(1, brickSet, powerUpList);
                                 }
                                 // resonance current brick
                                 if (currentBrick instanceof ResonanceBrick) {
                                     ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
                                 } else { // others
-                                    currentBrick.getHit(1, powerUpList);
+                                    currentBrick.getHit(1, brickSet, powerUpList);
                                 }
                             }
                         } else if (rightBrick != null && this.checkCollision(rightBrick)) {
@@ -277,13 +259,13 @@ public class Ball implements GameObject {
                                 if (rightBrick instanceof ResonanceBrick) {
                                     ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j + 1);
                                 } else { // others
-                                    rightBrick.getHit(1, powerUpList);
+                                    rightBrick.getHit(1, brickSet, powerUpList);
                                 }
                                 // resonance current brick
                                 if (currentBrick instanceof ResonanceBrick) {
                                     ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
                                 } else { // others
-                                    currentBrick.getHit(1, powerUpList);
+                                    currentBrick.getHit(1, brickSet, powerUpList);
                                 }
                             }
                         }
@@ -310,13 +292,13 @@ public class Ball implements GameObject {
                                 if (topBrick instanceof ResonanceBrick) {
                                     ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i - 1, j);
                                 } else { // others
-                                    topBrick.getHit(1, powerUpList);
+                                    topBrick.getHit(1, brickSet, powerUpList);
                                 }
                                 // resonance current brick
                                 if (currentBrick instanceof ResonanceBrick) {
                                     ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
                                 } else { // others
-                                    currentBrick.getHit(1, powerUpList);
+                                    currentBrick.getHit(1, brickSet, powerUpList);
                                 }
                             }
                         } else if (bottomBrick != null && this.checkCollision(bottomBrick)) {
@@ -329,13 +311,13 @@ public class Ball implements GameObject {
                                 if (bottomBrick instanceof ResonanceBrick) {
                                     ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i + 1, j);
                                 } else { // others
-                                    bottomBrick.getHit(1, powerUpList);
+                                    bottomBrick.getHit(1, brickSet, powerUpList);
                                 }
                                 // resonance current brick
                                 if (currentBrick instanceof ResonanceBrick) {
                                     ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
                                 } else { // others
-                                    currentBrick.getHit(1, powerUpList);
+                                    currentBrick.getHit(1, brickSet, powerUpList);
                                 }
                             }
                         }
@@ -356,7 +338,7 @@ public class Ball implements GameObject {
                             if (currentBrick instanceof ResonanceBrick) {
                                 ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
                             } else {
-                                currentBrick.getHit(1, powerUpList);
+                                currentBrick.getHit(1, brickSet, powerUpList);
                             }
                         }
                         this.collideWithBrick(currentBrick);

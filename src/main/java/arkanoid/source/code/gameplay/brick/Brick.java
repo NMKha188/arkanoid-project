@@ -27,13 +27,14 @@ public abstract class Brick extends RectangleGameObject {
     }
 
     // get hit by ball, increase game score and may create power up when destroyed
-    public void getHit(int hitPointsLoss, PowerUpList powerUpList) {
+    public void getHit(int hitPointsLoss, BrickSet brickSet, PowerUpList powerUpList) {
         if (this instanceof UnbreakableBrick) {
             return;
         }
         hitPoints -= hitPointsLoss;
         if (isDestroyed()) {
             this.removeShapeFromGameRoot();
+            brickSet.loseBrick();
             InGameStatus.setScore(InGameStatus.getScore() + 10);
             powerUpList.createPowerUp(this);
         } else {
