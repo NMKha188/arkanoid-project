@@ -8,7 +8,6 @@ import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import arkanoid.source.code.graphic.Texture;
 
@@ -23,8 +22,6 @@ public class InGameLogic {
     private static boolean movingRight = false;
 
     private static AnimationTimer gameTimer;
-
-    private static Rectangle downRec;
 
     private static final Paddle paddle = new Paddle();
 
@@ -47,16 +44,6 @@ public class InGameLogic {
         InGameStatus.applyBorderTextures();
 
         InGameStatus.addGroupToGameRoot();
-
-        double borderHeight = 55;
-        double borderWidth = GAMEPLAY_SCREEN_WIDTH + GAMEPLAY_SCREEN_WIDTH / 3;
-        double borderY = 680;
-
-        downRec = new Rectangle(0, borderY, borderWidth, borderHeight);
-
-        Texture.applyAndPlayAnimation(downRec);
-
-        gameRoot.getChildren().add(downRec);
     }
 
     public static double getGameplayScreenWidth() {
@@ -80,7 +67,6 @@ public class InGameLogic {
     }
 
     private static void handleKeyInput() {
-        // handle key press
         gameScene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
                 case LEFT -> {
@@ -94,7 +80,6 @@ public class InGameLogic {
             }
         });
 
-        // Handle key release
         gameScene.setOnKeyReleased(event -> {
             switch(event.getCode()) {
                 case LEFT -> {
@@ -140,7 +125,7 @@ public class InGameLogic {
             gameTimer = null;
         }
 
-        Texture.stopAnimation();
+        InGameStatus.stopDownRecAnimation();
     }
 
     private static void reset() {
@@ -148,5 +133,7 @@ public class InGameLogic {
         ballList.reset();
         brickSet.reset();
         powerUpList.reset(paddle, ballList);
+
+        InGameStatus.startDownRecAnimation();
     }
 }
