@@ -22,7 +22,7 @@ public class InGameLogic {
     private static boolean movingRight = false;
 
     private static AnimationTimer gameTimer;
-
+    private static int level = 0;
     static {
         Texture.loadTextures();
     }
@@ -102,8 +102,7 @@ public class InGameLogic {
     }
 
     public static Scene createGameScene(Stage primaryStage) {
-        reset();
-
+        level++;
         handleKeyInput();
 
         if (gameTimer != null) {
@@ -130,7 +129,8 @@ public class InGameLogic {
         }
     }
 
-    private static void reset() {
+    public static void reset() {
+        level = 0;
         paddle.reset();
         ballList.reset();
         brickSet.reset();

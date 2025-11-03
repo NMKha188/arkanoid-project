@@ -3,6 +3,8 @@ package arkanoid.source.code.gameplay;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gamecontroller.GameEngine;
 import arkanoid.source.code.gamecontroller.GameOverScreen;
+import arkanoid.source.code.gamecontroller.LevelClearScreen;
+import arkanoid.source.code.gamecontroller.SceneController;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -33,12 +35,12 @@ public class InGameStatus {
     private static final double LIVES_Y = Config.BRICK_HEIGHT;
 
     static {
-        scoreText.setFont(Font.font("Consolas", 25));
+        scoreText.setFont(Font.font("Charlemagne Std", 25));
         scoreText.setFill(Color.BLACK);
         scoreText.setX(SCORE_X);
         scoreText.setY(SCORE_Y);
 
-        livesText.setFont(Font.font("Consolas", 25));
+        livesText.setFont(Font.font("Charlemagne Std", 25));
         livesText.setFill(Color.BLACK);
         livesText.setX(LIVES_X);
         livesText.setY(LIVES_Y);
@@ -56,14 +58,13 @@ public class InGameStatus {
     public static void setScore(int value) {
         score = value;
         updateTexts();
+        if(score >= 50) {
+            SceneController.completeLevel();
+        }
     }
 
     public static int getLives() {
         return lives;
-    }
-
-    public static void setPrimaryStage(Stage stage) {
-        primaryStage = stage;
     }
 
     public static void recoverLife() {
@@ -75,7 +76,7 @@ public class InGameStatus {
         if (lives > 0) lives--;
         updateTexts();
         if (lives == 0) {
-            showGameOverScene();
+            SceneController.showGameOverScene();
         }
     }
 
@@ -92,22 +93,9 @@ public class InGameStatus {
         score = 0;
         lives = 3;
         updateTexts();
+        InGameLogic.reset();
     }
 
-    private static void showGameOverScene() {
-        Platform.runLater(() -> {
-            if (primaryStage != null) {
-                InGameLogic.stopGame();
-                System.out.println("Switching to game over scene...");
-                GameOverScreen.switchToGameOverScene(score, primaryStage);
-            } else {
-                System.out.println("You lose");
-                System.out.println("Your final score: " + score);
-                System.out.println("ERROR: primaryStage is null!");
-                System.exit(0);
-            }
-        });
-    }
 
     public static void addGroupToGameRoot() {
         InGameLogic.getRoot().getChildren().add(InGameStatus.getGroup());

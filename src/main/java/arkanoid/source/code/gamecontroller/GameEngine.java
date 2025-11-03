@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 public class GameEngine extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        InGameStatus.setPrimaryStage(primaryStage);
+        SceneController.setPrimaryStage(primaryStage);
 
         java.net.URL resourceUrl = getClass().getResource("/arkanoid/resources/sceneMenu.fxml");
 

@@ -1,6 +1,7 @@
 package arkanoid.source.code.gamecontroller;
 
 import arkanoid.source.code.gameplay.InGameLogic;
+import arkanoid.source.code.gameplay.InGameStatus;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
 
 public class SceneController {
     @FXML
@@ -30,15 +32,19 @@ public class SceneController {
 
     @FXML
     private Button backButton;
-//    private static Stage primaryStage;
 
+    private static Stage primaryStage;
+
+    public static void setPrimaryStage(Stage stage) {
+        primaryStage = stage;
+    }
     @FXML
     public void initialize() {
         if (instructionsOverlay != null) {
             instructionsOverlay.setVisible(false);
         }
         playButton.setOnAction(e -> {
-            startGame();
+            startGame(playButton);
         });
         exitButton.setOnAction(e -> {
             System.out.println("Closing game...");
@@ -53,11 +59,11 @@ public class SceneController {
         });
     }
 
-    private void startGame() {
+    public void startGame(Button a) {
         System.out.println("Starting game....");
         try {
             // Close the current menu stage
-            Stage currentStage = (Stage) playButton.getScene().getWindow();
+            Stage currentStage = (Stage) a.getScene().getWindow();
 
             Scene gameScene = InGameLogic.createGameScene(currentStage);
             currentStage.setScene(gameScene);
@@ -88,5 +94,35 @@ public class SceneController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void completeLevel() {
+        Platform.runLater(() -> {
+            if (primaryStage != null) {
+                InGameLogic.stopGame();
+                System.out.println("Switching to next level scene...");
+                LevelClearScreen.levelClear(InGameStatus.getScore(), primaryStage);
+            } else {
+                System.out.println("You passed");
+                System.out.println("Your score: " + InGameStatus.getScore());
+                System.out.println("ERROR: primaryStage is null!");
+                System.exit(0);
+            }
+        });
+    }
+
+    public static void showGameOverScene() {
+        Platform.runLater(() -> {
+            if (primaryStage != null) {
+                InGameLogic.stopGame();
+                System.out.println("Switching to game over scene...");
+                GameOverScreen.switchToGameOverScene(InGameStatus.getScore(), primaryStage);
+            } else {
+                System.out.println("You lose");
+                System.out.println("Your final score: " + InGameStatus.getScore());
+                System.out.println("ERROR: primaryStage is null!");
+                System.exit(0);
+            }
+        });
     }
 }
