@@ -44,11 +44,11 @@ public class ExplosiveBall extends PowerUp {
             }
             ResonanceBrick.resonanceHit(1, powerUpList, brickSet, iTemporary, jTemporary);
             if (t == 0) {
-                brick.getHit(3, powerUpList);
+                brick.getHit(3, brickSet, powerUpList);
             } else if (t <= 4) {
-                brick.getHit(2, powerUpList);
+                brick.getHit(2, brickSet, powerUpList);
             } else {
-                brick.getHit(1, powerUpList);
+                brick.getHit(1, brickSet, powerUpList);
             }
         }
     }

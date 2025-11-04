@@ -19,12 +19,10 @@ import javafx.util.Duration;
 import java.io.InputStream;
 
 public class Texture {
-
     private static Image backgroundImage;
+
     private static Image paddleImage;
-    private static Image ballImage;
-    private static Image expandPaddleImage;
-    private static Image speedUpPaddleImage;
+    private static Image normalBallImage;
     private static Image explosiveBallImage;
     private static Image bongnoImage;
     private static Image slowBallImage;
@@ -43,15 +41,15 @@ public class Texture {
         SLOWBALL,
         TRIPLEBALL,
         LIVE
-
     }
-    private static Image[] brickImages = new Image[8];
 
     static {
         try {
             backgroundImage = loadImage("/arkanoid/resources/background.png");
+
             paddleImage = loadImage("/arkanoid/resources/paddle/paddle.png");
-            ballImage = loadImage("/arkanoid/resources/ball/ball.png");
+            normalBallImage = loadImage("/arkanoid/resources/ball/ball.png");
+            explosiveBallImage = loadImage("/arkanoid/resources/ball/explosiveball.png");
 
             brickImages[0] = null;
             brickImages[1] = loadImage("/arkanoid/resources/brick/brick1.png");
@@ -77,6 +75,12 @@ public class Texture {
                 downRecImages[i] = loadImage(path);
             }
 
+            expandPaddlePowerUPImage = loadImage("/arkanoid/resources/powerup/powerup_expandpaddle.png");
+            speedUpPaddlePowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_speedpaddle.png");
+            explosiveBallPowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_explosiveball.png");
+            slowBallPowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_slowball.png");
+            tripleBallPowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_tripleball.png");
+            livePowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_live.png");
         } catch (Exception e) {
             System.err.println("Error loading textures resources");
             e.printStackTrace();
@@ -106,15 +110,15 @@ public class Texture {
         }
     }
 
-    public static void applyTextureToBall(Circle ballShape) {
-        if (ballImage != null) {
-            ballShape.setFill(new ImagePattern(ballImage));
+    public static void applyTextureToPaddle(Rectangle paddleShape) {
+        if (paddleImage != null) {
+            paddleShape.setFill(new ImagePattern(paddleImage));
         }
     }
 
-    public static void applyExplosiveTextureToBall(Circle ballShape) {
-        if (bongnoImage != null) {
-            ballShape.setFill(new ImagePattern(bongnoImage));
+    public static void applyTextureToBall(Circle ballShape) {
+        if (normalBallImage != null) {
+            ballShape.setFill(new ImagePattern(normalBallImage));
         }
     }
 
@@ -162,41 +166,27 @@ public class Texture {
         return speedUpPaddleImage;
     }
 
-    public static Image getExplosiveBallImage() {
-        return explosiveBallImage;
-    }
-    public static Image getSlowBallImage() {
-        return slowBallImage;
-    }
-
-    public static Image getTripleBallImage() {
-        return tripleBallImage;
-    }
-
-    public static Image getHealthImage() {
-        return liveImage;
-    }
     public static void applyTextureToPowerUp(Rectangle powerUpShape, PowerUpType type) {
         Image texture = null;
 
         switch (type) {
             case EXPAND:
-                texture = expandPaddleImage;
+                texture = expandPaddlePowerUPImage;
                 break;
             case SPEED_UP:
-                texture = speedUpPaddleImage;
+                texture = speedUpPaddlePowerUpImage;
                 break;
             case EXPLOSIVEBALL:
-                texture = explosiveBallImage;
+                texture = explosiveBallPowerUpImage;
                 break;
             case SLOWBALL:
-                texture = slowBallImage;
+                texture = slowBallPowerUpImage;
                 break;
             case TRIPLEBALL:
-                texture = tripleBallImage;
+                texture = tripleBallPowerUpImage;
                 break;
             case LIVE:
-                texture = liveImage;
+                texture = livePowerUpImage;
                 break;
         }
         if (texture != null) {

@@ -31,8 +31,8 @@ public class RegenerativeBrick extends Brick {
     }
 
     // specialized get hit method
-    public void getHit(int hitPointsLoss, PowerUpList powerUpList) {
-        super.getHit(hitPointsLoss, powerUpList);
+    public void getHit(int hitPointsLoss, BrickSet brickSet, PowerUpList powerUpList) {
+        super.getHit(hitPointsLoss, brickSet, powerUpList);
         hitMoment = Instant.now(); // store the last get hit moment
     }
 
