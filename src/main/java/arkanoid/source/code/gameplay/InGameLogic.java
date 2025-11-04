@@ -39,8 +39,7 @@ public class InGameLogic {
 
         brickSet.addShapeToGameRoot();
 
-        ballList.addShapeToGameRoot();
-        ballList.addVelocityRepresentativeLineToGameRoot();
+        InGameStatus.applyBorderTextures();
 
         InGameStatus.addGroupToGameRoot();
     }
@@ -66,7 +65,6 @@ public class InGameLogic {
     }
 
     private static void handleKeyInput() {
-        // handle key press
         gameScene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
                 case LEFT -> {
@@ -80,7 +78,6 @@ public class InGameLogic {
             }
         });
 
-        // Handle key release
         gameScene.setOnKeyReleased(event -> {
             switch(event.getCode()) {
                 case LEFT -> {
@@ -126,6 +123,8 @@ public class InGameLogic {
             gameTimer.stop();
             gameTimer = null;
         }
+
+        InGameStatus.stopDownRecAnimation();
     }
 
     private static void reset() {
@@ -133,5 +132,7 @@ public class InGameLogic {
         ballList.reset();
         brickSet.reset();
         powerUpList.reset(paddle, ballList);
+
+        InGameStatus.startDownRecAnimation();
     }
 }

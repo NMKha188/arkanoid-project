@@ -3,6 +3,7 @@ package arkanoid.source.code.gameplay;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gamecontroller.GameEngine;
 import arkanoid.source.code.gamecontroller.GameOverScreen;
+import arkanoid.source.code.graphic.Texture;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -10,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import java.io.InputStream;
 
 public class InGameStatus {
 
@@ -21,7 +23,7 @@ public class InGameStatus {
     private static final Text livesText = new Text("Lives: " + lives);
 
     private static final Rectangle topRec = new Rectangle(0, 0, Config.EXTRA +  Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4);
-    private static final Rectangle downRec = new Rectangle(0, Config.EXTRA / 4 + Config.GAMEPLAY_SCREEN_HEIGHT, Config.EXTRA + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4);
+    private static final Rectangle downRec = new Rectangle(0, Config.EXTRA / 4 + Config.GAMEPLAY_SCREEN_HEIGHT, Config.EXTRA + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4); // <- Animation sẽ áp dụng cho viền này
     private static final Rectangle leftRec = new Rectangle(0, Config.EXTRA / 4, Config.EXTRA / 2, Config.GAMEPLAY_SCREEN_HEIGHT);
     private static final Rectangle rightRec = new Rectangle(Config.EXTRA / 2 + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4, Config.EXTRA / 2, Config.GAMEPLAY_SCREEN_HEIGHT);
 
@@ -43,11 +45,22 @@ public class InGameStatus {
         livesText.setX(LIVES_X);
         livesText.setY(LIVES_Y);
 
-        topRec.setFill(Color.BLUE);
-        downRec.setFill(Color.BLUE);
-        leftRec.setFill(Color.BLUE);
-        rightRec.setFill(Color.BLUE);
     }
+
+    public static void applyBorderTextures() {
+        Texture.applyTextureToTopRec(topRec);
+        Texture.applyTextureToLeftRec(leftRec);
+        Texture.applyTextureToRightRec(rightRec);
+    }
+
+    public static void startDownRecAnimation() {
+        Texture.applyAndPlayAnimation(downRec);
+    }
+
+    public static void stopDownRecAnimation() {
+        Texture.stopAnimation();
+    }
+
 
     public static int getScore() {
         return score;
