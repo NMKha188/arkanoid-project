@@ -16,24 +16,29 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+
 import java.io.InputStream;
 
 public class Texture {
     private static Image backgroundImage;
 
+    private static Image topBorderImage;
+    private static Image[] downBorderImages = new Image[14];
+    private static Timeline borderAnimation;
+    private static Image leftBorderImage;
+    private static Image rightBorderImage;
+
     private static Image paddleImage;
     private static Image normalBallImage;
     private static Image explosiveBallImage;
-    private static Image bongnoImage;
-    private static Image slowBallImage;
-    private static Image tripleBallImage;
-    private static Image liveImage;
-    private static Image[] downRecImages = new Image[14];
-    private static Timeline borderAnimation;
-    private static Image topRecImage;
-    private static Image downRecImage;
-    private static Image leftRecImage;
-    private static Image rightRecImage;
+    private static Image[] brickImages = new Image[8];
+
+    private static Image expandPaddlePowerUPImage;
+    private static Image speedUpPaddlePowerUpImage;
+    private static Image slowBallPowerUpImage;
+    private static Image explosiveBallPowerUpImage;
+    private static Image tripleBallPowerUpImage;
+    private static Image livePowerUpImage;
     public enum PowerUpType {
         EXPAND,
         SPEED_UP,
@@ -48,6 +53,7 @@ public class Texture {
             backgroundImage = loadImage("/arkanoid/resources/background.png");
 
             paddleImage = loadImage("/arkanoid/resources/paddle/paddle.png");
+
             normalBallImage = loadImage("/arkanoid/resources/ball/ball.png");
             explosiveBallImage = loadImage("/arkanoid/resources/ball/explosiveball.png");
 
@@ -59,21 +65,6 @@ public class Texture {
             brickImages[5] = loadImage("/arkanoid/resources/brick/brick5.png");
             brickImages[6] = loadImage("/arkanoid/resources/brick/brick6.png");
             brickImages[7] = loadImage("/arkanoid/resources/brick/brick7.png");
-            expandPaddleImage = loadImage("/arkanoid/resources/powerup/powerup_expandpaddle.png");
-            speedUpPaddleImage = loadImage("/arkanoid/resources/powerup/powerup_speedpaddle.png");
-            explosiveBallImage = loadImage("/arkanoid/resources/powerup/powerup_explosiveball.png");
-            bongnoImage = loadImage("/arkanoid/resources/ball/explosiveball.png");
-            slowBallImage = loadImage("/arkanoid/resources/powerup/powerup_slowball.png");
-            tripleBallImage = loadImage("/arkanoid/resources/powerup/powerup_tripleball.png");
-            liveImage = loadImage("/arkanoid/resources/powerup/powerup_live.png");
-            topRecImage = loadImage("/arkanoid/resources/topRec.png");
-            downRecImage = loadImage("/arkanoid/resources/downRec.png");
-            leftRecImage = loadImage("/arkanoid/resources/leftRec.png");
-            rightRecImage = loadImage("/arkanoid/resources/rightRec.png");
-            for (int i = 0; i < downRecImages.length; i++) {
-                String path = "/arkanoid/resources/downRec" + (i + 1) + ".png";
-                downRecImages[i] = loadImage(path);
-            }
 
             expandPaddlePowerUPImage = loadImage("/arkanoid/resources/powerup/powerup_expandpaddle.png");
             speedUpPaddlePowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_speedpaddle.png");
@@ -81,6 +72,14 @@ public class Texture {
             slowBallPowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_slowball.png");
             tripleBallPowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_tripleball.png");
             livePowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_live.png");
+
+            topBorderImage = loadImage("/arkanoid/resources/border/topRec.png");
+            leftBorderImage = loadImage("/arkanoid/resources/border/leftRec.png");
+            rightBorderImage = loadImage("/arkanoid/resources/border/rightRec.png");
+            for (int i = 0; i < downBorderImages.length; i++) {
+                String path = "/arkanoid/resources/border/downRec" + (i + 1) + ".png";
+                downBorderImages[i] = loadImage(path);
+            }
         } catch (Exception e) {
             System.err.println("Error loading textures resources");
             e.printStackTrace();
@@ -110,6 +109,63 @@ public class Texture {
         }
     }
 
+    public static void applyTextureToTopRec(Rectangle topRec) {
+        if (topBorderImage != null) {
+            topRec.setFill(new ImagePattern(topBorderImage));
+        }
+    }
+
+    public static void applyTextureToLeftRec(Rectangle leftRec) {
+        if (leftBorderImage != null) {
+            leftRec.setFill(new ImagePattern(leftBorderImage));
+        }
+    }
+
+    public static void applyTextureToRightRec(Rectangle rightRec) {
+        if (rightBorderImage != null) {
+            rightRec.setFill(new ImagePattern(rightBorderImage));
+        }
+    }
+    // downRec animation
+    public static void applyAndPlayAnimation(Rectangle borderShape) {
+        if (downBorderImages == null || downBorderImages[0] == null) {
+            System.err.println("DownRec animation frames not loaded!");
+            return;
+        }
+
+        if (borderAnimation != null) {
+            borderAnimation.stop();
+        }
+
+        borderShape.setFill(new ImagePattern(downBorderImages[0]));
+
+        borderAnimation = new Timeline();
+        borderAnimation.setCycleCount(Animation.INDEFINITE);
+        double frameDuration = 150;
+
+        for (int i = 0; i < downBorderImages.length; i++) {
+            final int frameIndex = i;
+            KeyFrame kf = new KeyFrame(
+                    Duration.millis(frameDuration * (i + 1)),
+                    e -> {
+                        if (borderShape != null && borderShape.getScene() != null) {
+                            borderShape.setFill(new ImagePattern(downBorderImages[frameIndex]));
+                        }
+                    }
+            );
+            borderAnimation.getKeyFrames().add(kf);
+        }
+
+        borderAnimation.play();
+    }
+    // stop downRec animation
+    public static void stopAnimation() {
+        if (borderAnimation != null) {
+            borderAnimation.stop();
+            borderAnimation = null;
+        }
+    }
+
     public static void applyTextureToPaddle(Rectangle paddleShape) {
         if (paddleImage != null) {
             paddleShape.setFill(new ImagePattern(paddleImage));
@@ -122,33 +178,9 @@ public class Texture {
         }
     }
 
-    public static void applyTextureToTopRec(Rectangle topRec) {
-        if (topRecImage != null) {
-            topRec.setFill(new ImagePattern(topRecImage));
-        }
-    }
-
-    public static void applyTextureToDownRec(Rectangle downRec) {
-        if (downRecImage != null) {
-            downRec.setFill(new ImagePattern(downRecImage));
-        }
-    }
-
-    public static void applyTextureToLeftRec(Rectangle leftRec) {
-        if (leftRecImage != null) {
-            leftRec.setFill(new ImagePattern(leftRecImage));
-        }
-    }
-
-    public static void applyTextureToRightRec(Rectangle rightRec) {
-        if (rightRecImage != null) {
-            rightRec.setFill(new ImagePattern(rightRecImage));
-        }
-    }
-
-    public static void applyTextureToPaddle(Rectangle paddleShape) {
-        if (paddleImage != null) {
-            paddleShape.setFill(new ImagePattern(paddleImage));
+    public static void applyExplosiveTextureToBall(Circle ballShape) {
+        if (explosiveBallImage != null) {
+            ballShape.setFill(new ImagePattern(explosiveBallImage));
         }
     }
 
@@ -156,14 +188,6 @@ public class Texture {
         if (index > 0 && index < brickImages.length && brickImages[index] != null) {
             brickShape.setFill(new ImagePattern(brickImages[index]));
         }
-    }
-
-    public static Image getExpandPaddleImage() {
-        return expandPaddleImage;
-    }
-
-    public static Image getSpeedUpPaddleImage() {
-        return speedUpPaddleImage;
     }
 
     public static void applyTextureToPowerUp(Rectangle powerUpShape, PowerUpType type) {
@@ -191,44 +215,6 @@ public class Texture {
         }
         if (texture != null) {
             powerUpShape.setFill(new ImagePattern(texture));
-        }
-    }
-    public static void applyAndPlayAnimation(Rectangle borderShape) {
-        if (downRecImages == null || downRecImages[0] == null) {
-            System.err.println("DownRec animation frames not loaded!");
-            return;
-        }
-
-        if (borderAnimation != null) {
-            borderAnimation.stop();
-        }
-
-        borderShape.setFill(new ImagePattern(downRecImages[0]));
-
-        borderAnimation = new Timeline();
-        borderAnimation.setCycleCount(Animation.INDEFINITE);
-        double frameDuration = 150;
-
-        for (int i = 0; i < downRecImages.length; i++) {
-            final int frameIndex = i;
-            KeyFrame kf = new KeyFrame(
-                    Duration.millis(frameDuration * (i + 1)),
-                    e -> {
-                        if (borderShape != null && borderShape.getScene() != null) {
-                            borderShape.setFill(new ImagePattern(downRecImages[frameIndex]));
-                        }
-                    }
-            );
-            borderAnimation.getKeyFrames().add(kf);
-        }
-
-        borderAnimation.play();
-    }
-
-    public static void stopAnimation() {
-        if (borderAnimation != null) {
-            borderAnimation.stop();
-            borderAnimation = null;
         }
     }
 }
