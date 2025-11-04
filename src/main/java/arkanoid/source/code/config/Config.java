@@ -18,8 +18,6 @@ public class Config {
     // 1 set of bricks
     public static final int BRICKS_ROW = 10;
     public static final int BRICKS_PER_ROW = 12;
-    // brick set data path
-    public static final String MAP1_DATA_PATH = "/arkanoid/resources/mapdata/map1.txt";
     // 1 brick
     public static final double BRICK_WIDTH = GAMEPLAY_SCREEN_WIDTH / BRICKS_PER_ROW;
     public static final double BRICK_HEIGHT = BRICK_WIDTH / 2;
