@@ -29,8 +29,12 @@ public class GameOverScreen {
 
     @FXML
     private void initialize() {
-        mainMenuButton.setOnAction(e -> switchToMainMenu());
+        mainMenuButton.setOnAction(e -> {
+                InGameStatus.resetGame();
+                switchToMainMenu();
+            });
         exitButton.setOnAction(e -> {
+            InGameStatus.resetGame();
             System.out.println("Closing game...");
             Platform.exit();
             System.exit(0);
@@ -50,7 +54,7 @@ public class GameOverScreen {
     }
 
     private void switchToMainMenu() {
-        InGameStatus.resetGame();
+
         if (primaryStage != null) {
             SceneController.switchToMainMenu(primaryStage);
         } else {

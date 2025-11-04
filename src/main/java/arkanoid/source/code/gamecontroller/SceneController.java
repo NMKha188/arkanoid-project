@@ -2,6 +2,7 @@ package arkanoid.source.code.gamecontroller;
 
 import arkanoid.source.code.gameplay.InGameLogic;
 import arkanoid.source.code.gameplay.InGameStatus;
+import arkanoid.source.code.gameplay.Ranking;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class SceneController {
@@ -20,19 +22,32 @@ public class SceneController {
 
     @FXML
     private VBox instructionsOverlay;
-
+    @FXML
+    private VBox ldbOverlay;
     @FXML
     private Button playButton;
 
     @FXML
     private Button exitButton;
-
+    @FXML
+    private Button ldbButton;
     @FXML
     private Button instructionsButton;
 
     @FXML
     private Button backButton;
-
+    @FXML
+    private Button ldbBackButton;
+    @FXML
+    private Label score1;
+    @FXML
+    private Label score2;
+    @FXML
+    private Label score3;
+    @FXML
+    private Label score4;
+    @FXML
+    private Label score5;
     private static Stage primaryStage;
 
     public static void setPrimaryStage(Stage stage) {
@@ -43,6 +58,9 @@ public class SceneController {
         if (instructionsOverlay != null) {
             instructionsOverlay.setVisible(false);
         }
+        if (ldbOverlay != null) {
+            ldbOverlay.setVisible(false);
+        }
         playButton.setOnAction(e -> {
             startGame(playButton);
         });
@@ -50,6 +68,12 @@ public class SceneController {
             System.out.println("Closing game...");
             Platform.exit();
             System.exit(0);
+        });
+        ldbButton.setOnAction(e -> {
+            showLdb();
+        });
+        ldbBackButton.setOnAction(event -> {
+            hideLdb();
         });
         instructionsButton.setOnAction(e -> {
             showInstructions();
@@ -61,6 +85,7 @@ public class SceneController {
 
     public void startGame(Button a) {
         System.out.println("Starting game....");
+
         try {
             // Close the current menu stage
             Stage currentStage = (Stage) a.getScene().getWindow();
@@ -76,6 +101,25 @@ public class SceneController {
         }
     }
 
+    private void showLdb() {
+        addScore();
+        mainMenu.setVisible(false);
+        ldbOverlay.setVisible(true);
+    }
+
+    private void hideLdb() {
+        mainMenu.setVisible(true);
+        ldbOverlay.setVisible(false);
+    }
+    public void addScore(){
+        List<Integer> a = Ranking.returnArr();
+        Label[] scoreLabels = {score1, score2, score3, score4, score5};
+
+        // Gán điểm số vào các label
+        for (int i = 0; i < 5; i++) {
+            if(a.get(i) != null) scoreLabels[i].setText(String.valueOf(a.get(i)));
+        }
+    }
     private void showInstructions() {
         mainMenu.setVisible(false);
         instructionsOverlay.setVisible(true);

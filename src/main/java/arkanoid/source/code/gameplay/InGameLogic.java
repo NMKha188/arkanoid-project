@@ -1,6 +1,7 @@
 package arkanoid.source.code.gameplay;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gamecontroller.SceneController;
 import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.brick.Map;
@@ -100,8 +101,6 @@ public class InGameLogic {
     }
 
     public static Scene createGameScene(Stage primaryStage) {
-        reset();
-
         handleKeyInput();
 
         if (gameTimer != null) {
@@ -114,6 +113,10 @@ public class InGameLogic {
                 ballList.update(paddle, brickSet, powerUpList);
                 brickSet.update();
                 powerUpList.update(paddle, ballList, brickSet);
+                if(brickSet.isClear()) {
+                    System.out.println("Level Passed");
+                    SceneController.completeLevel();
+                }
             }
         };
         gameTimer.start();
@@ -128,7 +131,7 @@ public class InGameLogic {
         }
     }
 
-    private static void reset() {
+    public static void reset() {
         paddle.reset();
         ballList.reset();
         brickSet.reset();

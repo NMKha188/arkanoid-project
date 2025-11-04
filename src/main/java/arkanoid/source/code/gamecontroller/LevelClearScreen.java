@@ -29,11 +29,15 @@ public class LevelClearScreen {
     @FXML
     private void initialize() {
         nextLevelButton.setOnAction(e -> {
+            InGameLogic.reset();
             SceneController controller = new SceneController();
             controller.startGame(nextLevelButton);
         });
         updateScoreLabel();
-        backtoMMButton.setOnAction(e -> switchToMainMenu());
+        backtoMMButton.setOnAction(e -> {
+            InGameLogic.reset();
+            switchToMainMenu();
+        });
     }
 
     public void currentScore(int score) {
