@@ -20,7 +20,7 @@ public class ResonanceBrick extends Brick {
     public static void resonanceHit(int hitPointsLoss, PowerUpList powerUpList, BrickSet brickSet, int i, int j) {
         Brick currentBrick = brickSet.getOneBrickAt(i, j);
         if (currentBrick instanceof ResonanceBrick && !currentBrick.isDestroyed()) {
-            currentBrick.getHit(hitPointsLoss, powerUpList);
+            currentBrick.getHit(hitPointsLoss, brickSet, powerUpList);
             for (int t = 0; t < di.length; t++) {
                 resonanceHit(hitPointsLoss, powerUpList, brickSet, i + di[t], j + dj[t]);
             }

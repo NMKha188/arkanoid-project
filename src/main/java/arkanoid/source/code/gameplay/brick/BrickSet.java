@@ -11,6 +11,7 @@ public class BrickSet implements GameObject {
     private final int BRICKS_ROW = Config.BRICKS_ROW;
     private final int BRICKS_PER_ROW = Config.BRICKS_PER_ROW;
     private final Brick[][] brickSet = new Brick[BRICKS_ROW][BRICKS_PER_ROW]; // a matrix contains all Brick objects
+    private int numOfBricksLeft = 0;
 
     public int getBricksRow() {
         return BRICKS_ROW;
@@ -68,6 +69,9 @@ public class BrickSet implements GameObject {
                     double y = Config.EXTRA / 4 + i * Config.BRICK_HEIGHT;
                     int type = scanner.nextInt();
                     brickSet[i][j] = constructBrick(x, y, type);
+                    if (brickSet[i][j] != null && !(brickSet[i][j] instanceof UnbreakableBrick)) {
+                        numOfBricksLeft++;
+                    }
                 }
             }
             scanner.close();
@@ -108,6 +112,14 @@ public class BrickSet implements GameObject {
                 }
             }
         }
+    }
+
+    public void loseBrick() {
+        numOfBricksLeft--;
+    }
+
+    public boolean isClear() {
+        return numOfBricksLeft == 0;
     }
 
     // reset all brick state
