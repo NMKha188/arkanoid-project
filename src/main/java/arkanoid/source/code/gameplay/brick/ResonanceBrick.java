@@ -13,16 +13,26 @@ public class ResonanceBrick extends Brick {
     public ResonanceBrick(double x, double y) {
         super(x, y);
         hitPoints = 1;
+        score = Config.RESONANCE_BRICK_SCORE;
         Texture.applyTextureToBrick(shape, 7);
     }
 
     // specialized get hit method
-    public static void resonanceHit(int hitPointsLoss, PowerUpList powerUpList, BrickSet brickSet, int i, int j) {
-        Brick currentBrick = brickSet.getOneBrickAt(i, j);
-        if (currentBrick instanceof ResonanceBrick && !currentBrick.isDestroyed()) {
-            currentBrick.getHit(hitPointsLoss, brickSet, powerUpList);
+    public void getHit(int hitPointsLoss, BrickSet brickSet, PowerUpList powerUpList) {
+        super.getHit(hitPointsLoss, brickSet, powerUpList);
+        if (this.isDestroyed()) {
+            int i = (int) (Math.round((y - Config.EXTRA / 4) / Config.BRICK_HEIGHT));
+            int j = (int) (Math.round((x - Config.EXTRA / 2) / Config.BRICK_WIDTH));
             for (int t = 0; t < di.length; t++) {
-                resonanceHit(hitPointsLoss, powerUpList, brickSet, i + di[t], j + dj[t]);
+                int iTemporary = i + di[t];
+                int jTemporary = j + dj[t];
+                Brick brick = brickSet.getOneBrickAt(iTemporary, jTemporary);
+                if (brick == null || brick.isDestroyed()) {
+                    continue;
+                }
+                if (brick instanceof ResonanceBrick && !brick.isDestroyed()) {
+                    brickSet.addResonanceBrick((ResonanceBrick) brick);
+                }
             }
         }
     }

@@ -3,7 +3,11 @@ package arkanoid.source.code.gameplay.brick;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.InGameLogic;
+import arkanoid.source.code.gameplay.powerup.PowerUpList;
+
 import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class BrickSet implements GameObject {
@@ -12,6 +16,9 @@ public class BrickSet implements GameObject {
     private final int BRICKS_PER_ROW = Config.BRICKS_PER_ROW;
     private final Brick[][] brickSet = new Brick[BRICKS_ROW][BRICKS_PER_ROW]; // a matrix contains all Brick objects
     private int numOfBricksLeft = 0;
+
+    private final Queue<ResonanceBrick> resonanceBrickQueue = new LinkedList<>();
+    private final Queue<ExplosiveBrick> explosiveBrickQueue = new LinkedList<>();
 
     public int getBricksRow() {
         return BRICKS_ROW;
@@ -95,6 +102,9 @@ public class BrickSet implements GameObject {
                 newBrick = new ResonanceBrick(x, y);
             }
             case 5 -> {
+                newBrick = new ExplosiveBrick(x, y);
+            }
+            case 6 -> {
                 newBrick = new RegenerativeBrick(x, y);
             }
             default -> {
@@ -103,13 +113,35 @@ public class BrickSet implements GameObject {
         return newBrick;
     }
 
-    // update all brick state (not including getting hit since that method has already been called inside a ball collision method)
+    public void addResonanceBrick(ResonanceBrick resonanceBrick) {
+        resonanceBrickQueue.offer(resonanceBrick);
+    }
+
+    public void addExplosiveBrick(ExplosiveBrick explosiveBrick) {
+        explosiveBrickQueue.offer(explosiveBrick);
+    }
+
     public void update() {
+    }
+
+    // update all brick state (not including getting hit since that method has already been called inside a ball collision method)
+    public void update(PowerUpList powerUpList) {
         for (int i = 0; i < BRICKS_ROW; i++) {
             for (int j = 0; j < BRICKS_PER_ROW; j++) {
                 if (getOneBrickAt(i, j) instanceof RegenerativeBrick) {
                     ((RegenerativeBrick) getOneBrickAt(i, j)).regenerate();
                 }
+            }
+        }
+        for (int i = 0; i < 1; i++) {
+            ResonanceBrick resonanceBrick = resonanceBrickQueue.poll();
+            if (resonanceBrick != null && !resonanceBrick.isDestroyed()) {
+                resonanceBrick.getHit(1, this, powerUpList);
+            }
+
+            ExplosiveBrick explosiveBrick = explosiveBrickQueue.poll();
+            if (explosiveBrick != null && !explosiveBrick.isDestroyed()) {
+                explosiveBrick.getHit(2, this, powerUpList);
             }
         }
     }

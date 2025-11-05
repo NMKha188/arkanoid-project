@@ -128,6 +128,7 @@ public class Texture {
             rightRec.setFill(new ImagePattern(rightBorderImage));
         }
     }
+
     // downRec animation
     public static void applyAndPlayAnimation(Rectangle borderShape) {
         if (downBorderImages == null || downBorderImages[0] == null) {
@@ -160,6 +161,7 @@ public class Texture {
 
         borderAnimation.play();
     }
+
     // stop downRec animation
     public static void stopAnimation() {
         if (borderAnimation != null) {

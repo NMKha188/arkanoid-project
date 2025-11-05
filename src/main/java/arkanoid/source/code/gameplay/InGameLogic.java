@@ -28,7 +28,7 @@ public class InGameLogic {
 
     private static final BallList ballList = new BallList();
 
-    private static BrickSet brickSet = Map.getMap(1);
+    private static BrickSet brickSet = Map.getMap(5);
 
     private static final PowerUpList powerUpList = new PowerUpList();
 
@@ -112,7 +112,7 @@ public class InGameLogic {
             public void handle(long now) {
                 paddle.update();
                 ballList.update(paddle, brickSet, powerUpList);
-                brickSet.update();
+                brickSet.update(powerUpList);
                 powerUpList.update(paddle, ballList, brickSet);
             }
         };
@@ -131,6 +131,8 @@ public class InGameLogic {
     }
 
     private static void reset() {
+        movingLeft = false;
+        movingRight = false;
         paddle.reset();
         ballList.reset();
         brickSet.reset();
