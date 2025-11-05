@@ -45,7 +45,7 @@ public class Texture {
         LIVE
 
     }
-    private static Image[] brickImages = new Image[8];
+    private static Image[] brickImages = new Image[10];
 
     static {
         try {
@@ -61,6 +61,8 @@ public class Texture {
             brickImages[5] = loadImage("/arkanoid/resources/brick/brick5.png");
             brickImages[6] = loadImage("/arkanoid/resources/brick/brick6.png");
             brickImages[7] = loadImage("/arkanoid/resources/brick/brick7.png");
+            brickImages[8] = loadImage("/arkanoid/resources/brick/brick8.png");
+            brickImages[9] = loadImage("/arkanoid/resources/brick/brick9.png");
             expandPaddleImage = loadImage("/arkanoid/resources/powerup/powerup_expandpaddle.png");
             speedUpPaddleImage = loadImage("/arkanoid/resources/powerup/powerup_speedpaddle.png");
             explosiveBallImage = loadImage("/arkanoid/resources/powerup/powerup_explosiveball.png");
