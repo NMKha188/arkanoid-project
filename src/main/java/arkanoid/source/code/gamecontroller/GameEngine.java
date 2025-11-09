@@ -1,7 +1,6 @@
 package arkanoid.source.code.gamecontroller;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.InGameLogic;
-import arkanoid.source.code.gameplay.InGameStatus;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +11,7 @@ import javafx.stage.Stage;
 public class GameEngine extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        InGameStatus.setPrimaryStage(primaryStage);
+        SceneController.setPrimaryStage(primaryStage);
 
         java.net.URL resourceUrl = getClass().getResource("/arkanoid/resources/sceneMenu.fxml");
 

@@ -15,7 +15,8 @@ public class BrickSet implements GameObject {
     private final int BRICKS_ROW = Config.BRICKS_ROW;
     private final int BRICKS_PER_ROW = Config.BRICKS_PER_ROW;
     private final Brick[][] brickSet = new Brick[BRICKS_ROW][BRICKS_PER_ROW]; // a matrix contains all Brick objects
-    private int numOfBricksLeft = 0;
+    private int totalNumOfBricks = 0;
+    private int numOfBricksLeft;
 
     private final Queue<ResonanceBrick> resonanceBrickQueue = new LinkedList<>();
     private final Queue<ExplosiveBrick> explosiveBrickQueue = new LinkedList<>();
@@ -77,10 +78,11 @@ public class BrickSet implements GameObject {
                     int type = scanner.nextInt();
                     brickSet[i][j] = constructBrick(x, y, type);
                     if (brickSet[i][j] != null && !(brickSet[i][j] instanceof UnbreakableBrick)) {
-                        numOfBricksLeft++;
+                        totalNumOfBricks++;
                     }
                 }
             }
+            numOfBricksLeft = totalNumOfBricks;
             scanner.close();
         }
     }
@@ -162,6 +164,7 @@ public class BrickSet implements GameObject {
                 Brick brick = this.getOneBrickAt(i, j);
                 if (brick != null) {
                     brick.reset();
+                    numOfBricksLeft = totalNumOfBricks;
                 }
             }
         }

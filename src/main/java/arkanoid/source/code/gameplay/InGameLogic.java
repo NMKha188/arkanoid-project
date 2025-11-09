@@ -1,6 +1,7 @@
 package arkanoid.source.code.gameplay;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gamecontroller.SceneController;
 import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.brick.Map;
@@ -28,7 +29,7 @@ public class InGameLogic {
 
     private static final BallList ballList = new BallList();
 
-    private static BrickSet brickSet = Map.getMap(5);
+    private static BrickSet brickSet = Map.getMap(1);
 
     private static final PowerUpList powerUpList = new PowerUpList();
 
@@ -37,12 +38,10 @@ public class InGameLogic {
 
         paddle.addShapeToGameRoot();
 
-        ballList.addShapeToGameRoot();
-        ballList.addVelocityRepresentativeLineToGameRoot();
-
         brickSet.addShapeToGameRoot();
 
-        InGameStatus.applyBorderTextures();
+        ballList.addShapeToGameRoot();
+        ballList.addVelocityRepresentativeLineToGameRoot();
 
         InGameStatus.addGroupToGameRoot();
     }
@@ -68,27 +67,21 @@ public class InGameLogic {
     }
 
     private static void handleKeyInput() {
+        // handle key press
         gameScene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
-                case LEFT -> {
-                    movingLeft = true;
-                }
-                case RIGHT -> {
-                    movingRight = true;
-                }
+                case LEFT -> movingLeft = true;
+                case RIGHT -> movingRight = true;
                 default -> {
                 }
             }
         });
 
+        // Handle key release
         gameScene.setOnKeyReleased(event -> {
             switch(event.getCode()) {
-                case LEFT -> {
-                    movingLeft = false;
-                }
-                case RIGHT -> {
-                    movingRight = false;
-                }
+                case LEFT -> movingLeft = false;
+                case RIGHT -> movingRight = false;
                 case SPACE -> {
                     ballList.setReleased(true);
                     ballList.hideVelocityRepresentativeLine();
@@ -100,8 +93,6 @@ public class InGameLogic {
     }
 
     public static Scene createGameScene(Stage primaryStage) {
-        reset();
-
         handleKeyInput();
 
         if (gameTimer != null) {
@@ -112,8 +103,12 @@ public class InGameLogic {
             public void handle(long now) {
                 paddle.update();
                 ballList.update(paddle, brickSet, powerUpList);
-                brickSet.update(powerUpList);
+                brickSet.update();
                 powerUpList.update(paddle, ballList, brickSet);
+                if(brickSet.isClear()) {
+                    System.out.println("Level Passed");
+                    SceneController.completeLevel();
+                }
             }
         };
         gameTimer.start();
@@ -126,18 +121,12 @@ public class InGameLogic {
             gameTimer.stop();
             gameTimer = null;
         }
-
-        InGameStatus.stopDownRecAnimation();
     }
 
-    private static void reset() {
-        movingLeft = false;
-        movingRight = false;
+    public static void reset() {
         paddle.reset();
         ballList.reset();
         brickSet.reset();
         powerUpList.reset(paddle, ballList);
-
-        InGameStatus.startDownRecAnimation();
     }
 }
