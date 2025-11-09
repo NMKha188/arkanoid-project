@@ -5,39 +5,35 @@ import arkanoid.source.code.gameplay.InGameStatus;
 import arkanoid.source.code.gameplay.Ranking;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 import java.util.List;
 
 
 public class SceneController {
     @FXML
     private VBox mainMenu;
-
     @FXML
     private VBox instructionsOverlay;
     @FXML
     private VBox ldbOverlay;
+
     @FXML
     private Button playButton;
-
     @FXML
     private Button exitButton;
     @FXML
     private Button ldbButton;
     @FXML
     private Button instructionsButton;
-
     @FXML
     private Button backButton;
     @FXML
     private Button ldbBackButton;
+
     @FXML
     private Label score1;
     @FXML
@@ -53,6 +49,7 @@ public class SceneController {
     public static void setPrimaryStage(Stage stage) {
         primaryStage = stage;
     }
+
     @FXML
     public void initialize() {
         if (instructionsOverlay != null) {
@@ -61,26 +58,16 @@ public class SceneController {
         if (ldbOverlay != null) {
             ldbOverlay.setVisible(false);
         }
-        playButton.setOnAction(e -> {
-            startGame(playButton);
-        });
+        playButton.setOnAction(e -> startGame(playButton));
         exitButton.setOnAction(e -> {
             System.out.println("Closing game...");
             Platform.exit();
             System.exit(0);
         });
-        ldbButton.setOnAction(e -> {
-            showLdb();
-        });
-        ldbBackButton.setOnAction(event -> {
-            hideLdb();
-        });
-        instructionsButton.setOnAction(e -> {
-            showInstructions();
-        });
-        backButton.setOnAction(event -> {
-            hideInstructions();
-        });
+        ldbButton.setOnAction(e -> showLdb());
+        ldbBackButton.setOnAction(event -> hideLdb());
+        instructionsButton.setOnAction(e -> showInstructions());
+        backButton.setOnAction(event -> hideInstructions());
     }
 
     public void startGame(Button a) {
@@ -111,15 +98,16 @@ public class SceneController {
         mainMenu.setVisible(true);
         ldbOverlay.setVisible(false);
     }
-    public void addScore(){
+
+    public void addScore() {
         List<Integer> a = Ranking.returnArr();
         Label[] scoreLabels = {score1, score2, score3, score4, score5};
 
-        // Gán điểm số vào các label
         for (int i = 0; i < 5; i++) {
-            if(a.get(i) != null) scoreLabels[i].setText(String.valueOf(a.get(i)));
+            if (a.get(i) != null) scoreLabels[i].setText(String.valueOf(a.get(i)));
         }
     }
+
     private void showInstructions() {
         mainMenu.setVisible(false);
         instructionsOverlay.setVisible(true);

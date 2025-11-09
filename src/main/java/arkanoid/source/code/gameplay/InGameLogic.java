@@ -70,12 +70,8 @@ public class InGameLogic {
         // handle key press
         gameScene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
-                case LEFT -> {
-                    movingLeft = true;
-                }
-                case RIGHT -> {
-                    movingRight = true;
-                }
+                case LEFT -> movingLeft = true;
+                case RIGHT -> movingRight = true;
                 default -> {
                 }
             }
@@ -84,12 +80,8 @@ public class InGameLogic {
         // Handle key release
         gameScene.setOnKeyReleased(event -> {
             switch(event.getCode()) {
-                case LEFT -> {
-                    movingLeft = false;
-                }
-                case RIGHT -> {
-                    movingRight = false;
-                }
+                case LEFT -> movingLeft = false;
+                case RIGHT -> movingRight = false;
                 case SPACE -> {
                     ballList.setReleased(true);
                     ballList.hideVelocityRepresentativeLine();

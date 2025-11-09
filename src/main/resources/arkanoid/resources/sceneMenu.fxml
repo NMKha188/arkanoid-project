@@ -13,324 +13,377 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="746.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arkanoid.source.code.gamecontroller.SceneController">
+<AnchorPane fx:id="rootPane" prefHeight="746.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/21.0.8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="arkanoid.source.code.gamecontroller.SceneController">
     <children>
         <!-- Background Image - Fixed size for Scene Builder -->
         <ImageView fx:id="backgroundImage" fitHeight="746.0" fitWidth="746.0" pickOnBounds="true" preserveRatio="false">
             <image>
-                <Image url="@background.png" />
+                <Image url="@background.png"/>
             </image>
         </ImageView>
 
         <!-- Main Menu -->
-        <VBox fx:id="mainMenu" alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="746.0" prefWidth="746.0" spacing="30.0">
+        <VBox fx:id="mainMenu" alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="746.0" prefWidth="746.0"
+              spacing="30.0">
             <padding>
-                <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
             </padding>
 
             <!-- Logo Section -->
             <VBox alignment="CENTER" spacing="10.0">
                 <ImageView fitHeight="150.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@Arkanoid-logo.png" />
+                        <Image url="@Arkanoid-logo.png"/>
                     </image>
                 </ImageView>
                 <Label text="Classic Arcade Game" textFill="WHITE">
                     <font>
-                        <Font name="System Italic" size="36.0" />
+                        <Font name="System Italic" size="36.0"/>
                     </font>
                 </Label>
             </VBox>
 
             <!-- Buttons Section -->
             <VBox alignment="CENTER" spacing="15.0">
-                <Button fx:id="playButton" focusTraversable="false" prefHeight="75.0" prefWidth="300.0" style="-fx-base: #e8db60; -fx-background-radius: 40; -fx-cursor: hand;" text="PLAY GAME">
+                <Button fx:id="playButton" focusTraversable="false" prefHeight="75.0" prefWidth="300.0"
+                        style="-fx-base: #e8db60; -fx-background-radius: 40; -fx-cursor: hand;" text="PLAY GAME">
                     <font>
-                        <Font name="System Bold" size="30.0" />
+                        <Font name="System Bold" size="30.0"/>
                     </font>
                 </Button>
-            <Button fx:id="ldbButton" focusTraversable="false" layoutX="183.0" layoutY="100.0" prefHeight="75.0" prefWidth="300.0" style="-fx-base: #91c6ee; -fx-background-radius: 40; -fx-cursor: hand;" text="LEADERBOARD">
-               <font>
-                  <Font name="System Bold" size="30.0" />
-               </font>
-            </Button>
-
-                <Button fx:id="instructionsButton" focusTraversable="false" prefHeight="75.0" prefWidth="300.0" style="-fx-base: #eeeeee; -fx-background-radius: 40; -fx-cursor: hand;" text="INSTRUCTIONS">
+                <Button fx:id="ldbButton" focusTraversable="false" layoutX="183.0" layoutY="100.0" prefHeight="75.0"
+                        prefWidth="300.0" style="-fx-base: #91c6ee; -fx-background-radius: 40; -fx-cursor: hand;"
+                        text="LEADERBOARD">
                     <font>
-                        <Font name="System Bold" size="30.0" />
+                        <Font name="System Bold" size="30.0"/>
                     </font>
                 </Button>
 
-                <Button fx:id="exitButton" focusTraversable="false" prefHeight="75.0" prefWidth="300.0" style="-fx-base: #d72922; -fx-background-radius: 40; -fx-cursor: hand;" text="EXIT" textFill="WHITE">
+                <Button fx:id="instructionsButton" focusTraversable="false" prefHeight="75.0" prefWidth="300.0"
+                        style="-fx-base: #eeeeee; -fx-background-radius: 40; -fx-cursor: hand;" text="INSTRUCTIONS">
                     <font>
-                        <Font name="System Bold" size="30.0" />
+                        <Font name="System Bold" size="30.0"/>
+                    </font>
+                </Button>
+
+                <Button fx:id="exitButton" focusTraversable="false" prefHeight="75.0" prefWidth="300.0"
+                        style="-fx-base: #d72922; -fx-background-radius: 40; -fx-cursor: hand;" text="EXIT"
+                        textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="30.0"/>
                     </font>
                 </Button>
             </VBox>
         </VBox>
 
-              <!-- Instructions Overlay -->
-        <VBox fx:id="instructionsOverlay" alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="746.0" prefWidth="746.0" spacing="20.0" visible="false">
+        <!-- Instructions Overlay -->
+        <VBox fx:id="instructionsOverlay" alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="746.0"
+              prefWidth="746.0" spacing="20.0" visible="false">
             <!-- Dark Overlay -->
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="rgba(0,0,0,0.8)" width="746.0" />
-         <TabPane focusTraversable="false" prefHeight="509.0" prefWidth="746.0" style="-fx-border-color: #370404e6; -fx-border-radius: 10; -fx-border-width: 10; -fx-cursor: hand;" tabClosingPolicy="UNAVAILABLE" tabMinHeight="40.0" tabMinWidth="220.0">
-           <tabs>
-               <Tab style="-fx-font-size: 15; -fx-background-radius: 10;" text="Rules">
-                  <content>
-                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="329.0" prefWidth="746.0" style="-fx-background-color: #550404e6;">
-                        <children>
-                           <VBox alignment="CENTER_LEFT" layoutX="13.0" layoutY="-1.0" prefHeight="444.0" prefWidth="700.0" spacing="20.0">
-                              <children>
-                                 <VBox alignment="CENTER_LEFT" spacing="10.0">
-                                    <children>
-                                       <Label focusTraversable="false" style="-fx-font-weight: bold;" text="DI CHUYỂN:" textFill="#e8db60">
-                                          <font>
-                                             <Font size="30.0" />
-                                          </font>
-                                       </Label>
-                                       <VBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="771.0" spacing="5.0" style="-fx-padding: 0 0 0 20;">
-                                          <children>
-                                             <Label focusTraversable="false" text="• LEFT / RIGHT ARROW - Di chuyển thanh đỡ" textFill="WHITE">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="rgba(0,0,0,0.8)" width="746.0"/>
+            <TabPane focusTraversable="false" prefHeight="509.0" prefWidth="746.0"
+                     style="-fx-border-color: #370404e6; -fx-border-radius: 10; -fx-border-width: 10; -fx-cursor: hand;"
+                     tabClosingPolicy="UNAVAILABLE" tabMinHeight="40.0" tabMinWidth="220.0">
+                <tabs>
+                    <Tab style="-fx-font-size: 15; -fx-background-radius: 10;" text="Rules">
+                        <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="329.0" prefWidth="746.0"
+                                        style="-fx-background-color: #550404e6;">
+                                <children>
+                                    <VBox alignment="CENTER_LEFT" layoutX="13.0" layoutY="-1.0" prefHeight="444.0"
+                                          prefWidth="700.0" spacing="20.0">
+                                        <children>
+                                            <VBox alignment="CENTER_LEFT" spacing="10.0">
+                                                <children>
+                                                    <Label focusTraversable="false" style="-fx-font-weight: bold;"
+                                                           text="DI CHUYỂN:" textFill="#e8db60">
+                                                        <font>
+                                                            <Font size="30.0"/>
+                                                        </font>
+                                                    </Label>
+                                                    <VBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="771.0"
+                                                          spacing="5.0" style="-fx-padding: 0 0 0 20;">
+                                                        <children>
+                                                            <Label focusTraversable="false"
+                                                                   text="• LEFT / RIGHT ARROW - Di chuyển thanh đỡ"
+                                                                   textFill="WHITE">
+                                                                <font>
+                                                                    <Font size="18.0"/>
+                                                                </font>
+                                                            </Label>
+                                                            <Label focusTraversable="false" text="• SPACEBAR - Thả bóng"
+                                                                   textFill="WHITE">
+                                                                <font>
+                                                                    <Font size="18.0"/>
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </VBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox alignment="CENTER_LEFT" spacing="10.0">
+                                                <children>
+                                                    <Label text="MỤC TIÊU:" textFill="#e8db60">
+                                                        <font>
+                                                            <Font name="System Bold" size="30.0"/>
+                                                        </font>
+                                                    </Label>
+                                                    <VBox alignment="CENTER_LEFT" spacing="5.0"
+                                                          style="-fx-padding: 0 0 0 20;">
+                                                        <children>
+                                                            <Label text="• Dùng bóng phá các viên gạch trong màn chơi"
+                                                                   textFill="WHITE">
+                                                                <font>
+                                                                    <Font size="18.0"/>
+                                                                </font>
+                                                            </Label>
+                                                            <Label text="• Đừng để bóng rơi xuống dưới thanh đỡ"
+                                                                   textFill="WHITE">
+                                                                <font>
+                                                                    <Font size="18.0"/>
+                                                                </font>
+                                                            </Label>
+                                                            <Label text="• Đỡ các powerups khác nhau để được hỗ trợ"
+                                                                   textFill="WHITE">
+                                                                <font>
+                                                                    <Font size="18.0"/>
+                                                                </font>
+                                                            </Label>
+                                                            <Label text="• Vượt qua tất cả màn chơi để thắng"
+                                                                   textFill="WHITE">
+                                                                <font>
+                                                                    <Font size="18.0"/>
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </VBox>
+                                                </children>
+                                            </VBox>
+                                        </children>
+                                    </VBox>
+                                </children>
+                            </AnchorPane>
+                        </content>
+                    </Tab>
+                    <Tab style="-fx-font-size: 15; -fx-background-radius: 10;" text="Powerups">
+                        <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="329.0" prefWidth="746.0"
+                                        style="-fx-background-color: #550404e6;">
+                                <children>
+                                    <VBox layoutX="42.0" layoutY="24.0" prefHeight="389.0" prefWidth="120.0"
+                                          spacing="15.0">
+                                        <children>
+                                            <ImageView fitHeight="74.0" fitWidth="120.0" pickOnBounds="true"
+                                                       preserveRatio="true">
+                                                <image>
+                                                    <Image url="@powerup/powerup_expandpaddle.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="10.0"
+                                                       pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@powerup/powerup_speedpaddle.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="63.0"
+                                                       pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@powerup/powerup_live.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="63.0"
+                                                       pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@powerup/powerup_slowball.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="116.0"
+                                                       pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@powerup/powerup_tripleball.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="169.0"
+                                                       pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@powerup/powerup_explosiveball.png"/>
+                                                </image>
+                                            </ImageView>
+                                        </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER_LEFT" layoutX="178.0" layoutY="36.0" prefHeight="279.0"
+                                          prefWidth="512.0" spacing="32.0">
+                                        <children>
+                                            <Label text="• Thanh đỡ kéo rộng" textFill="WHITE">
                                                 <font>
-                                                   <Font size="18.0" />
+                                                    <Font size="24.0"/>
                                                 </font>
-                                             </Label>
-                                             <Label focusTraversable="false" text="• SPACEBAR - Thả bóng" textFill="WHITE">
+                                            </Label>
+                                            <Label text="• Tăng tốc độ thanh đỡ" textFill="WHITE">
                                                 <font>
-                                                   <Font size="18.0" />
+                                                    <Font size="24.0"/>
                                                 </font>
-                                             </Label>
-                                          </children>
-                                       </VBox>
-                                    </children>
-                                 </VBox>
-                                 <VBox alignment="CENTER_LEFT" spacing="10.0">
-                                    <children>
-                                       <Label text="MỤC TIÊU:" textFill="#e8db60">
-                                          <font>
-                                             <Font name="System Bold" size="30.0" />
-                                          </font>
-                                       </Label>
-                                       <VBox alignment="CENTER_LEFT" spacing="5.0" style="-fx-padding: 0 0 0 20;">
-                                          <children>
-                                             <Label text="• Dùng bóng phá các viên gạch trong màn chơi" textFill="WHITE">
+                                            </Label>
+                                            <Label text="• Hồi 1 mạng" textFill="WHITE">
                                                 <font>
-                                                   <Font size="18.0" />
+                                                    <Font size="24.0"/>
                                                 </font>
-                                             </Label>
-                                             <Label text="• Đừng để bóng rơi xuống dưới thanh đỡ" textFill="WHITE">
+                                            </Label>
+                                            <Label layoutX="10.0" layoutY="173.0" text="• Giảm tốc độ bóng"
+                                                   textFill="WHITE">
                                                 <font>
-                                                   <Font size="18.0" />
+                                                    <Font size="24.0"/>
                                                 </font>
-                                             </Label>
-                                             <Label text="• Đỡ các powerups khác nhau để được hỗ trợ" textFill="WHITE">
+                                            </Label>
+                                            <Label layoutX="10.0" layoutY="192.0" text="• Thêm 2 nhân bản của bóng"
+                                                   textFill="WHITE">
                                                 <font>
-                                                   <Font size="18.0" />
+                                                    <Font size="24.0"/>
                                                 </font>
-                                             </Label>
-                                             <Label text="• Vượt qua tất cả màn chơi để thắng" textFill="WHITE">
+                                            </Label>
+                                            <Label layoutX="10.0" layoutY="210.0"
+                                                   text="• Bóng nổ gây sát thương cho gạch xung quanh" textFill="WHITE">
                                                 <font>
-                                                   <Font size="18.0" />
+                                                    <Font size="24.0"/>
                                                 </font>
-                                             </Label>
-                                          </children>
-                                       </VBox>
-                                    </children>
-                                 </VBox>
-                              </children>
-                           </VBox>
-                        </children>
-                     </AnchorPane>
-                  </content>
-               </Tab>
-             <Tab style="-fx-font-size: 15; -fx-background-radius: 10;" text="Powerups">
-               <content>
-                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="329.0" prefWidth="746.0" style="-fx-background-color: #550404e6;">
-                        <children>
-                           <VBox layoutX="42.0" layoutY="24.0" prefHeight="389.0" prefWidth="120.0" spacing="15.0">
-                              <children>
-                                 <ImageView fitHeight="74.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@powerup/powerup_expandpaddle.png" />
-                                    </image>
-                                 </ImageView>
-                                 <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@powerup/powerup_speedpaddle.png" />
-                                    </image>
-                                 </ImageView>
-                                 <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@powerup/powerup_live.png" />
-                                    </image>
-                                 </ImageView>
-                                 <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@powerup/powerup_slowball.png" />
-                                    </image>
-                                 </ImageView>
-                                 <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@powerup/powerup_tripleball.png" />
-                                    </image>
-                                 </ImageView>
-                                 <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@powerup/powerup_explosiveball.png" />
-                                    </image>
-                                 </ImageView>
-                              </children>
-                           </VBox>
-                           <VBox alignment="CENTER_LEFT" layoutX="178.0" layoutY="36.0" prefHeight="279.0" prefWidth="512.0" spacing="32.0">
-                              <children>
-                                 <Label text="• Thanh đỡ kéo rộng" textFill="WHITE">
-                                    <font>
-                                       <Font size="24.0" />
-                                    </font>
-                                 </Label>
-                                 <Label text="• Tăng tốc độ thanh đỡ" textFill="WHITE">
-                                    <font>
-                                       <Font size="24.0" />
-                                    </font>
-                                 </Label>
-                                 <Label text="• Hồi 1 mạng" textFill="WHITE">
-                                    <font>
-                                       <Font size="24.0" />
-                                    </font>
-                                 </Label>
-                                 <Label layoutX="10.0" layoutY="173.0" text="• Giảm tốc độ bóng" textFill="WHITE">
-                                    <font>
-                                       <Font size="24.0" />
-                                    </font>
-                                 </Label>
-                                 <Label layoutX="10.0" layoutY="192.0" text="• Thêm 2 nhân bản của bóng" textFill="WHITE">
-                                    <font>
-                                       <Font size="24.0" />
-                                    </font>
-                                 </Label>
-                                 <Label layoutX="10.0" layoutY="210.0" text="• Bóng nổ gây sát thương cho gạch xung quanh" textFill="WHITE">
-                                    <font>
-                                       <Font size="24.0" />
-                                    </font>
-                                 </Label>
-                              </children>
-                           </VBox>
-                        </children>
-                     </AnchorPane>
-               </content>
-             </Tab>
-               <Tab style="-fx-font-size: 15; -fx-background-radius: 10;" text="Bricks">
-                  <content>
-                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="329.0" prefWidth="746.0" style="-fx-background-color: #550404e6;">
-                        <children>
-                           <VBox alignment="CENTER_LEFT" layoutX="204.0" layoutY="246.0" prefHeight="182.0" prefWidth="481.0" spacing="32.0">
-                              <children>
-                                 <Label text="• Gạch bất tử (Không thể bị phá)" textFill="WHITE">
-                                    <font>
-                                       <Font size="24.0" />
-                                    </font>
-                                 </Label>
-                                 <Label prefHeight="35.0" prefWidth="482.0" text="• Gạch lan (phá các gạch cùng loại quanh nó" textFill="WHITE">
-                                    <font>
-                                       <Font size="24.0" />
-                                    </font>
-                                 </Label>
-                              </children>
-                           </VBox>
-                           <VBox layoutX="81.0" layoutY="278.0" prefHeight="117.0" prefWidth="102.0" spacing="15.0">
-                              <children>
-                                 <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@brick/brick6.png" />
-                                    </image>
-                                 </ImageView>
-                                 <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@brick/brick7.png" />
-                                    </image>
-                                 </ImageView>
-                              </children>
-                           </VBox>
-                           <HBox layoutX="81.0" layoutY="51.0" prefHeight="60.0" prefWidth="540.0" spacing="10.0">
-                              <children>
-                                 <ImageView fitHeight="53.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@brick/brick5.png" />
-                                    </image>
-                                 </ImageView>
-                                 <ImageView fitHeight="53.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@brick/brick4.png" />
-                                    </image>
-                                 </ImageView>
-                                 <ImageView fitHeight="54.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@brick/brick3.png" />
-                                    </image>
-                                 </ImageView>
-                                 <ImageView fitHeight="49.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@brick/brick2.png" />
-                                    </image>
-                                 </ImageView>
-                                 <ImageView fitHeight="53.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@brick/brick1.png" />
-                                    </image>
-                                 </ImageView>
-                              </children>
-                           </HBox>
-                           <Label layoutX="142.0" layoutY="111.0" text="• Các gạch thường (Lần lượt từ 5-1 HP)" textFill="WHITE">
-                              <font>
-                                 <Font name="System Bold" size="24.0" />
-                              </font>
-                           </Label>
-                           <Label layoutX="244.0" layoutY="221.0" text="• Các gạch đặc biệt" textFill="WHITE">
-                              <font>
-                                 <Font name="System Bold" size="24.0" />
-                              </font>
-                           </Label>
-                        </children>
-                     </AnchorPane>
-                  </content>
-               </Tab>
-           </tabs>
-         </TabPane>
+                                            </Label>
+                                        </children>
+                                    </VBox>
+                                </children>
+                            </AnchorPane>
+                        </content>
+                    </Tab>
+                    <Tab style="-fx-font-size: 15; -fx-background-radius: 10;" text="Bricks">
+                        <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="329.0" prefWidth="746.0"
+                                        style="-fx-background-color: #550404e6;">
+                                <children>
+                                    <VBox alignment="CENTER_LEFT" layoutX="204.0" layoutY="246.0" prefHeight="182.0"
+                                          prefWidth="481.0" spacing="32.0">
+                                        <children>
+                                            <Label text="• Gạch bất tử (Không thể bị phá)" textFill="WHITE">
+                                                <font>
+                                                    <Font size="24.0"/>
+                                                </font>
+                                            </Label>
+                                            <Label prefHeight="35.0" prefWidth="482.0"
+                                                   text="• Gạch lan (phá các gạch cùng loại quanh nó" textFill="WHITE">
+                                                <font>
+                                                    <Font size="24.0"/>
+                                                </font>
+                                            </Label>
+                                        </children>
+                                    </VBox>
+                                    <VBox layoutX="81.0" layoutY="278.0" prefHeight="117.0" prefWidth="102.0"
+                                          spacing="15.0">
+                                        <children>
+                                            <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="169.0"
+                                                       pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@brick/brick6.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="318.0"
+                                                       pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@brick/brick7.png"/>
+                                                </image>
+                                            </ImageView>
+                                        </children>
+                                    </VBox>
+                                    <HBox layoutX="81.0" layoutY="51.0" prefHeight="60.0" prefWidth="540.0"
+                                          spacing="10.0">
+                                        <children>
+                                            <ImageView fitHeight="53.0" fitWidth="100.0" pickOnBounds="true"
+                                                       preserveRatio="true">
+                                                <image>
+                                                    <Image url="@brick/brick5.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView fitHeight="53.0" fitWidth="100.0" pickOnBounds="true"
+                                                       preserveRatio="true">
+                                                <image>
+                                                    <Image url="@brick/brick4.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView fitHeight="54.0" fitWidth="100.0" pickOnBounds="true"
+                                                       preserveRatio="true">
+                                                <image>
+                                                    <Image url="@brick/brick3.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView fitHeight="49.0" fitWidth="100.0" pickOnBounds="true"
+                                                       preserveRatio="true">
+                                                <image>
+                                                    <Image url="@brick/brick2.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView fitHeight="53.0" fitWidth="100.0" pickOnBounds="true"
+                                                       preserveRatio="true">
+                                                <image>
+                                                    <Image url="@brick/brick1.png"/>
+                                                </image>
+                                            </ImageView>
+                                        </children>
+                                    </HBox>
+                                    <Label layoutX="142.0" layoutY="111.0" text="• Các gạch thường (Lần lượt từ 5-1 HP)"
+                                           textFill="WHITE">
+                                        <font>
+                                            <Font name="System Bold" size="24.0"/>
+                                        </font>
+                                    </Label>
+                                    <Label layoutX="244.0" layoutY="221.0" text="• Các gạch đặc biệt" textFill="WHITE">
+                                        <font>
+                                            <Font name="System Bold" size="24.0"/>
+                                        </font>
+                                    </Label>
+                                </children>
+                            </AnchorPane>
+                        </content>
+                    </Tab>
+                </tabs>
+            </TabPane>
 
-                            <!-- Back Button -->
-             <Button fx:id="backButton" focusTraversable="false" prefHeight="60.0" prefWidth="200.0" style="-fx-base: #3498db; -fx-background-radius: 30; -fx-cursor: hand;" text="BACK TO MENU" textFill="WHITE">
-                 <font>
-                     <Font name="System Bold" size="20.0" />
-                 </font>
-             </Button>
+            <!-- Back Button -->
+            <Button fx:id="backButton" focusTraversable="false" prefHeight="60.0" prefWidth="200.0"
+                    style="-fx-base: #3498db; -fx-background-radius: 30; -fx-cursor: hand;" text="BACK TO MENU"
+                    textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="20.0"/>
+                </font>
+            </Button>
         </VBox>
 
         <!-- Leaderboard Overlay - Simpler Version -->
-        <VBox fx:id="ldbOverlay" alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="746.0" prefWidth="746.0" spacing="20.0">
+        <VBox fx:id="ldbOverlay" alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="746.0" prefWidth="746.0"
+              spacing="20.0">
             <!-- Dark Overlay -->
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="rgba(0,0,0,0.8)" opacity="0.0" width="746.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="rgba(0,0,0,0.8)" opacity="0.0" width="746.0"/>
 
             <!-- Leaderboard Content -->
-            <VBox alignment="CENTER" prefHeight="654.0" prefWidth="746.0" spacing="30.0" style="-fx-background-color: #550404; -fx-background-radius: 10; -fx-padding: 40;">
+            <VBox alignment="CENTER" prefHeight="654.0" prefWidth="746.0" spacing="30.0"
+                  style="-fx-background-color: #550404; -fx-background-radius: 10; -fx-padding: 40;">
                 <!-- Leaderboard Title -->
                 <Label text="LEADERBOARD" textFill="#e8db60">
                     <font>
-                        <Font name="System Bold" size="48.0" />
+                        <Font name="System Bold" size="48.0"/>
                     </font>
                 </Label>
 
                 <!-- Table -->
                 <VBox alignment="CENTER" spacing="10.0">
                     <!-- Header -->
-                    <HBox alignment="CENTER" spacing="150.0" style="-fx-border-color: #e8db60; -fx-border-width: 0 0 2 0; -fx-padding: 0 0 10 0;">
+                    <HBox alignment="CENTER" spacing="150.0"
+                          style="-fx-border-color: #e8db60; -fx-border-width: 0 0 2 0; -fx-padding: 0 0 10 0;">
                         <Label alignment="CENTER" minWidth="100.0" text="RANK" textFill="#e8db60">
                             <font>
-                                <Font name="System Bold" size="24.0" />
+                                <Font name="System Bold" size="24.0"/>
                             </font>
                         </Label>
                         <Label alignment="CENTER" minWidth="100.0" text="SCORE" textFill="#e8db60">
                             <font>
-                                <Font name="System Bold" size="24.0" />
+                                <Font name="System Bold" size="24.0"/>
                             </font>
                         </Label>
                     </HBox>
@@ -339,62 +392,74 @@
                     <VBox alignment="CENTER" spacing="15.0">
                         <HBox alignment="CENTER" spacing="150.0">
                             <Label fx:id="rank1" alignment="CENTER" minWidth="100.0" text="1st" textFill="WHITE">
-                        <font>
-                           <Font size="24.0" />
-                        </font></Label>
+                                <font>
+                                    <Font size="24.0"/>
+                                </font>
+                            </Label>
                             <Label fx:id="score1" alignment="CENTER" minWidth="100.0" text="0" textFill="WHITE">
-                        <font>
-                           <Font name="System Bold Italic" size="24.0" />
-                        </font></Label>
+                                <font>
+                                    <Font name="System Bold Italic" size="24.0"/>
+                                </font>
+                            </Label>
                         </HBox>
                         <HBox alignment="CENTER" spacing="150.0">
                             <Label fx:id="rank2" alignment="CENTER" minWidth="100.0" text="2nd" textFill="WHITE">
-                        <font>
-                           <Font size="24.0" />
-                        </font></Label>
+                                <font>
+                                    <Font size="24.0"/>
+                                </font>
+                            </Label>
                             <Label fx:id="score2" alignment="CENTER" minWidth="100.0" text="0" textFill="WHITE">
-                        <font>
-                           <Font name="System Bold Italic" size="24.0" />
-                        </font></Label>
+                                <font>
+                                    <Font name="System Bold Italic" size="24.0"/>
+                                </font>
+                            </Label>
                         </HBox>
                         <HBox alignment="CENTER" spacing="150.0">
                             <Label fx:id="rank3" alignment="CENTER" minWidth="100.0" text="3rd" textFill="WHITE">
-                        <font>
-                           <Font size="24.0" />
-                        </font></Label>
+                                <font>
+                                    <Font size="24.0"/>
+                                </font>
+                            </Label>
                             <Label fx:id="score3" alignment="CENTER" minWidth="100.0" text="0" textFill="WHITE">
-                        <font>
-                           <Font name="System Bold Italic" size="24.0" />
-                        </font></Label>
+                                <font>
+                                    <Font name="System Bold Italic" size="24.0"/>
+                                </font>
+                            </Label>
                         </HBox>
                         <HBox alignment="CENTER" spacing="150.0">
                             <Label fx:id="rank4" alignment="CENTER" minWidth="100.0" text="4th" textFill="WHITE">
-                        <font>
-                           <Font size="24.0" />
-                        </font></Label>
+                                <font>
+                                    <Font size="24.0"/>
+                                </font>
+                            </Label>
                             <Label fx:id="score4" alignment="CENTER" minWidth="100.0" text="0" textFill="WHITE">
-                        <font>
-                           <Font name="System Bold Italic" size="24.0" />
-                        </font></Label>
+                                <font>
+                                    <Font name="System Bold Italic" size="24.0"/>
+                                </font>
+                            </Label>
                         </HBox>
                         <HBox alignment="CENTER" spacing="150.0">
                             <Label fx:id="rank5" alignment="CENTER" minWidth="100.0" text="5th" textFill="WHITE">
-                        <font>
-                           <Font size="24.0" />
-                        </font></Label>
+                                <font>
+                                    <Font size="24.0"/>
+                                </font>
+                            </Label>
                             <Label fx:id="score5" alignment="CENTER" minWidth="100.0" text="0" textFill="WHITE">
-                        <font>
-                           <Font name="System Bold Italic" size="24.0" />
-                        </font></Label>
+                                <font>
+                                    <Font name="System Bold Italic" size="24.0"/>
+                                </font>
+                            </Label>
                         </HBox>
                     </VBox>
                 </VBox>
             </VBox>
 
             <!-- Back Button -->
-            <Button fx:id="ldbBackButton" focusTraversable="false" prefHeight="60.0" prefWidth="200.0" style="-fx-base: #3498db; -fx-background-radius: 30; -fx-cursor: hand;" text="BACK TO MENU" textFill="WHITE">
+            <Button fx:id="ldbBackButton" focusTraversable="false" prefHeight="60.0" prefWidth="200.0"
+                    style="-fx-base: #3498db; -fx-background-radius: 30; -fx-cursor: hand;" text="BACK TO MENU"
+                    textFill="WHITE">
                 <font>
-                    <Font name="System Bold" size="20.0" />
+                    <Font name="System Bold" size="20.0"/>
                 </font>
             </Button>
         </VBox>

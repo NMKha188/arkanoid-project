@@ -7,11 +7,11 @@ import java.util.List;
 
 public class Ranking {
 
-    private static String path = "src/main/resources/arkanoid/resources/ranking.txt";
-    private static String pathGame = "src/main/resources/arkanoid/resources/saveGame.txt";
+    private static String path = "src/main/resources/arkanoid/resources/scorestatus/ranking.txt";
+    private static String pathGame = "src/main/resources/arkanoid/resources/scorestatus/saveGame.txt";
     private static File file = new File(path);
     private static File fileGame = new File(pathGame);
-    private static List <Integer> arr = new ArrayList<>();
+    private static List<Integer> arr = new ArrayList<>();
 
     static {
         file.getParentFile().mkdirs();
@@ -44,7 +44,7 @@ public class Ranking {
                 }
             }
             arr.sort(Collections.reverseOrder());
-            while (arr.size() > 5 ) {
+            while (arr.size() > 5) {
                 arr.remove(5);
             }
         } catch (IOException e) {
@@ -64,8 +64,8 @@ public class Ranking {
     }
 
     private static void printRankScore(List<Integer> arr) {
-        for (int i=0;i<arr.size();i++) {
-            System.out.println("No." + (i+1) + " Score: " + arr.get(i));
+        for (int i = 0; i < arr.size(); i++) {
+            System.out.println("No." + (i + 1) + " Score: " + arr.get(i));
         }
     }
 
@@ -77,6 +77,7 @@ public class Ranking {
     }
 
     public static List<Integer> returnArr() {
+        loadRanking();
         while (arr.size() < 5) {
             arr.add(0);
         }

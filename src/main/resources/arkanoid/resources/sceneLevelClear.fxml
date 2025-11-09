@@ -13,7 +13,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="746.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arkanoid.source.code.gamecontroller.LevelClearScreen">
+<AnchorPane fx:id="rootPane" prefHeight="746.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arkanoid.source.code.gamecontroller.LevelClearScreen">
     <children>
         <!-- Background Image - Fixed size -->
         <ImageView fx:id="backgroundImage" fitHeight="746.0" fitWidth="746.0" pickOnBounds="true" preserveRatio="false">

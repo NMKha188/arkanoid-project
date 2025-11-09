@@ -30,9 +30,9 @@ public class GameOverScreen {
     @FXML
     private void initialize() {
         mainMenuButton.setOnAction(e -> {
-                InGameStatus.resetGame();
-                switchToMainMenu();
-            });
+            InGameStatus.resetGame();
+            switchToMainMenu();
+        });
         exitButton.setOnAction(e -> {
             InGameStatus.resetGame();
             System.out.println("Closing game...");
