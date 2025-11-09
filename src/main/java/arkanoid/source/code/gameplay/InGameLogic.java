@@ -29,7 +29,7 @@ public class InGameLogic {
 
     private static final BallList ballList = new BallList();
 
-    private static BrickSet brickSet = Map.getMap(1);
+    private static BrickSet brickSet = Map.getMap(5);
 
     private static final PowerUpList powerUpList = new PowerUpList();
 
@@ -38,11 +38,13 @@ public class InGameLogic {
 
         paddle.addShapeToGameRoot();
 
-        brickSet.addShapeToGameRoot();
-
         ballList.addShapeToGameRoot();
         ballList.addVelocityRepresentativeLineToGameRoot();
 
+        brickSet.addShapeToGameRoot();
+
+        InGameStatus.applyBorderTextures();
+        InGameStatus.startDownRecAnimation();
         InGameStatus.addGroupToGameRoot();
     }
 
@@ -67,21 +69,27 @@ public class InGameLogic {
     }
 
     private static void handleKeyInput() {
-        // handle key press
         gameScene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
-                case LEFT -> movingLeft = true;
-                case RIGHT -> movingRight = true;
+                case LEFT -> {
+                    movingLeft = true;
+                }
+                case RIGHT -> {
+                    movingRight = true;
+                }
                 default -> {
                 }
             }
         });
 
-        // Handle key release
         gameScene.setOnKeyReleased(event -> {
             switch(event.getCode()) {
-                case LEFT -> movingLeft = false;
-                case RIGHT -> movingRight = false;
+                case LEFT -> {
+                    movingLeft = false;
+                }
+                case RIGHT -> {
+                    movingRight = false;
+                }
                 case SPACE -> {
                     ballList.setReleased(true);
                     ballList.hideVelocityRepresentativeLine();
@@ -103,7 +111,7 @@ public class InGameLogic {
             public void handle(long now) {
                 paddle.update();
                 ballList.update(paddle, brickSet, powerUpList);
-                brickSet.update();
+                brickSet.update(powerUpList);
                 powerUpList.update(paddle, ballList, brickSet);
                 if(brickSet.isClear()) {
                     System.out.println("Level Passed");
@@ -121,12 +129,16 @@ public class InGameLogic {
             gameTimer.stop();
             gameTimer = null;
         }
+        InGameStatus.stopDownRecAnimation();
     }
 
     public static void reset() {
+        movingLeft = false;
+        movingRight = false;
         paddle.reset();
         ballList.reset();
         brickSet.reset();
         powerUpList.reset(paddle, ballList);
+        InGameStatus.startDownRecAnimation();
     }
 }

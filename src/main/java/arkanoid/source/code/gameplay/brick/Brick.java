@@ -3,9 +3,8 @@ package arkanoid.source.code.gameplay.brick;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.InGameStatus;
 import arkanoid.source.code.gameplay.RectangleGameObject;
-import arkanoid.source.code.graphic.Texture;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
-import javafx.scene.paint.Color;
+import arkanoid.source.code.graphic.Texture;
 
 public abstract class Brick extends RectangleGameObject {
     protected int hitPoints;
@@ -77,6 +76,10 @@ public abstract class Brick extends RectangleGameObject {
             case ResonanceBrick resonanceBrick -> {
                 hitPoints = 1;
                 Texture.applyTextureToBrick(shape, 7);
+            }
+            case ExplosiveBrick explosiveBrick -> {
+                hitPoints = 2;
+                Texture.applyTextureToBrick(shape, 8);
             }
             default -> {
             }

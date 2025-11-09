@@ -164,10 +164,12 @@ public class BrickSet implements GameObject {
                 Brick brick = this.getOneBrickAt(i, j);
                 if (brick != null) {
                     brick.reset();
-                    numOfBricksLeft = totalNumOfBricks;
                 }
             }
         }
+        numOfBricksLeft = totalNumOfBricks;
+        resonanceBrickQueue.clear();
+        explosiveBrickQueue.clear();
         this.addShapeToGameRoot();
     }
 }

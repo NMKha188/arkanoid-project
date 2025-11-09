@@ -6,6 +6,7 @@ import arkanoid.source.code.gamecontroller.GameOverScreen;
 import arkanoid.source.code.gamecontroller.LevelClearScreen;
 import arkanoid.source.code.gamecontroller.SceneController;
 import arkanoid.source.code.gameplay.brick.BrickSet;
+import arkanoid.source.code.graphic.Texture;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -18,17 +19,16 @@ public class InGameStatus {
 
     private static int score = 0;
     private static int lives = 3;
-    private static Stage primaryStage;
 
     private static final Text scoreText = new Text("Score: " + score);
     private static final Text livesText = new Text("Lives: " + lives);
 
-    private static final Rectangle topRec = new Rectangle(0, 0, Config.EXTRA +  Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4);
-    private static final Rectangle downRec = new Rectangle(0, Config.EXTRA / 4 + Config.GAMEPLAY_SCREEN_HEIGHT, Config.EXTRA + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4);
-    private static final Rectangle leftRec = new Rectangle(0, Config.EXTRA / 4, Config.EXTRA / 2, Config.GAMEPLAY_SCREEN_HEIGHT);
-    private static final Rectangle rightRec = new Rectangle(Config.EXTRA / 2 + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4, Config.EXTRA / 2, Config.GAMEPLAY_SCREEN_HEIGHT);
+    private static final Rectangle topBorder = new Rectangle(0, 0, Config.EXTRA +  Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4);
+    private static final Rectangle downBorder = new Rectangle(0, Config.EXTRA / 4 + Config.GAMEPLAY_SCREEN_HEIGHT, Config.EXTRA + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4); // downBorder fire burning animation
+    private static final Rectangle leftBorder = new Rectangle(0, Config.EXTRA / 4, Config.EXTRA / 2, Config.EXTRA / 8 + Config.GAMEPLAY_SCREEN_HEIGHT);
+    private static final Rectangle rightBorder = new Rectangle(Config.EXTRA / 2 + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4, Config.EXTRA / 2, Config.EXTRA / 8 + Config.GAMEPLAY_SCREEN_HEIGHT);
 
-    private static final Group group = new Group(topRec, downRec, leftRec, rightRec, scoreText, livesText);
+    private static final Group group = new Group(topBorder, downBorder, leftBorder, rightBorder, scoreText, livesText);
 
     private static final double SCORE_X = Config.BRICK_WIDTH * ((Config.EXTRA / (2 * Config.BRICK_WIDTH)) + 2);
     private static final double SCORE_Y = Config.BRICK_HEIGHT;
@@ -45,11 +45,20 @@ public class InGameStatus {
         livesText.setFill(Color.BLACK);
         livesText.setX(LIVES_X);
         livesText.setY(LIVES_Y);
+    }
 
-        topRec.setFill(Color.BLUE);
-        downRec.setFill(Color.BLUE);
-        leftRec.setFill(Color.BLUE);
-        rightRec.setFill(Color.BLUE);
+    public static void applyBorderTextures() {
+        Texture.applyTextureToTopRec(topBorder);
+        Texture.applyTextureToLeftRec(leftBorder);
+        Texture.applyTextureToRightRec(rightBorder);
+    }
+
+    public static void startDownRecAnimation() {
+        Texture.applyAndPlayAnimation(downBorder);
+    }
+
+    public static void stopDownRecAnimation() {
+        Texture.stopAnimation();
     }
 
     public static int getScore() {
