@@ -13,7 +13,9 @@ public class Live extends PowerUp {
     }
 
     public void applyEffect(GameObject o) {
-        InGameStatus.recoverLife();
+        if (InGameStatus.getLives() < 5) {
+            InGameStatus.recoverLife();
+        }
     }
 
     public void removeEffect(GameObject o) {
