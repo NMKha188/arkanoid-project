@@ -106,6 +106,7 @@ public class InGameStatus {
         }
         updateTexts();
         if (lives == 0) {
+            System.out.println("Currentmap is: " + SaveGame.getCurrentMapFromFile());
             Ranking.printAndSaveRankScore(score);
             SceneController.showGameOverScene();
         }

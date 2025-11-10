@@ -22,8 +22,6 @@ public class SaveGame {
             String line = reader.readLine();
             if (line != null) {
                 String[] parts = line.split(" ");
-                int score = Integer.parseInt(parts[0]);
-                int live = Integer.parseInt(parts[1]);
                 currentMap = Integer.parseInt(parts[2]);
             }
         } catch (IOException e) {
