@@ -99,6 +99,8 @@ public class InGameLogic {
     }
 
     public static Scene createGameScene(Stage primaryStage) {
+
+
         handleInGameKeyInput();
 
         if (gameTimer != null) {
