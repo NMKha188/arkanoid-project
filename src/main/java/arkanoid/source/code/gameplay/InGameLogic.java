@@ -68,6 +68,9 @@ public class InGameLogic {
         return gameRoot;
     }
 
+    public static void loadMap() {
+        brickSet = Map.getMap(InGameStatus.getCurrentMap());
+    }
     private static void handleInGameKeyInput() {
         // handle key press
         gameScene.setOnKeyPressed(event -> {
@@ -102,7 +105,7 @@ public class InGameLogic {
 
 
         handleInGameKeyInput();
-
+        reset();
         if (gameTimer != null) {
             gameTimer.stop();
         }
@@ -114,6 +117,8 @@ public class InGameLogic {
                 brickSet.update();
                 powerUpList.update(paddle, ballList, brickSet);
                 if(brickSet.isClear()) {
+//                    InGameStatus.setNextMap();
+//                    SaveGame.saveGame();
                     System.out.println("Level Passed");
                     SceneController.completeLevel();
                 }
