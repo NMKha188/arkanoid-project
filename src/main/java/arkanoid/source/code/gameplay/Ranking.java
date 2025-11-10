@@ -97,11 +97,13 @@ public class Ranking {
 
     public static int getCurrentMapFromFile() {
         int currentMap=0;
-        try (BufferedReader reader = new BufferedReader(new FileReader("save.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileGame))) {
             String line = reader.readLine();
             if (line != null) {
                 String[] parts = line.split(" ");
-                currentMap = Integer.parseInt(parts[0]);
+                int score = Integer.parseInt(parts[0]);
+                int live = Integer.parseInt(parts[1]);
+                currentMap = Integer.parseInt(parts[2]);
             }
         } catch (IOException e) {
             e.printStackTrace();

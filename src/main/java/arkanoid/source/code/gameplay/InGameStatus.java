@@ -88,13 +88,13 @@ public class InGameStatus {
 
     public static void loseLife() {
         if (lives > 0) {
-            LineBall.setVx();
             lives--;
         }
         updateTexts();
         if (lives == 0) {
             Ranking.printAndSaveRankScore(score);
             SceneController.showGameOverScene();
+            System.out.println(Ranking.getCurrentMapFromFile());
         }
     }
 
@@ -112,6 +112,7 @@ public class InGameStatus {
         lives = 3;
         updateTexts();
         InGameLogic.reset();
+
     }
 
     public static void addGroupToGameRoot() {
