@@ -95,6 +95,7 @@ public class InGameStatus {
     public static void setLives(int live) {
         lives = live;
     }
+
     public static void recoverLife() {
         lives++;
         updateTexts();
@@ -106,7 +107,7 @@ public class InGameStatus {
         }
         updateTexts();
         if (lives == 0) {
-            System.out.println("Currentmap is: " + SaveGame.getCurrentMapFromFile());
+            System.out.println("Currentmap is: " + currentMap);
             Ranking.printAndSaveRankScore(score);
             SceneController.showGameOverScene();
         }

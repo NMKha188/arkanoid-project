@@ -16,20 +16,6 @@ public class SaveGame {
         }
     }
 
-    public static int getCurrentMapFromFile() {
-        int currentMap=0;
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileGame))) {
-            String line = reader.readLine();
-            if (line != null) {
-                String[] parts = line.split(" ");
-                currentMap = Integer.parseInt(parts[2]);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return currentMap;
-    }
-
     public static void resetGameInFile() {
         try {
             FileWriter writer = new FileWriter(fileGame,false);
