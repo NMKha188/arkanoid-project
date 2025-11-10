@@ -23,6 +23,7 @@ public class ExplosiveBrick extends Brick {
             Texture.applyTextureToBrick(shape, 9);
         }
         if (this.isDestroyed()) {
+            Texture.playExplosionAnimation(this.getX() + this.getWidth() / 2, this.getY() + this.getHeight() / 2);
             int i = (int) (Math.round((y - Config.EXTRA / 4) / Config.BRICK_HEIGHT));
             int j = (int) (Math.round((x - Config.EXTRA / 2) / Config.BRICK_WIDTH));
             for (int t = 0; t < di.length; t++) {

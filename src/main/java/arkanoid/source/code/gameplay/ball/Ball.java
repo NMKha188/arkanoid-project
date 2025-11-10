@@ -232,6 +232,7 @@ public class Ball implements GameObject {
                         if (leftBrick != null && this.checkCollision(leftBrick)) {
                             // explosive ball is on
                             if (ExplosiveBall.isInExplosiveMode()) {
+                                Texture.playExplosionAnimation(x, y);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j - 1, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
@@ -241,6 +242,7 @@ public class Ball implements GameObject {
                         } else if (rightBrick != null && this.checkCollision(rightBrick)) {
                             // explosive ball is on
                             if (ExplosiveBall.isInExplosiveMode()) {
+                                Texture.playExplosionAnimation(x, y);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j + 1, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
@@ -264,6 +266,7 @@ public class Ball implements GameObject {
                         if (topBrick != null && this.checkCollision(topBrick)) {
                             // explosive ball is on
                             if (ExplosiveBall.isInExplosiveMode()) {
+                                Texture.playExplosionAnimation(x, y);
                                 ExplosiveBall.explosiveDamage(brickSet, i - 1, j, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
@@ -273,6 +276,7 @@ public class Ball implements GameObject {
                         } else if (bottomBrick != null && this.checkCollision(bottomBrick)) {
                             // explosive ball is on
                             if (ExplosiveBall.isInExplosiveMode()) {
+                                Texture.playExplosionAnimation(x, y);
                                 ExplosiveBall.explosiveDamage(brickSet, i + 1, j, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
@@ -292,6 +296,7 @@ public class Ball implements GameObject {
                     // collide with only current brick
                     else {
                         if (ExplosiveBall.isInExplosiveMode()) {
+                            Texture.playExplosionAnimation(x, y);
                             ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                         } else {
                             currentBrick.getHit(1, brickSet, powerUpList);
