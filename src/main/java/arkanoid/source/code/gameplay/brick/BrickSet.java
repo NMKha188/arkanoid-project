@@ -135,7 +135,7 @@ public class BrickSet implements GameObject {
                 }
             }
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             ResonanceBrick resonanceBrick = resonanceBrickQueue.poll();
             if (resonanceBrick != null && !resonanceBrick.isDestroyed()) {
                 resonanceBrick.getHit(1, this, powerUpList);
