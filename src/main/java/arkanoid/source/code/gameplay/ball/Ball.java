@@ -9,6 +9,7 @@ import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.brick.ResonanceBrick;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import arkanoid.source.code.gameplay.powerup.ExplosiveBall;
+import arkanoid.source.code.graphic.Sound;
 import arkanoid.source.code.graphic.Texture;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
@@ -169,6 +170,7 @@ public class Ball implements GameObject {
     // collide with paddle logic
     public void collideWithPaddle(Paddle paddle) {
         if (this.checkCollision(paddle)) {
+            Sound.playPaddleHit();
             // collide with the top surface of the paddle
             if (paddle.getX() <= x && x <= paddle.getX() + paddle.getWidth()) {
                 // effect from the distance between the position of collision and the center of the paddle
