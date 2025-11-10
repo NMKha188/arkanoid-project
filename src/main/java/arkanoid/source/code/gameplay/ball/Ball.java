@@ -6,7 +6,6 @@ import arkanoid.source.code.gameplay.InGameLogic;
 import arkanoid.source.code.gameplay.paddle.Paddle;
 import arkanoid.source.code.gameplay.brick.Brick;
 import arkanoid.source.code.gameplay.brick.BrickSet;
-import arkanoid.source.code.gameplay.brick.ResonanceBrick;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import arkanoid.source.code.gameplay.powerup.ExplosiveBall;
 import arkanoid.source.code.graphic.Sound;
@@ -119,7 +118,7 @@ public class Ball implements GameObject {
 
     // check if ball has fallen to bottom
     public boolean isAtBottom() {
-        return (y >= Config.EXTRA / 4 + InGameLogic.getGameplayScreenHeight() + BALL_RADIUS);
+        return (y >= Config.EXTRA / 3 + InGameLogic.getGameplayScreenHeight() + BALL_RADIUS);
     }
 
     // stick to the paddle and initialize Vx Vy (has not been released)
@@ -238,18 +237,8 @@ public class Ball implements GameObject {
                                 ExplosiveBall.explosiveDamage(brickSet, i, j - 1, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
-                                // resonance left brick
-                                if (leftBrick instanceof ResonanceBrick) {
-                                    ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j - 1);
-                                } else { // others
-                                    leftBrick.getHit(1, brickSet, powerUpList);
-                                }
-                                // resonance current brick
-                                if (currentBrick instanceof ResonanceBrick) {
-                                    ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
-                                } else { // others
-                                    currentBrick.getHit(1, brickSet, powerUpList);
-                                }
+                                leftBrick.getHit(1, brickSet, powerUpList);
+                                currentBrick.getHit(1, brickSet, powerUpList);
                             }
                         } else if (rightBrick != null && this.checkCollision(rightBrick)) {
                             // explosive ball is on
@@ -257,18 +246,8 @@ public class Ball implements GameObject {
                                 ExplosiveBall.explosiveDamage(brickSet, i, j + 1, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
-                                // resonance right brick
-                                if (rightBrick instanceof ResonanceBrick) {
-                                    ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j + 1);
-                                } else { // others
-                                    rightBrick.getHit(1, brickSet, powerUpList);
-                                }
-                                // resonance current brick
-                                if (currentBrick instanceof ResonanceBrick) {
-                                    ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
-                                } else { // others
-                                    currentBrick.getHit(1, brickSet, powerUpList);
-                                }
+                                rightBrick.getHit(1, brickSet, powerUpList);
+                                currentBrick.getHit(1, brickSet, powerUpList);
                             }
                         }
                         // change Vy and set new position
@@ -290,18 +269,8 @@ public class Ball implements GameObject {
                                 ExplosiveBall.explosiveDamage(brickSet, i - 1, j, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
-                                // resonance top brick
-                                if (topBrick instanceof ResonanceBrick) {
-                                    ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i - 1, j);
-                                } else { // others
-                                    topBrick.getHit(1, brickSet, powerUpList);
-                                }
-                                // resonance current brick
-                                if (currentBrick instanceof ResonanceBrick) {
-                                    ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
-                                } else { // others
-                                    currentBrick.getHit(1, brickSet, powerUpList);
-                                }
+                                topBrick.getHit(1, brickSet, powerUpList);
+                                currentBrick.getHit(1, brickSet, powerUpList);
                             }
                         } else if (bottomBrick != null && this.checkCollision(bottomBrick)) {
                             // explosive ball is on
@@ -309,18 +278,8 @@ public class Ball implements GameObject {
                                 ExplosiveBall.explosiveDamage(brickSet, i + 1, j, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
-                                // resonance top brick
-                                if (bottomBrick instanceof ResonanceBrick) {
-                                    ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i + 1, j);
-                                } else { // others
-                                    bottomBrick.getHit(1, brickSet, powerUpList);
-                                }
-                                // resonance current brick
-                                if (currentBrick instanceof ResonanceBrick) {
-                                    ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
-                                } else { // others
-                                    currentBrick.getHit(1, brickSet, powerUpList);
-                                }
+                                bottomBrick.getHit(1, brickSet, powerUpList);
+                                currentBrick.getHit(1, brickSet, powerUpList);
                             }
                         }
                         // change Vx and set new position
@@ -337,11 +296,7 @@ public class Ball implements GameObject {
                         if (ExplosiveBall.isInExplosiveMode()) {
                             ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                         } else {
-                            if (currentBrick instanceof ResonanceBrick) {
-                                ResonanceBrick.resonanceHit(1, powerUpList, brickSet, i, j);
-                            } else {
-                                currentBrick.getHit(1, brickSet, powerUpList);
-                            }
+                            currentBrick.getHit(1, brickSet, powerUpList);
                         }
                         this.collideWithBrick(currentBrick);
                     }
@@ -401,10 +356,10 @@ public class Ball implements GameObject {
             dy = Math.abs(y - (brick.getY() + Config.BRICK_HEIGHT));
         }
         double k = dx / dy;
-        if (k > 1.25) {
-            k = 1.25;
-        } else if (k < 0.75) {
-            k = 0.75;
+        if (k > 1.1) {
+            k = 1.1;
+        } else if (k < 0.9) {
+            k = 0.9;
         }
         return k;
     }

@@ -117,5 +117,6 @@ public class BallList implements GameObject {
         ballList.add(firstBall);
         released = false;
         this.addShapeToGameRoot();
+        showVelocityRepresentativeLine();
     }
 }

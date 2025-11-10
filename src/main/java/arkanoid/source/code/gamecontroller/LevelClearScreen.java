@@ -9,69 +9,67 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import javafx.application.Platform;
 
 import java.io.IOException;
 
-public class GameOverScreen {
+public class LevelClearScreen {
     @FXML
     private Label scoreLabel;
 
     @FXML
-    private Button mainMenuButton;
+    private Button nextLevelButton;
 
     @FXML
-    private Button exitButton;
+    private Button backtoMMButton;
 
-    private int finalScore;
+    private int currentScore;
 
     private static Stage primaryStage;
 
     @FXML
     private void initialize() {
-        mainMenuButton.setOnAction(e -> {
-            InGameStatus.resetGame();
-            switchToMainMenu();
-        });
-        exitButton.setOnAction(e -> {
-            InGameStatus.resetGame();
-            System.out.println("Closing game...");
-            Platform.exit();
-            System.exit(0);
+        nextLevelButton.setOnAction(e -> {
+            InGameLogic.reset();
+            SceneController controller = new SceneController();
+            controller.startGame(nextLevelButton);
         });
         updateScoreLabel();
+        backtoMMButton.setOnAction(e -> {
+            InGameLogic.reset();
+            switchToMainMenu();
+        });
     }
 
-    public void setFinalScore(int score) {
-        this.finalScore = score;
+    public void currentScore(int score) {
+        this.currentScore = score;
         updateScoreLabel();
     }
 
     private void updateScoreLabel() {
         if (scoreLabel != null) {
-            scoreLabel.setText("Final Score: " + finalScore);
+            scoreLabel.setText("Score: " + currentScore);
         }
     }
 
     private void switchToMainMenu() {
-
+        InGameStatus.resetGame();
         if (primaryStage != null) {
             SceneController.switchToMainMenu(primaryStage);
         } else {
             // Fallback: get stage from button
-            Stage currentStage = (Stage) mainMenuButton.getScene().getWindow();
+            Stage currentStage = (Stage) backtoMMButton.getScene().getWindow();
             SceneController.switchToMainMenu(currentStage);
         }
     }
 
-    public static void switchToGameOverScene(int finalScore, Stage stage) {
+    public static void levelClear(int finalScore, Stage stage) {
         try {
-            java.net.URL resourceUrl = GameOverScreen.class.getResource("/arkanoid/resources/sceneGameOver.fxml");
+            java.net.URL resourceUrl = GameOverScreen.class.getResource("/arkanoid/resources/sceneLevelClear.fxml");
             FXMLLoader loader = new FXMLLoader(resourceUrl);
             Scene gameOverScene = new Scene(loader.load(), InGameLogic.getGameplayScreenWidth() + Config.EXTRA, InGameLogic.getGameplayScreenHeight() + Config.EXTRA / 2);
 
-            GameOverScreen controller = loader.getController();
-            controller.setFinalScore(finalScore);
+            LevelClearScreen controller = loader.getController();
+            controller.currentScore(finalScore);
 
             stage.setScene(gameOverScene);
             stage.setTitle("Arkanoid - Game Over");

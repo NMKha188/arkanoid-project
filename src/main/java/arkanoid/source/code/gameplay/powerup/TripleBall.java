@@ -17,6 +17,9 @@ public class TripleBall extends PowerUp {
 
     public void applyEffect(GameObject o) {
         BallList ballList = (BallList) o;
+        if (!ballList.isReleased()) {
+            return;
+        }
         ArrayList<Ball> newBalls = new ArrayList<>();
         for (Ball ball : ballList.getBallList()) {
             splitBall(ball, newBalls);
@@ -33,11 +36,11 @@ public class TripleBall extends PowerUp {
         double Vx = ball.getVx();
         double Vy = ball.getVy();
 
-        double VxLeft = Vx - 0.5;
+        double VxLeft = Vx - 0.25;
         double VyLeft = Math.sqrt(Math.pow(ball.getBallSpeed(), 2) - Math.pow(VxLeft, 2)) * (Vy / Math.abs(Vy));
         newBalls.add(new Ball(ball, VxLeft, VyLeft));
 
-        double VxRight = Vx + 0.5;
+        double VxRight = Vx + 0.25;
         double VyRight = Math.sqrt(Math.pow(ball.getBallSpeed(), 2) - Math.pow(VxRight, 2)) * (Vy / Math.abs(Vy));
         newBalls.add(new Ball(ball, VxRight, VyRight));
     }

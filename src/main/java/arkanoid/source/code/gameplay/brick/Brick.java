@@ -3,12 +3,12 @@ package arkanoid.source.code.gameplay.brick;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.InGameStatus;
 import arkanoid.source.code.gameplay.RectangleGameObject;
-import arkanoid.source.code.graphic.Texture;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
-import javafx.scene.paint.Color;
+import arkanoid.source.code.graphic.Texture;
 
 public abstract class Brick extends RectangleGameObject {
     protected int hitPoints;
+    protected int score;
 
     public Brick(double x, double y) {
         super(x, y, Config.BRICK_WIDTH, Config.BRICK_HEIGHT);
@@ -20,6 +20,14 @@ public abstract class Brick extends RectangleGameObject {
 
     public void setHitPoints(int hitPoints) {
         this.hitPoints = hitPoints;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public boolean isDestroyed() {
@@ -35,7 +43,7 @@ public abstract class Brick extends RectangleGameObject {
         if (isDestroyed()) {
             this.removeShapeFromGameRoot();
             brickSet.loseBrick();
-            InGameStatus.setScore(InGameStatus.getScore() + 10);
+            InGameStatus.setScore(InGameStatus.getScore() + score);
             powerUpList.createPowerUp(this);
         } else {
             Texture.applyTextureToBrick(shape, hitPoints);
@@ -68,6 +76,10 @@ public abstract class Brick extends RectangleGameObject {
             case ResonanceBrick resonanceBrick -> {
                 hitPoints = 1;
                 Texture.applyTextureToBrick(shape, 7);
+            }
+            case ExplosiveBrick explosiveBrick -> {
+                hitPoints = 2;
+                Texture.applyTextureToBrick(shape, 8);
             }
             default -> {
             }
