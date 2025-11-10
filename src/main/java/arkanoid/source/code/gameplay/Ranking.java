@@ -120,7 +120,7 @@ public class Ranking {
         }
     }
 
-    public static void setCurrentMapFromFile() {
+    public static void loadGame() {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileGame))) {
             String line = reader.readLine();
             if (line != null) {

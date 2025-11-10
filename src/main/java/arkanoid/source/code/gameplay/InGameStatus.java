@@ -79,6 +79,10 @@ public class InGameStatus {
         currentMap = a;
     }
 
+    public static void setNextMap() {
+        currentMap++;
+    }
+
     public static void setScore(int value) {
         score = value;
         updateTexts();
