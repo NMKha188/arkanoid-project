@@ -32,6 +32,7 @@ public class Texture {
     private static Image normalBallImage;
     private static Image explosiveBallImage;
     private static Image[] brickImages = new Image[10];
+    private static Image[] explosionImages = new Image[8];
 
     private static Image expandPaddlePowerUPImage;
     private static Image speedUpPaddlePowerUpImage;
@@ -82,6 +83,10 @@ public class Texture {
                 String path = "/arkanoid/resources/border/downRec" + (i + 1) + ".png";
                 downBorderImages[i] = loadImage(path);
             }
+            for (int i = 0; i < explosionImages.length; i++) {
+                String path = "/arkanoid/resources/explosion" + (i + 1) + ".png";
+                explosionImages[i] = loadImage(path);
+            }
         } catch (Exception e) {
             System.err.println("Error loading textures resources");
             e.printStackTrace();
@@ -128,7 +133,46 @@ public class Texture {
             rightRec.setFill(new ImagePattern(rightBorderImage));
         }
     }
+  
+    public static void playExplosionAnimation(Pane gamePane, double x, double y) {
+        if (explosionImages == null || explosionImages[0] == null) {
+            System.err.println("Explosion animation frames not loaded!");
+            return;
+        }
 
+        double frameWidth = explosionImages[0].getWidth();
+        double frameHeight = explosionImages[0].getHeight();
+
+        Rectangle explosionRect = new Rectangle(frameWidth, frameHeight);
+
+        explosionRect.setX(x - frameWidth / 2);
+        explosionRect.setY(y - frameHeight / 2);
+
+        explosionRect.setFill(new ImagePattern(explosionImages[0]));
+
+        gamePane.getChildren().add(explosionRect);
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        double frameDuration = 80;
+
+        for (int i = 0; i < explosionImages.length; i++) {
+            final int frameIndex = i;
+            KeyFrame kf = new KeyFrame(
+                    Duration.millis(frameDuration * (i + 1)),
+                    e -> {
+                        if (explosionRect != null && explosionRect.getScene() != null) {
+                            explosionRect.setFill(new ImagePattern(explosionImages[frameIndex]));
+                        }
+                    }
+            );
+            timeline.getKeyFrames().add(kf);
+        }
+
+        timeline.setOnFinished(e -> gamePane.getChildren().remove(explosionRect));
+
+        timeline.play();
+    }
+  
     // downRec animation
     public static void applyAndPlayAnimation(Rectangle borderShape) {
         if (downBorderImages == null || downBorderImages[0] == null) {
