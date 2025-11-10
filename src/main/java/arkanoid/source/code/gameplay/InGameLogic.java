@@ -37,6 +37,9 @@ public class InGameLogic {
 
         paddle.addShapeToGameRoot();
 
+        ballList.addShapeToGameRoot();
+        ballList.addVelocityRepresentativeLineToGameRoot();
+
         brickSet.addShapeToGameRoot();
 
         InGameStatus.applyBorderTextures();
