@@ -74,6 +74,13 @@ public class BallList implements GameObject {
             defaultBall.getShape().setCenterX(ballList.getFirst().getX());
             defaultBall.getShape().setCenterY(ballList.getFirst().getY());
 
+
+
+
+            LineBall.showLineBall(paddle);
+
+
+
             velocityRepresentativeLine.setStartX(defaultBall.getX());
             velocityRepresentativeLine.setStartY(defaultBall.getY() + defaultBall.getRadius() + paddle.getHeight() + 5);
             velocityRepresentativeLine.setEndX(defaultBall.getX() + defaultBall.getVx() * ((paddle.getWidth() / 2) / defaultBall.getMaxVx()));
@@ -88,6 +95,7 @@ public class BallList implements GameObject {
                     if (ballList.size() == 1) {
                         released = false;
                         showVelocityRepresentativeLine();
+                        LineBall.setVisibility(true);
                         ball.setVx(0);
                         powerUpList.reset(paddle, this);
                         InGameStatus.loseLife();

@@ -5,6 +5,7 @@ import arkanoid.source.code.gamecontroller.GameEngine;
 import arkanoid.source.code.gamecontroller.GameOverScreen;
 import arkanoid.source.code.gamecontroller.LevelClearScreen;
 import arkanoid.source.code.gamecontroller.SceneController;
+import arkanoid.source.code.gameplay.ball.LineBall;
 import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.graphic.Texture;
 import javafx.application.Platform;
@@ -19,7 +20,7 @@ public class InGameStatus {
 
     private static int score = 0;
     private static int lives = 3;
-
+    private static int currentMap = 1;
     private static final Text scoreText = new Text("Score: " + score);
     private static final Text livesText = new Text("Lives: " + lives);
 
@@ -28,7 +29,7 @@ public class InGameStatus {
     private static final Rectangle leftBorder = new Rectangle(0, Config.EXTRA / 4, Config.EXTRA / 2, Config.EXTRA / 8 + Config.GAMEPLAY_SCREEN_HEIGHT);
     private static final Rectangle rightBorder = new Rectangle(Config.EXTRA / 2 + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4, Config.EXTRA / 2, Config.EXTRA / 8 + Config.GAMEPLAY_SCREEN_HEIGHT);
 
-    private static final Group group = new Group(topBorder, downBorder, leftBorder, rightBorder, scoreText, livesText);
+    private static final Group group = new Group(topBorder, downBorder, leftBorder, rightBorder, scoreText, livesText, LineBall.lineBall);
 
     private static final double SCORE_X = Config.BRICK_WIDTH * ((Config.EXTRA / (2 * Config.BRICK_WIDTH)) + 2);
     private static final double SCORE_Y = Config.BRICK_HEIGHT;
@@ -80,7 +81,10 @@ public class InGameStatus {
     }
 
     public static void loseLife() {
-        if (lives > 0) lives--;
+        if (lives > 0) {
+            LineBall.setVx();
+            lives--;
+        }
         updateTexts();
         if (lives == 0) {
             Ranking.printAndSaveRankScore(score);

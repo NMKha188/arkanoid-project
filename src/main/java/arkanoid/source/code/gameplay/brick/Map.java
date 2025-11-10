@@ -25,9 +25,9 @@ public class Map {
         map[10] = new BrickSet();
         map[10].readData("/arkanoid/resources/mapdata/map10.txt");
         map[11] = new BrickSet();
-        map[10].readData("/arkanoid/resources/mapdata/map11.txt");
+        map[11].readData("/arkanoid/resources/mapdata/map11.txt");
         map[12] = new BrickSet();
-        map[10].readData("/arkanoid/resources/mapdata/map12.txt");
+        map[12].readData("/arkanoid/resources/mapdata/map12.txt");
     }
 
     public static BrickSet getMap(int index) {

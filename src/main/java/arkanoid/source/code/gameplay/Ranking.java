@@ -83,4 +83,14 @@ public class Ranking {
         }
         return arr;
     }
+
+    public static void saveGame() {
+        File file = fileGame;
+        try {
+            FileWriter writer = new FileWriter(file, false);
+            writer.write(InGameStatus.getScore() + " " + InGameStatus.getLives() + '\n');
+        } catch (IOException e) {
+            System.err.println("ERROR SAVEGAME: " + e.getMessage());
+        }
+    }
 }

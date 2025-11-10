@@ -3,6 +3,7 @@ package arkanoid.source.code.gameplay;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gamecontroller.SceneController;
 import arkanoid.source.code.gameplay.ball.BallList;
+import arkanoid.source.code.gameplay.ball.LineBall;
 import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.brick.Map;
 import arkanoid.source.code.gameplay.paddle.Paddle;
@@ -38,14 +39,14 @@ public class InGameLogic {
 
         paddle.addShapeToGameRoot();
 
-        ballList.addShapeToGameRoot();
-        ballList.addVelocityRepresentativeLineToGameRoot();
-
         brickSet.addShapeToGameRoot();
 
         InGameStatus.applyBorderTextures();
         InGameStatus.startDownRecAnimation();
         InGameStatus.addGroupToGameRoot();
+
+        ballList.addShapeToGameRoot();
+        ballList.addVelocityRepresentativeLineToGameRoot();
     }
 
     public static double getGameplayScreenWidth() {
@@ -93,6 +94,7 @@ public class InGameLogic {
                 case SPACE -> {
                     ballList.setReleased(true);
                     ballList.hideVelocityRepresentativeLine();
+                    LineBall.setVisibility(false);
                 }
                 default -> {
                 }
@@ -117,6 +119,7 @@ public class InGameLogic {
                     System.out.println("Level Passed");
                     SceneController.completeLevel();
                 }
+
             }
         };
         gameTimer.start();
