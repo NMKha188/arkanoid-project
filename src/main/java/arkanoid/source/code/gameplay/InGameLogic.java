@@ -103,6 +103,13 @@ public class InGameLogic {
     }
 
     public static Scene createGameScene(Stage primaryStage) {
+
+
+        brickSet = Map.getMap(InGameStatus.getCurrentMap());
+
+
+
+
         handleKeyInput();
 
         if (gameTimer != null) {
@@ -116,6 +123,7 @@ public class InGameLogic {
                 brickSet.update(powerUpList);
                 powerUpList.update(paddle, ballList, brickSet);
                 if(brickSet.isClear()) {
+                    InGameStatus.setNextMap();
                     SaveGame.saveGame();
                     System.out.println("Level Passed");
                     SceneController.completeLevel();
