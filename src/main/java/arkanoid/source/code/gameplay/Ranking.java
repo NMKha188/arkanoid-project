@@ -88,9 +88,24 @@ public class Ranking {
         File file = fileGame;
         try {
             FileWriter writer = new FileWriter(file, false);
-            writer.write(InGameStatus.getScore() + " " + InGameStatus.getLives() + '\n');
+            writer.write(InGameStatus.getScore() + " " + InGameStatus.getLives() + " " + InGameStatus.getCurrentMap()+ '\n');
+            writer.close();
         } catch (IOException e) {
             System.err.println("ERROR SAVEGAME: " + e.getMessage());
         }
+    }
+
+    public static int getCurrentMapFromFile() {
+        int currentMap=0;
+        try (BufferedReader reader = new BufferedReader(new FileReader("save.txt"))) {
+            String line = reader.readLine();
+            if (line != null) {
+                String[] parts = line.split(" ");
+                currentMap = Integer.parseInt(parts[0]);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return currentMap;
     }
 }

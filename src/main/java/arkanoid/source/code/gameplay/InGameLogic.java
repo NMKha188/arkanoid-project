@@ -116,6 +116,7 @@ public class InGameLogic {
                 brickSet.update(powerUpList);
                 powerUpList.update(paddle, ballList, brickSet);
                 if(brickSet.isClear()) {
+                    Ranking.saveGame();
                     System.out.println("Level Passed");
                     SceneController.completeLevel();
                 }

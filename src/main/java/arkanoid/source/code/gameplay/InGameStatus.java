@@ -62,8 +62,14 @@ public class InGameStatus {
         Texture.stopAnimation();
     }
 
+    public static int getCurrentMap() {return currentMap;}
+
     public static int getScore() {
         return score;
+    }
+
+    public static void setCurrentMap(int a) {
+        currentMap = a;
     }
 
     public static void setScore(int value) {
