@@ -23,19 +23,21 @@ public class InGameStatus {
     private static int currentMap = 1;
     private static final Text scoreText = new Text("Score: " + score);
     private static final Text livesText = new Text("Lives: " + lives);
+    private static final Text currentMapText = new Text("currentMap: " + currentMap);
 
     private static final Rectangle topBorder = new Rectangle(0, 0, Config.EXTRA +  Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4);
     private static final Rectangle downBorder = new Rectangle(0, Config.EXTRA / 4 + Config.GAMEPLAY_SCREEN_HEIGHT, Config.EXTRA + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4); // downBorder fire burning animation
     private static final Rectangle leftBorder = new Rectangle(0, Config.EXTRA / 4, Config.EXTRA / 2, Config.EXTRA / 8 + Config.GAMEPLAY_SCREEN_HEIGHT);
     private static final Rectangle rightBorder = new Rectangle(Config.EXTRA / 2 + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4, Config.EXTRA / 2, Config.EXTRA / 8 + Config.GAMEPLAY_SCREEN_HEIGHT);
 
-    private static final Group group = new Group(topBorder, downBorder, leftBorder, rightBorder, scoreText, livesText, LineBall.lineBall);
+    private static final Group group = new Group(topBorder, downBorder, leftBorder, rightBorder, scoreText, currentMapText, livesText, LineBall.lineBall);
 
-    private static final double SCORE_X = Config.BRICK_WIDTH * ((Config.EXTRA / (2 * Config.BRICK_WIDTH)) + 2);
+    private static final double SCORE_X = Config.BRICK_WIDTH * 2 ;
     private static final double SCORE_Y = Config.BRICK_HEIGHT;
-    private static final double LIVES_X = Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA - SCORE_X - Config.BRICK_WIDTH * 2;
+    private static final double LIVES_X = Config.BRICK_WIDTH * 12;
     private static final double LIVES_Y = Config.BRICK_HEIGHT;
-
+    private static final double CURRENTMAP_X = (SCORE_X + LIVES_X) / 2 - Config.BRICK_WIDTH;
+    private static final double CURRENTMAP_Y = Config.BRICK_HEIGHT;
     static {
         scoreText.setFont(Font.font("Charlemagne Std", 25));
         scoreText.setFill(Color.BLACK);
@@ -46,6 +48,11 @@ public class InGameStatus {
         livesText.setFill(Color.BLACK);
         livesText.setX(LIVES_X);
         livesText.setY(LIVES_Y);
+
+        currentMapText.setFont(Font.font("Charlemagne Std", 25));
+        currentMapText.setFill(Color.BLACK);
+        currentMapText.setX(CURRENTMAP_X);
+        currentMapText.setY(CURRENTMAP_Y);
     }
 
     public static void applyBorderTextures() {
@@ -81,6 +88,9 @@ public class InGameStatus {
         return lives;
     }
 
+    public static void setLives(int live) {
+        lives = live;
+    }
     public static void recoverLife() {
         lives++;
         updateTexts();
@@ -94,7 +104,6 @@ public class InGameStatus {
         if (lives == 0) {
             Ranking.printAndSaveRankScore(score);
             SceneController.showGameOverScene();
-            System.out.println(Ranking.getCurrentMapFromFile());
         }
     }
 
@@ -112,7 +121,6 @@ public class InGameStatus {
         lives = 3;
         updateTexts();
         InGameLogic.reset();
-
     }
 
     public static void addGroupToGameRoot() {
