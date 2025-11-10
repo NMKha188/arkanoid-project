@@ -1,6 +1,7 @@
 package arkanoid.source.code.gameplay;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gamecontroller.PauseScreen;
 import arkanoid.source.code.gamecontroller.SceneController;
 import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.gameplay.brick.BrickSet;
@@ -23,7 +24,8 @@ public class InGameLogic {
     private static boolean movingLeft = false;
     private static boolean movingRight = false;
 
-    private static AnimationTimer gameTimer;
+    public static AnimationTimer gameTimer;
+    public static boolean pausing = false;
 
     private static final Paddle paddle = new Paddle();
 
@@ -66,7 +68,7 @@ public class InGameLogic {
         return gameRoot;
     }
 
-    private static void handleKeyInput() {
+    private static void handleInGameKeyInput() {
         // handle key press
         gameScene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
@@ -86,6 +88,10 @@ public class InGameLogic {
                     ballList.setReleased(true);
                     ballList.hideVelocityRepresentativeLine();
                 }
+                case P -> {
+                    gameTimer.stop();
+                    PauseScreen.showPauseOverlay((Stage) gameScene.getWindow());
+                }
                 default -> {
                 }
             }
@@ -93,7 +99,7 @@ public class InGameLogic {
     }
 
     public static Scene createGameScene(Stage primaryStage) {
-        handleKeyInput();
+        handleInGameKeyInput();
 
         if (gameTimer != null) {
             gameTimer.stop();
