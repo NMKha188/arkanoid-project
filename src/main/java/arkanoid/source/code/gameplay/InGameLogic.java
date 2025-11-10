@@ -1,6 +1,7 @@
 package arkanoid.source.code.gameplay;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gamecontroller.SceneController;
 import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.brick.Map;
@@ -28,7 +29,7 @@ public class InGameLogic {
 
     private static final BallList ballList = new BallList();
 
-    private static BrickSet brickSet = Map.getMap(1);
+    private static BrickSet brickSet = Map.getMap(5);
 
     private static final PowerUpList powerUpList = new PowerUpList();
 
@@ -43,7 +44,7 @@ public class InGameLogic {
         brickSet.addShapeToGameRoot();
 
         InGameStatus.applyBorderTextures();
-
+        InGameStatus.startDownRecAnimation();
         InGameStatus.addGroupToGameRoot();
     }
 
@@ -100,8 +101,6 @@ public class InGameLogic {
     }
 
     public static Scene createGameScene(Stage primaryStage) {
-        reset();
-
         handleKeyInput();
 
         if (gameTimer != null) {
@@ -112,8 +111,12 @@ public class InGameLogic {
             public void handle(long now) {
                 paddle.update();
                 ballList.update(paddle, brickSet, powerUpList);
-                brickSet.update();
+                brickSet.update(powerUpList);
                 powerUpList.update(paddle, ballList, brickSet);
+                if(brickSet.isClear()) {
+                    System.out.println("Level Passed");
+                    SceneController.completeLevel();
+                }
             }
         };
         gameTimer.start();
@@ -126,16 +129,16 @@ public class InGameLogic {
             gameTimer.stop();
             gameTimer = null;
         }
-
         InGameStatus.stopDownRecAnimation();
     }
 
-    private static void reset() {
+    public static void reset() {
+        movingLeft = false;
+        movingRight = false;
         paddle.reset();
         ballList.reset();
         brickSet.reset();
         powerUpList.reset(paddle, ballList);
-
         InGameStatus.startDownRecAnimation();
     }
 }

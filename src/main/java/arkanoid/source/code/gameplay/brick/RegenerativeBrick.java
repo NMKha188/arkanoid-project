@@ -3,6 +3,7 @@ package arkanoid.source.code.gameplay.brick;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import arkanoid.source.code.graphic.Texture;
+
 import java.time.Duration;
 import java.time.Instant;
 
@@ -13,6 +14,7 @@ public class RegenerativeBrick extends Brick {
     public RegenerativeBrick(double x, double y) {
         super(x, y);
         hitPoints = Config.REGENERATIVE_BRICK_HP;
+        score = Config.REGENERATIVE_BRICK_SCORE;
         Texture.applyTextureToBrick(shape, hitPoints);
         hitMoment = null;
     }
