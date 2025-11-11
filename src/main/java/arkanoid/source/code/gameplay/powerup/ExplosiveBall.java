@@ -42,7 +42,6 @@ public class ExplosiveBall extends PowerUp {
             if (brick == null || brick.isDestroyed()) {
                 continue;
             }
-            ResonanceBrick.resonanceHit(1, powerUpList, brickSet, iTemporary, jTemporary);
             if (t == 0) {
                 brick.getHit(3, brickSet, powerUpList);
             } else if (t <= 4) {

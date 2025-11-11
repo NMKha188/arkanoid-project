@@ -4,23 +4,26 @@ import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import arkanoid.source.code.graphic.Texture;
 
-public class ResonanceBrick extends Brick {
+public class ExplosiveBrick extends Brick {
     // arrays for flood fill technique
     private static final int[] di = {-1, 0, 1, 0, -1, 1, -1, 1};
     private static final int[] dj = {0, -1, 0, 1, -1, -1, 1, 1};
 
-    // constructor
-    public ResonanceBrick(double x, double y) {
+    public ExplosiveBrick(double x, double y) {
         super(x, y);
-        hitPoints = 1;
-        score = Config.RESONANCE_BRICK_SCORE;
-        Texture.applyTextureToBrick(shape, 7);
+        hitPoints = 2;
+        Texture.applyTextureToBrick(shape, 8);
+        score = Config.EXPLOSIVE_BRICK_SCORE;
     }
 
     // specialized get hit method
     public void getHit(int hitPointsLoss, BrickSet brickSet, PowerUpList powerUpList) {
         super.getHit(hitPointsLoss, brickSet, powerUpList);
+        if (hitPoints == 1) {
+            Texture.applyTextureToBrick(shape, 9);
+        }
         if (this.isDestroyed()) {
+            Texture.playExplosionAnimation(this.getX() + this.getWidth() / 2, this.getY() + this.getHeight() / 2);
             int i = (int) (Math.round((y - Config.EXTRA / 4) / Config.BRICK_HEIGHT));
             int j = (int) (Math.round((x - Config.EXTRA / 2) / Config.BRICK_WIDTH));
             for (int t = 0; t < di.length; t++) {
@@ -30,9 +33,20 @@ public class ResonanceBrick extends Brick {
                 if (brick == null || brick.isDestroyed()) {
                     continue;
                 }
-                if (brick instanceof ResonanceBrick && !brick.isDestroyed()) {
-                    brickSet.addResonanceBrick((ResonanceBrick) brick);
+                if (t <= 3) {
+                    if (brick instanceof ExplosiveBrick && brick.getHitPoints() <= 2) {
+                        brickSet.addExplosiveBrick((ExplosiveBrick) brick);
+                    } else {
+                        brick.getHit(2, brickSet, powerUpList);
+                    }
+                } else {
+                    if (brick instanceof ExplosiveBrick && brick.getHitPoints() <= 1) {
+                        brickSet.addExplosiveBrick((ExplosiveBrick) brick);
+                    } else {
+                        brick.getHit(1, brickSet, powerUpList);
+                    }
                 }
+
             }
         }
     }

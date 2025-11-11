@@ -45,6 +45,8 @@ public class InGameLogic {
         ballList.addShapeToGameRoot();
         ballList.addVelocityRepresentativeLineToGameRoot();
 
+        InGameStatus.applyBorderTextures();
+        InGameStatus.startDownRecAnimation();
         InGameStatus.addGroupToGameRoot();
     }
 
@@ -140,6 +142,7 @@ public class InGameLogic {
         if (gameTimer != null) {
             gameTimer.stop();
             gameTimer = null;
+            InGameStatus.stopDownRecAnimation();
         }
     }
 
@@ -150,5 +153,6 @@ public class InGameLogic {
         ballList.reset();
         brickSet.reset();
         powerUpList.reset(paddle, ballList);
+        InGameStatus.startDownRecAnimation();
     }
 }
