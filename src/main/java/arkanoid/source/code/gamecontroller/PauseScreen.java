@@ -47,7 +47,6 @@ public class PauseScreen {
     private void exitToMainMenu() {
         InGameLogic.stopGame();
         InGameStatus.resetGame();
-
         hidePauseOverlay();
         if (gameStage != null) {
             SceneController.switchToMainMenu(gameStage);

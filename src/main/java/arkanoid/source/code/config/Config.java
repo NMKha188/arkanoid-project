@@ -16,7 +16,7 @@ public class Config {
     public static final double BALL_SPEED = 8;
 
     // 1 set of bricks
-    public static final int BRICKS_ROW = 10;
+    public static final int BRICKS_ROW = 16;
     public static final int BRICKS_PER_ROW = 12;
     // brick set data path
     public static final String MAP1_DATA_PATH = "/arkanoid/resources/map/map1.txt";

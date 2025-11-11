@@ -18,10 +18,12 @@ public class InGameStatus {
 
     private static int score = 0;
     private static int lives = 3;
+    private static int currentMap = 1;
     private static Stage primaryStage;
 
     private static final Text scoreText = new Text("Score: " + score);
     private static final Text livesText = new Text("Lives: " + lives);
+    private static final Text currentMapText = new Text("currentMap: " + currentMap);
 
     private static final Rectangle topRec = new Rectangle(0, 0, Config.EXTRA +  Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4);
     private static final Rectangle downRec = new Rectangle(0, Config.EXTRA / 4 + Config.GAMEPLAY_SCREEN_HEIGHT, Config.EXTRA + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4);
@@ -34,7 +36,8 @@ public class InGameStatus {
     private static final double SCORE_Y = Config.BRICK_HEIGHT;
     private static final double LIVES_X = Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA - SCORE_X - Config.BRICK_WIDTH * 2;
     private static final double LIVES_Y = Config.BRICK_HEIGHT;
-
+    private static final double CURRENTMAP_X = (SCORE_X + LIVES_X) / 2 - Config.BRICK_WIDTH;
+    private static final double CURRENTMAP_Y = Config.BRICK_HEIGHT;
     static {
         scoreText.setFont(Font.font("Charlemagne Std", 25));
         scoreText.setFill(Color.BLACK);
@@ -50,6 +53,11 @@ public class InGameStatus {
         downRec.setFill(Color.BLUE);
         leftRec.setFill(Color.BLUE);
         rightRec.setFill(Color.BLUE);
+
+        currentMapText.setFont(Font.font("Charlemagne Std", 25));
+        currentMapText.setFill(Color.BLACK);
+        currentMapText.setX(CURRENTMAP_X);
+        currentMapText.setY(CURRENTMAP_Y);
     }
 
     public static int getScore() {
@@ -59,6 +67,18 @@ public class InGameStatus {
     public static void setScore(int value) {
         score = value;
         updateTexts();
+    }
+
+    public static int getCurrentMap() {
+        return currentMap;
+    }
+
+    public static void setCurrentMap(int a) {
+        currentMap = a;
+    }
+
+    public static void setNextMap() {
+        currentMap++;
     }
 
     public static int getLives() {
@@ -91,6 +111,7 @@ public class InGameStatus {
     public static void resetGame() {
         score = 0;
         lives = 3;
+        currentMap = 1;
         updateTexts();
         InGameLogic.reset();
     }

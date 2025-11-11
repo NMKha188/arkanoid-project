@@ -30,7 +30,8 @@ public class LevelClearScreen {
     @FXML
     private void initialize() {
         nextLevelButton.setOnAction(e -> {
-            InGameLogic.reset();
+//            InGameLogic.loadMap();
+//            InGameLogic.reset();
             SceneController controller = new SceneController();
             controller.startGame(nextLevelButton);
         });
