@@ -140,8 +140,8 @@ public class Texture {
             return;
         }
 
-        double frameWidth = 150;
-        double frameHeight = 150;
+        double frameWidth = 135;
+        double frameHeight = 135;
 
         Rectangle explosionRect = new Rectangle(frameWidth, frameHeight);
 

@@ -14,16 +14,16 @@ import java.util.ArrayList;
 public class BallList implements GameObject {
     private final ArrayList<Ball> ballList;
     private boolean released; // check if ball has been released or stick to the paddle
-    private final Line velocityRepresentativeLine;
+    private final Line directionLine;
 
     public BallList() {
         ballList = new ArrayList<>();
         Ball firstBall = new Ball();
         ballList.add(firstBall);
         released = false;
-        velocityRepresentativeLine = new Line();
-        velocityRepresentativeLine.setStrokeWidth(5);
-        velocityRepresentativeLine.setStroke(Color.web("#B74127"));
+        directionLine = new Line();
+        directionLine.setStrokeWidth(5);
+        directionLine.setStroke(Color.web("#B74127"));
     }
 
     public ArrayList<Ball> getBallList() {
@@ -38,16 +38,16 @@ public class BallList implements GameObject {
         this.released = released;
     }
 
-    public void addVelocityRepresentativeLineToGameRoot() {
-        InGameLogic.getRoot().getChildren().add(velocityRepresentativeLine);
+    public void addDirectionLineToGameRoot() {
+        InGameLogic.getRoot().getChildren().add(directionLine);
     }
 
-    public void hideVelocityRepresentativeLine() {
-        velocityRepresentativeLine.setVisible(false);
+    public void hideDirectionLine() {
+        directionLine.setVisible(false);
     }
 
-    private void showVelocityRepresentativeLine() {
-        velocityRepresentativeLine.setVisible(true);
+    private void showDirectionLine() {
+        directionLine.setVisible(true);
     }
 
     public void addBallToList(Ball ball) {
@@ -70,14 +70,26 @@ public class BallList implements GameObject {
     public void update(Paddle paddle, BrickSet brickSet, PowerUpList powerUpList) {
         if (!released && ballList.size() == 1) {
             Ball defaultBall = ballList.getFirst();
+
             defaultBall.initializeVelocity(paddle);
+
             defaultBall.getShape().setCenterX(ballList.getFirst().getX());
             defaultBall.getShape().setCenterY(ballList.getFirst().getY());
 
-            velocityRepresentativeLine.setStartX(defaultBall.getX());
-            velocityRepresentativeLine.setStartY(defaultBall.getY() + defaultBall.getRadius() + paddle.getHeight() + 5);
-            velocityRepresentativeLine.setEndX(defaultBall.getX() + defaultBall.getVx() * ((paddle.getWidth() / 2) / defaultBall.getMaxVx()));
-            velocityRepresentativeLine.setEndY(defaultBall.getY() + defaultBall.getRadius() + paddle.getHeight() + 5);
+
+
+            double startX = paddle.getX() + paddle.getWidth() / 2;
+            double startY = paddle.getY() - defaultBall.getRadius();
+
+            double currentVxRad = Math.atan2(defaultBall.getVy(), defaultBall.getVx());
+
+            double endX = startX + 50 * Math.cos(currentVxRad);
+            double endY = startY + 50 * Math.sin(currentVxRad);
+
+            directionLine.setStartX(startX);
+            directionLine.setStartY(startY);
+            directionLine.setEndX(endX);
+            directionLine.setEndY(endY);
         } else {
             for (int i = 0; i < ballList.size(); i++) {
                 Ball ball = ballList.get(i);
@@ -87,7 +99,7 @@ public class BallList implements GameObject {
                 if (ball.isAtBottom()) {
                     if (ballList.size() == 1) {
                         released = false;
-                        showVelocityRepresentativeLine();
+                        showDirectionLine();
                         ball.setVx(0);
                         powerUpList.reset(paddle, this);
                         InGameStatus.loseLife();
@@ -117,6 +129,6 @@ public class BallList implements GameObject {
         ballList.add(firstBall);
         released = false;
         this.addShapeToGameRoot();
-        showVelocityRepresentativeLine();
+        showDirectionLine();
     }
 }

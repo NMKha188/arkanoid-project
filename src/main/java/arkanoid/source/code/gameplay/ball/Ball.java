@@ -21,7 +21,7 @@ public class Ball implements GameObject {
     private double ballSpeed = Config.BALL_SPEED;
     private double Vx;
     private double Vy;
-    private double maxVx = ballSpeed * 0.67;
+    private double maxVx = ballSpeed * 0.75;
     private double changeVx = 0.05;
 
     public Ball() {

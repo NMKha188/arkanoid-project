@@ -38,8 +38,8 @@ public class InGameLogic {
 
         paddle.addShapeToGameRoot();
 
+        ballList.addDirectionLineToGameRoot();
         ballList.addShapeToGameRoot();
-        ballList.addVelocityRepresentativeLineToGameRoot();
 
         brickSet.addShapeToGameRoot();
 
@@ -92,7 +92,7 @@ public class InGameLogic {
                 }
                 case SPACE -> {
                     ballList.setReleased(true);
-                    ballList.hideVelocityRepresentativeLine();
+                    ballList.hideDirectionLine();
                 }
                 default -> {
                 }
