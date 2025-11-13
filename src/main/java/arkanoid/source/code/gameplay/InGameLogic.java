@@ -20,27 +20,24 @@ public class InGameLogic {
     private static final Pane gameRoot = new Pane();
     private static final Scene gameScene = new Scene(gameRoot, GAMEPLAY_SCREEN_WIDTH + Config.EXTRA, GAMEPLAY_SCREEN_HEIGHT + Config.EXTRA / 2);
 
+    private static AnimationTimer gameTimer;
+
     private static boolean movingLeft = false;
     private static boolean movingRight = false;
 
-    private static AnimationTimer gameTimer;
-
     private static final Paddle paddle = new Paddle();
-
     private static final BallList ballList = new BallList();
-
     private static BrickSet brickSet = Map.getMap(2);
-
     private static final PowerUpList powerUpList = new PowerUpList();
+
+    private static GameLogicThread gameLogicThread;
 
     static {
         Texture.applyBackground(gameRoot);
 
         paddle.addShapeToGameRoot();
-
         ballList.addDirectionLineToGameRoot();
         ballList.addShapeToGameRoot();
-
         brickSet.addShapeToGameRoot();
 
         InGameStatus.applyBorderTextures();
@@ -106,13 +103,19 @@ public class InGameLogic {
         if (gameTimer != null) {
             gameTimer.stop();
         }
+
+        gameLogicThread = new GameLogicThread(paddle, ballList, brickSet, powerUpList);
+        new Thread(gameLogicThread).start();
+
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                /*
                 paddle.update();
                 ballList.update(paddle, brickSet, powerUpList);
                 brickSet.update(powerUpList);
                 powerUpList.update(paddle, ballList, brickSet);
+                */
                 if(brickSet.isClear()) {
                     System.out.println("Level Passed");
                     SceneController.completeLevel();
@@ -128,6 +131,10 @@ public class InGameLogic {
         if (gameTimer != null) {
             gameTimer.stop();
             gameTimer = null;
+        }
+        if (gameLogicThread != null) {
+            gameLogicThread.stopThread();
+            gameLogicThread = null;
         }
         InGameStatus.stopDownRecAnimation();
     }
