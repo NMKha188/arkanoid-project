@@ -177,19 +177,24 @@ public class Ball implements GameObject {
                 if ((Vx > 0 && x < paddleCenter) || (Vx < 0 && x > paddleCenter)) {
                     Vx = -Vx;
                 }
-
                 // effect from paddle speed
                 if (InGameLogic.isMovingLeft()) {
                     Vx = Vx * 0.7 - 0.3 * paddle.getSpeed();
+                    if (Vx < -maxVx) {
+                        Vx = -maxVx;
+                    }
                 } else if (InGameLogic.isMovingRight()) {
                     Vx = Vx * 0.7 + 0.3 * paddle.getSpeed();
+                    if (Vx > maxVx) {
+                        Vx = maxVx;
+                    }
                 }
                 Vy = -Math.sqrt(Math.pow(ballSpeed, 2) - Math.pow(Vx, 2));
                 y = paddle.getY() - BALL_RADIUS - 1;
                 shape.setCenterY(y);
             }
             // collide with the sides of the paddle
-            else if (paddle.getY() <= y) {
+            else if (paddle.getY() <= y && y <= paddle.getY() + paddle.getHeight()) {
                 Vx = -Vx;
                 if (x <= paddle.getX() + paddle.getWidth() / 2) {
                     x = paddle.getX() - BALL_RADIUS - 1;

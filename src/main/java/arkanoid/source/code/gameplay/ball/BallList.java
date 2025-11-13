@@ -76,8 +76,6 @@ public class BallList implements GameObject {
             defaultBall.getShape().setCenterX(ballList.getFirst().getX());
             defaultBall.getShape().setCenterY(ballList.getFirst().getY());
 
-
-
             double startX = paddle.getX() + paddle.getWidth() / 2;
             double startY = paddle.getY() - defaultBall.getRadius();
 
