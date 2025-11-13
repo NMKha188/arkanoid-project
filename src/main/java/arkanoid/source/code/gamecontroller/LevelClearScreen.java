@@ -3,6 +3,8 @@ package arkanoid.source.code.gamecontroller;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.InGameLogic;
 import arkanoid.source.code.gameplay.InGameStatus;
+import arkanoid.source.code.gameplay.Ranking;
+import arkanoid.source.code.gameplay.SaveGame;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,7 +17,10 @@ import java.io.IOException;
 public class LevelClearScreen {
     @FXML
     private Label scoreLabel;
-
+    @FXML
+    private Label bonus;
+    @FXML
+    private Label finalScoreLabel;
     @FXML
     private Button nextLevelButton;
 
@@ -23,18 +28,30 @@ public class LevelClearScreen {
     private Button backtoMMButton;
 
     private int currentScore;
-
+    private int bonusPercentage;
+    private int finalScore;
     private static Stage primaryStage;
 
     @FXML
     private void initialize() {
+        if(InGameStatus.hasFinishedGame()) {
+            nextLevelButton.setVisible(false);
+        }
         nextLevelButton.setOnAction(e -> {
-            InGameLogic.reset();
+            InGameStatus.setScore(finalScore);
+            SaveGame.saveGame();
             SceneController controller = new SceneController();
             controller.startGame(nextLevelButton);
         });
-        updateScoreLabel();
+        updateScoreLabels();
         backtoMMButton.setOnAction(e -> {
+            if(InGameStatus.hasFinishedGame()) {
+                SaveGame.resetSaveGameFile();
+            }
+            else {
+                SaveGame.saveGame();
+            }
+            Ranking.printAndSaveRankScore(currentScore);
             InGameLogic.reset();
             switchToMainMenu();
         });
@@ -42,12 +59,35 @@ public class LevelClearScreen {
 
     public void currentScore(int score) {
         this.currentScore = score;
-        updateScoreLabel();
+        calculateScore();
+        updateScoreLabels();
     }
 
-    private void updateScoreLabel() {
+    private void calculateScore() {
+        // Get bonus percentage based on remaining lives
+        this.bonusPercentage = InGameStatus.getBonusScorePercentage();
+
+        // Calculate final score with bonus
+        this.finalScore = InGameStatus.getFinalScore();
+    }
+
+    private void updateScoreLabels() {
         if (scoreLabel != null) {
-            scoreLabel.setText("Score: " + currentScore);
+            scoreLabel.setText("Base Score: " + currentScore);
+        }
+        updateBonus();
+        updateFinalScore();
+    }
+
+    private void updateBonus() {
+        if (bonus != null) {
+            bonus.setText("Remaining Lives Bonus: " + bonusPercentage + "%");
+        }
+    }
+
+    private void updateFinalScore() {
+        if (finalScoreLabel != null) {
+            finalScoreLabel.setText("Final Score: " + finalScore);
         }
     }
 

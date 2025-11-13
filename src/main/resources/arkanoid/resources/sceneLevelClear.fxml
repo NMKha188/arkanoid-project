@@ -44,6 +44,11 @@
                            <Color red="0.9417142868041992" green="1.0" blue="0.6399999856948853" />
                         </color>
                      </Stop>
+                     <Stop offset="0.006711409395973154">
+                        <color>
+                           <Color red="0.9459999799728394" green="1.0" blue="0.6399999856948853" />
+                        </color>
+                     </Stop>
                      <Stop offset="1.0">
                         <color>
                            <Color red="0.4868420958518982" green="0.4833109974861145" blue="0.27497562766075134" />
@@ -61,6 +66,16 @@
                         <Font name="System Bold" size="32.0" />
                     </font>
                 </Label>
+            <Label fx:id="bonus" layoutX="274.0" layoutY="10.0" text="Remaining Lives Bonus: 0%">
+               <font>
+                  <Font name="System Bold" size="32.0" />
+               </font>
+            </Label>
+            <Label fx:id="finalScoreLabel" layoutX="274.0" layoutY="67.0" text="Total Score: 0">
+               <font>
+                  <Font name="System Bold" size="32.0" />
+               </font>
+            </Label>
             </VBox>
 
             <!-- Buttons -->

@@ -133,15 +133,15 @@ public class Texture {
             rightRec.setFill(new ImagePattern(rightBorderImage));
         }
     }
-  
+
     public static void playExplosionAnimation(double x, double y) {
         if (explosionImages == null || explosionImages[0] == null) {
             System.err.println("Explosion animation frames not loaded!");
             return;
         }
 
-        double frameWidth = 135;
-        double frameHeight = 135;
+        double frameWidth = 150;
+        double frameHeight = 150;
 
         Rectangle explosionRect = new Rectangle(frameWidth, frameHeight);
 
@@ -172,7 +172,7 @@ public class Texture {
 
         timeline.play();
     }
-  
+
     // downRec animation
     public static void applyAndPlayAnimation(Rectangle borderShape) {
         if (downBorderImages == null || downBorderImages[0] == null) {

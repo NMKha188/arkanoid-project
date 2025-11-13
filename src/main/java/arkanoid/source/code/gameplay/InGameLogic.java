@@ -1,6 +1,7 @@
 package arkanoid.source.code.gameplay;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gamecontroller.PauseScreen;
 import arkanoid.source.code.gamecontroller.SceneController;
 import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.gameplay.brick.BrickSet;
@@ -20,25 +21,29 @@ public class InGameLogic {
     private static final Pane gameRoot = new Pane();
     private static final Scene gameScene = new Scene(gameRoot, GAMEPLAY_SCREEN_WIDTH + Config.EXTRA, GAMEPLAY_SCREEN_HEIGHT + Config.EXTRA / 2);
 
-    private static AnimationTimer gameTimer;
-
     private static boolean movingLeft = false;
     private static boolean movingRight = false;
 
-    private static final Paddle paddle = new Paddle();
-    private static final BallList ballList = new BallList();
-    private static BrickSet brickSet = Map.getMap(2);
-    private static final PowerUpList powerUpList = new PowerUpList();
+    public static AnimationTimer gameTimer;
+    public static boolean pausing = false;
 
-    private static GameLogicThread gameLogicThread;
+    private static final Paddle paddle = new Paddle();
+
+    private static final BallList ballList = new BallList();
+
+    private static BrickSet brickSet = Map.getMap(1);
+
+    private static final PowerUpList powerUpList = new PowerUpList();
 
     static {
         Texture.applyBackground(gameRoot);
 
         paddle.addShapeToGameRoot();
-        ballList.addDirectionLineToGameRoot();
-        ballList.addShapeToGameRoot();
+
         brickSet.addShapeToGameRoot();
+
+        ballList.addShapeToGameRoot();
+        ballList.addVelocityRepresentativeLineToGameRoot();
 
         InGameStatus.applyBorderTextures();
         InGameStatus.startDownRecAnimation();
@@ -65,31 +70,38 @@ public class InGameLogic {
         return gameRoot;
     }
 
-    private static void handleKeyInput() {
+    public static void loadMap() {
+        if (brickSet != null) {
+            brickSet.removeShapeFromGameRoot();
+        }
+
+        brickSet = Map.getMap(InGameStatus.getLevel());
+        brickSet.addShapeToGameRoot();
+    }
+
+    private static void handleInGameKeyInput() {
+        // handle key press
         gameScene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
-                case LEFT -> {
-                    movingLeft = true;
-                }
-                case RIGHT -> {
-                    movingRight = true;
-                }
+                case LEFT -> movingLeft = true;
+                case RIGHT -> movingRight = true;
                 default -> {
                 }
             }
         });
 
+        // Handle key release
         gameScene.setOnKeyReleased(event -> {
             switch(event.getCode()) {
-                case LEFT -> {
-                    movingLeft = false;
-                }
-                case RIGHT -> {
-                    movingRight = false;
-                }
+                case LEFT -> movingLeft = false;
+                case RIGHT -> movingRight = false;
                 case SPACE -> {
                     ballList.setReleased(true);
-                    ballList.hideDirectionLine();
+                    ballList.hideVelocityRepresentativeLine();
+                }
+                case P -> {
+                    gameTimer.stop();
+                    PauseScreen.showPauseOverlay((Stage) gameScene.getWindow());
                 }
                 default -> {
                 }
@@ -98,25 +110,23 @@ public class InGameLogic {
     }
 
     public static Scene createGameScene(Stage primaryStage) {
-        handleKeyInput();
+        loadMap();
+        reset();
+        handleInGameKeyInput();
 
         if (gameTimer != null) {
             gameTimer.stop();
         }
-
-        gameLogicThread = new GameLogicThread(paddle, ballList, brickSet, powerUpList);
-        new Thread(gameLogicThread).start();
-
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                /*
                 paddle.update();
                 ballList.update(paddle, brickSet, powerUpList);
                 brickSet.update(powerUpList);
                 powerUpList.update(paddle, ballList, brickSet);
-                */
                 if(brickSet.isClear()) {
+                    InGameStatus.setNextMap();
+                    SaveGame.saveGame();
                     System.out.println("Level Passed");
                     SceneController.completeLevel();
                 }
@@ -131,10 +141,6 @@ public class InGameLogic {
         if (gameTimer != null) {
             gameTimer.stop();
             gameTimer = null;
-        }
-        if (gameLogicThread != null) {
-            gameLogicThread.stopThread();
-            gameLogicThread = null;
         }
         InGameStatus.stopDownRecAnimation();
     }
