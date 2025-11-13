@@ -19,12 +19,12 @@ public class InGameStatus {
 
     private static int score = 0;
     private static int lives = 3;
-    private static int currentMap = 1;
+    private static int level = 2;
     private static Stage primaryStage;
 
     private static final Text scoreText = new Text("Score: " + score);
     private static final Text livesText = new Text("Lives: " + lives);
-    private static final Text currentMapText = new Text("currentMap: " + currentMap);
+    private static final Text levelText = new Text("level: " + level);
 
     private static final Rectangle topBorder = new Rectangle(0, 0, Config.EXTRA +  Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4);
     private static final Rectangle downBorder = new Rectangle(0, Config.EXTRA / 4 + Config.GAMEPLAY_SCREEN_HEIGHT, Config.EXTRA + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4); // downBorder fire burning animation
@@ -38,8 +38,8 @@ public class InGameStatus {
     private static final double LIVES_X = Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA - SCORE_X - Config.BRICK_WIDTH * 2;
     private static final double LIVES_Y = Config.BRICK_HEIGHT;
 
-    private static final double CURRENTMAP_X = (SCORE_X + LIVES_X) / 2 - Config.BRICK_WIDTH;
-    private static final double CURRENTMAP_Y = Config.BRICK_HEIGHT;
+    private static final double level_X = (SCORE_X + LIVES_X) / 2 - Config.BRICK_WIDTH;
+    private static final double level_Y = Config.BRICK_HEIGHT;
     static {
         scoreText.setFont(Font.font("Papyrus", 25));
         scoreText.setFill(Color.BLACK);
@@ -51,10 +51,10 @@ public class InGameStatus {
         livesText.setX(LIVES_X);
         livesText.setY(LIVES_Y);
 
-        currentMapText.setFont(Font.font("Papyrus", 25));
-        currentMapText.setFill(Color.BLACK);
-        currentMapText.setX(CURRENTMAP_X);
-        currentMapText.setY(CURRENTMAP_Y);
+        levelText.setFont(Font.font("Papyrus", 25));
+        levelText.setFill(Color.BLACK);
+        levelText.setX(level_X);
+        levelText.setY(level_Y);
     }
     public static void applyBorderTextures() {
         Texture.applyTextureToTopRec(topBorder);
@@ -78,20 +78,24 @@ public class InGameStatus {
         updateTexts();
     }
 
-    public static int getCurrentMap() {
-        return currentMap;
+    public static int getLevel() {
+        return level;
     }
 
-    public static void setCurrentMap(int a) {
-        currentMap = a;
+    public static void setLevel(int a) {
+        level = a;
     }
 
     public static void setNextMap() {
-        currentMap++;
+        level++;
     }
 
     public static int getLives() {
         return lives;
+    }
+
+    public static void setLives(int lives) {
+        InGameStatus.lives = lives;
     }
 
     public static void recoverLife() {
@@ -120,12 +124,41 @@ public class InGameStatus {
     public static void resetGame() {
         score = 0;
         lives = 3;
-        currentMap = 1;
+        level = 1;
         updateTexts();
         InGameLogic.reset();
     }
-
+    public static boolean hasFinishedGame() {
+        return level>2;
+    }
     public static void addGroupToGameRoot() {
         InGameLogic.getRoot().getChildren().add(InGameStatus.getGroup());
+    }
+    public static int getBonusScorePercentage() {
+        switch (lives) {
+            case 5 -> {
+                return 50;
+            }
+            case 4 -> {
+                return 35;
+            }
+            case 3 -> {
+                return 20;
+            }
+            case 2 -> {
+                return 10;
+            }
+            case 1 -> {
+                return 5;
+            }
+            default -> {
+                return 0;
+            }
+        }
+    }
+
+    public static int getFinalScore() {
+        score = (int) (score * (1 + ((double) getBonusScorePercentage()) / 100));
+        return score;
     }
 }

@@ -75,7 +75,7 @@ public class InGameLogic {
             brickSet.removeShapeFromGameRoot();
         }
 
-        brickSet = Map.getMap(InGameStatus.getCurrentMap());
+        brickSet = Map.getMap(InGameStatus.getLevel());
         brickSet.addShapeToGameRoot();
     }
 
@@ -110,7 +110,6 @@ public class InGameLogic {
     }
 
     public static Scene createGameScene(Stage primaryStage) {
-
         loadMap();
         reset();
         handleInGameKeyInput();
@@ -123,11 +122,11 @@ public class InGameLogic {
             public void handle(long now) {
                 paddle.update();
                 ballList.update(paddle, brickSet, powerUpList);
-                brickSet.update();
+                brickSet.update(powerUpList);
                 powerUpList.update(paddle, ballList, brickSet);
                 if(brickSet.isClear()) {
                     InGameStatus.setNextMap();
-//                    SaveGame.saveGame();
+                    SaveGame.saveGame();
                     System.out.println("Level Passed");
                     SceneController.completeLevel();
                 }
@@ -142,8 +141,8 @@ public class InGameLogic {
         if (gameTimer != null) {
             gameTimer.stop();
             gameTimer = null;
-            InGameStatus.stopDownRecAnimation();
         }
+        InGameStatus.stopDownRecAnimation();
     }
 
     public static void reset() {

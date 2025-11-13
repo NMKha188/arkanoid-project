@@ -3,6 +3,7 @@ package arkanoid.source.code.gamecontroller;
 import arkanoid.source.code.gameplay.InGameLogic;
 import arkanoid.source.code.gameplay.InGameStatus;
 import arkanoid.source.code.gameplay.Ranking;
+import arkanoid.source.code.gameplay.SaveGame;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -23,6 +24,8 @@ public class SceneController {
 
     @FXML
     private Button playButton;
+    @FXML
+    private Button loadGameButton;
     @FXML
     private Button exitButton;
     @FXML
@@ -58,7 +61,15 @@ public class SceneController {
         if (ldbOverlay != null) {
             ldbOverlay.setVisible(false);
         }
-        playButton.setOnAction(e -> startGame(playButton));
+        playButton.setOnAction(e -> {
+            SaveGame.resetSaveGameFile();
+            SaveGame.loadGame();
+            startGame(playButton);
+        });
+        loadGameButton.setOnAction(e -> {
+            SaveGame.loadGame();
+            startGame(loadGameButton);
+        });
         exitButton.setOnAction(e -> {
             System.out.println("Closing game...");
             Platform.exit();
