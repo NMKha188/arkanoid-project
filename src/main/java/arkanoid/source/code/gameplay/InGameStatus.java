@@ -6,6 +6,7 @@ import arkanoid.source.code.gamecontroller.GameOverScreen;
 import arkanoid.source.code.gamecontroller.LevelClearScreen;
 import arkanoid.source.code.gamecontroller.SceneController;
 import arkanoid.source.code.gameplay.brick.BrickSet;
+import arkanoid.source.code.graphic.Sound;
 import arkanoid.source.code.graphic.Texture;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -80,7 +81,10 @@ public class InGameStatus {
     }
 
     public static void loseLife() {
-        if (lives > 0) lives--;
+        if (lives > 0) {
+            lives--;
+            Sound.playLoseLife();
+        }
         updateTexts();
         if (lives == 0) {
             Ranking.printAndSaveRankScore(score);

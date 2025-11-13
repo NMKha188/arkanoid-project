@@ -169,7 +169,7 @@ public class Ball implements GameObject {
     // collide with paddle logic
     public void collideWithPaddle(Paddle paddle) {
         if (this.checkCollision(paddle)) {
-            Sound.playPaddleHit();
+            Sound.playHit();
             // collide with the top surface of the paddle
             if (paddle.getX() <= x && x <= paddle.getX() + paddle.getWidth()) {
                 // effect from the distance between the position of collision and the center of the paddle
@@ -230,6 +230,7 @@ public class Ball implements GameObject {
                     // collide with current brick and either left or right brick
                     if ((leftBrick != null && !leftBrick.isDestroyed() && this.checkCollision(leftBrick))
                             || (rightBrick != null && !rightBrick.isDestroyed() && this.checkCollision(rightBrick))) {
+                        Sound.playHit();
                         // hit current brick and either left or right brick
                         if (leftBrick != null && this.checkCollision(leftBrick)) {
                             // explosive ball is on
@@ -293,6 +294,7 @@ public class Ball implements GameObject {
                     }
                     // collide with only current brick
                     else {
+                        Sound.playHit();
                         if (ExplosiveBall.isInExplosiveMode()) {
                             ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                         } else {
