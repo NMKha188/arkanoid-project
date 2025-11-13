@@ -1,19 +1,13 @@
 package arkanoid.source.code.gameplay;
 
 import arkanoid.source.code.config.Config;
-import arkanoid.source.code.gamecontroller.GameEngine;
-import arkanoid.source.code.gamecontroller.GameOverScreen;
-import arkanoid.source.code.gamecontroller.LevelClearScreen;
 import arkanoid.source.code.gamecontroller.SceneController;
-import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.graphic.Texture;
-import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
 public class InGameStatus {
 
@@ -85,6 +79,8 @@ public class InGameStatus {
     }
 
     public static void setNextMap() {
+        score = getFinalScore();
+        updateTexts();
         level++;
     }
 
@@ -128,7 +124,7 @@ public class InGameStatus {
         InGameLogic.reset();
     }
     public static boolean hasFinishedGame() {
-        return level>2;
+        return level>4;
     }
     public static void addGroupToGameRoot() {
         InGameLogic.getRoot().getChildren().add(InGameStatus.getGroup());

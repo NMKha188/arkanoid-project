@@ -38,8 +38,8 @@ public class LevelClearScreen {
             nextLevelButton.setVisible(false);
         }
         nextLevelButton.setOnAction(e -> {
-//            InGameLogic.loadMap();
-//            InGameLogic.reset();
+            InGameStatus.setScore(finalScore);
+            SaveGame.saveGame();
             SceneController controller = new SceneController();
             controller.startGame(nextLevelButton);
         });
