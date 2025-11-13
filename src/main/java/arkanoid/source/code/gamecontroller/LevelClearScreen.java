@@ -68,7 +68,7 @@ public class LevelClearScreen {
         this.bonusPercentage = InGameStatus.getBonusScorePercentage();
 
         // Calculate final score with bonus
-        this.finalScore = (int) (currentScore * (1 + ((double) bonusPercentage) / 100));
+        this.finalScore = InGameStatus.getFinalScore();
     }
 
     private void updateScoreLabels() {

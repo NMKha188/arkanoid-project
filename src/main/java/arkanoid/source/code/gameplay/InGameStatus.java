@@ -19,27 +19,25 @@ public class InGameStatus {
 
     private static int score = 0;
     private static int lives = 3;
-    private static int level = 2;
-    private static Stage primaryStage;
-
+    private static int level = 1;
     private static final Text scoreText = new Text("Score: " + score);
     private static final Text livesText = new Text("Lives: " + lives);
-    private static final Text levelText = new Text("level: " + level);
+    private static final Text levelText = new Text("Level: " + level);
 
     private static final Rectangle topBorder = new Rectangle(0, 0, Config.EXTRA +  Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4);
     private static final Rectangle downBorder = new Rectangle(0, Config.EXTRA / 4 + Config.GAMEPLAY_SCREEN_HEIGHT, Config.EXTRA + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4); // downBorder fire burning animation
     private static final Rectangle leftBorder = new Rectangle(0, Config.EXTRA / 4, Config.EXTRA / 2, Config.EXTRA / 8 + Config.GAMEPLAY_SCREEN_HEIGHT);
     private static final Rectangle rightBorder = new Rectangle(Config.EXTRA / 2 + Config.GAMEPLAY_SCREEN_WIDTH, Config.EXTRA / 4, Config.EXTRA / 2, Config.EXTRA / 8 + Config.GAMEPLAY_SCREEN_HEIGHT);
 
-    private static final Group group = new Group(topBorder, downBorder, leftBorder, rightBorder, scoreText, livesText);
+    private static final Group group = new Group(topBorder, downBorder, leftBorder, rightBorder, scoreText, livesText, levelText);
 
-    private static final double SCORE_X = Config.BRICK_WIDTH * ((Config.EXTRA / (2 * Config.BRICK_WIDTH)) + 2);
-    private static final double SCORE_Y = Config.BRICK_HEIGHT;
-    private static final double LIVES_X = Config.GAMEPLAY_SCREEN_WIDTH + Config.EXTRA - SCORE_X - Config.BRICK_WIDTH * 2;
-    private static final double LIVES_Y = Config.BRICK_HEIGHT;
 
-    private static final double level_X = (SCORE_X + LIVES_X) / 2 - Config.BRICK_WIDTH;
-    private static final double level_Y = Config.BRICK_HEIGHT;
+    private static final double SCORE_X = Config.BRICK_WIDTH * 2 ;
+    private static final double SCORE_Y = Config.BRICK_HEIGHT - 2;
+    private static final double LIVES_X = Config.BRICK_WIDTH * 12;
+    private static final double LIVES_Y = Config.BRICK_HEIGHT - 2;
+    private static final double level_X = (SCORE_X + LIVES_X) / 2;
+    private static final double level_Y = Config.BRICK_HEIGHT - 2;
     static {
         scoreText.setFont(Font.font("Papyrus", 25));
         scoreText.setFill(Color.BLACK);
@@ -119,6 +117,7 @@ public class InGameStatus {
     private static void updateTexts() {
         scoreText.setText("Score: " + score);
         livesText.setText("Lives: " + lives);
+        levelText.setText("Level: " + level);
     }
 
     public static void resetGame() {
