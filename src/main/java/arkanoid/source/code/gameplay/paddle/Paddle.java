@@ -39,6 +39,8 @@ public class Paddle extends RectangleGameObject {
     }
 
     public void update() {
+        updateLogic();
+        updateVisual();
     }
 
     public void reset() {

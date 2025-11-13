@@ -43,7 +43,7 @@ public class InGameLogic {
         brickSet.addShapeToGameRoot();
 
         ballList.addShapeToGameRoot();
-        ballList.addVelocityRepresentativeLineToGameRoot();
+        ballList.addDirectionLineToGameRoot();
 
         InGameStatus.applyBorderTextures();
         InGameStatus.startDownRecAnimation();
@@ -97,7 +97,7 @@ public class InGameLogic {
                 case RIGHT -> movingRight = false;
                 case SPACE -> {
                     ballList.setReleased(true);
-                    ballList.hideVelocityRepresentativeLine();
+                    ballList.hideDirectionLine();
                 }
                 case P -> {
                     gameTimer.stop();

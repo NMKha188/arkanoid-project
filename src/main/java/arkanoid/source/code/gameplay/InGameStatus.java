@@ -126,9 +126,11 @@ public class InGameStatus {
     public static boolean hasFinishedGame() {
         return level>4;
     }
+
     public static void addGroupToGameRoot() {
         InGameLogic.getRoot().getChildren().add(InGameStatus.getGroup());
     }
+
     public static int getBonusScorePercentage() {
         switch (lives) {
             case 5 -> {
