@@ -9,14 +9,14 @@ public class SaveGame {
     public static void saveGame() {
         try {
             FileWriter writer = new FileWriter(fileGame, false);
-            writer.write(InGameStatus.getScore() + " " + InGameStatus.getLives() + " " + InGameStatus.getCurrentMap()+ '\n');
+            writer.write(InGameStatus.getScore() + " " + InGameStatus.getLives() + " " + InGameStatus.getLevel()+ '\n');
             writer.close();
         } catch (IOException e) {
             System.err.println("ERROR SAVEGAME: " + e.getMessage());
         }
     }
 
-    public static void resetGameInFile() {
+    public static void resetSaveGameFile() {
         try {
             FileWriter writer = new FileWriter(fileGame,false);
             writer.write(0 + " " + 3 + " " + 1);
@@ -33,8 +33,8 @@ public class SaveGame {
                 String[] parts = line.split(" ");
                 int score = Integer.parseInt(parts[0]);
                 int live = Integer.parseInt(parts[1]);
-                int currentMap = Integer.parseInt(parts[2]);
-                InGameStatus.setCurrentMap(currentMap);
+                int level = Integer.parseInt(parts[2]);
+                InGameStatus.setLevel(level);
                 InGameStatus.setScore(score);
                 InGameStatus.setLives(live);
             }

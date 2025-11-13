@@ -105,7 +105,7 @@ public class InGameLogic {
     public static Scene createGameScene(Stage primaryStage) {
 
 
-        brickSet = Map.getMap(InGameStatus.getCurrentMap());
+        brickSet = Map.getMap(InGameStatus.getLevel());
 
 
 
