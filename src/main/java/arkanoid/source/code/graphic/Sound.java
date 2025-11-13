@@ -8,10 +8,12 @@ public class Sound {
     private static final String HIT_PATH = "/arkanoid/resources/sounds/hit.wav";
     private static final String LOSE_LIFE_PATH = "/arkanoid/resources/sounds/die.wav";
     private static final String THEME_SOUND = "/arkanoid/resources/sounds/theme_song.mp3";
+    private static final String EXPLOSION_PATH = "/arkanoid/resources/sounds/explode.wav";
 
     private static final AudioClip themeSound = loadSound(THEME_SOUND);
     private static final AudioClip HitSound = loadSound(HIT_PATH);
     private static final AudioClip loseLifeSound = loadSound(LOSE_LIFE_PATH);
+    private static final AudioClip explosionSound = loadSound(EXPLOSION_PATH);
 
     private static AudioClip loadSound(String path) {
         try {
@@ -50,6 +52,11 @@ public class Sound {
     public static void playLoseLife() {
         if (loseLifeSound != null) {
             loseLifeSound.play();
+        }
+    }
+    public static void playExplosion() {
+        if (explosionSound != null) {
+            explosionSound.play();
         }
     }
 }

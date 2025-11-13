@@ -2,6 +2,7 @@ package arkanoid.source.code.gameplay.brick;
 
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
+import arkanoid.source.code.graphic.Sound;
 import arkanoid.source.code.graphic.Texture;
 
 public class ExplosiveBrick extends Brick {
@@ -23,6 +24,7 @@ public class ExplosiveBrick extends Brick {
             Texture.applyTextureToBrick(shape, 9);
         }
         if (this.isDestroyed()) {
+            Sound.playExplosion();
             int i = (int) (Math.round((y - Config.EXTRA / 4) / Config.BRICK_HEIGHT));
             int j = (int) (Math.round((x - Config.EXTRA / 2) / Config.BRICK_WIDTH));
             for (int t = 0; t < di.length; t++) {

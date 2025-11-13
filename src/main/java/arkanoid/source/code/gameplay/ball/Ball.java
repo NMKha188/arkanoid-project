@@ -230,23 +230,26 @@ public class Ball implements GameObject {
                     // collide with current brick and either left or right brick
                     if ((leftBrick != null && !leftBrick.isDestroyed() && this.checkCollision(leftBrick))
                             || (rightBrick != null && !rightBrick.isDestroyed() && this.checkCollision(rightBrick))) {
-                        Sound.playHit();
                         // hit current brick and either left or right brick
                         if (leftBrick != null && this.checkCollision(leftBrick)) {
                             // explosive ball is on
                             if (ExplosiveBall.isInExplosiveMode()) {
+                                Sound.playExplosion();
                                 ExplosiveBall.explosiveDamage(brickSet, i, j - 1, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
+                                Sound.playBrickHit();
                                 leftBrick.getHit(1, brickSet, powerUpList);
                                 currentBrick.getHit(1, brickSet, powerUpList);
                             }
                         } else if (rightBrick != null && this.checkCollision(rightBrick)) {
                             // explosive ball is on
                             if (ExplosiveBall.isInExplosiveMode()) {
+                                Sound.playExplosion();
                                 ExplosiveBall.explosiveDamage(brickSet, i, j + 1, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
+                                Sound.playBrickHit();
                                 rightBrick.getHit(1, brickSet, powerUpList);
                                 currentBrick.getHit(1, brickSet, powerUpList);
                             }
@@ -267,18 +270,22 @@ public class Ball implements GameObject {
                         if (topBrick != null && this.checkCollision(topBrick)) {
                             // explosive ball is on
                             if (ExplosiveBall.isInExplosiveMode()) {
+                                Sound.playExplosion();
                                 ExplosiveBall.explosiveDamage(brickSet, i - 1, j, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
+                                Sound.playBrickHit();
                                 topBrick.getHit(1, brickSet, powerUpList);
                                 currentBrick.getHit(1, brickSet, powerUpList);
                             }
                         } else if (bottomBrick != null && this.checkCollision(bottomBrick)) {
                             // explosive ball is on
                             if (ExplosiveBall.isInExplosiveMode()) {
+                                Sound.playExplosion();
                                 ExplosiveBall.explosiveDamage(brickSet, i + 1, j, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
+                                Sound.playBrickHit();
                                 bottomBrick.getHit(1, brickSet, powerUpList);
                                 currentBrick.getHit(1, brickSet, powerUpList);
                             }
@@ -294,10 +301,11 @@ public class Ball implements GameObject {
                     }
                     // collide with only current brick
                     else {
-                        Sound.playHit();
                         if (ExplosiveBall.isInExplosiveMode()) {
+                            Sound.playExplosion();
                             ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                         } else {
+                            Sound.playBrickHit();
                             currentBrick.getHit(1, brickSet, powerUpList);
                         }
                         this.collideWithBrick(currentBrick);
