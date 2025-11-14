@@ -6,14 +6,15 @@ import java.net.URL;
 public class Sound {
 
     private static final String HIT_PATH = "/arkanoid/resources/sounds/hit.wav";
-    private static final String LOSE_LIFE_PATH = "/arkanoid/resources/sounds/die.wav";
-    private static final String THEME_SOUND = "/arkanoid/resources/sounds/theme_song.mp3";
-    private static final String EXPLOSION_PATH = "/arkanoid/resources/sounds/explode.wav";
-
+    private static final String LOSE_LIFE_PATH = "/arkanoid/resources/sounds/gamedie.mp3";
+    private static final String THEME_SOUND = "/arkanoid/resources/sounds/theme.mp3";
+    private static final String EXPLOSION_PATH = "/arkanoid/resources/sounds/explode.mp3";
+    private static final String BRICK_HIT = "/arkanoid/resources/sounds/brick_hit.mp3";
     private static final AudioClip themeSound = loadSound(THEME_SOUND);
     private static final AudioClip HitSound = loadSound(HIT_PATH);
     private static final AudioClip loseLifeSound = loadSound(LOSE_LIFE_PATH);
     private static final AudioClip explosionSound = loadSound(EXPLOSION_PATH);
+    private static final AudioClip brickhitSound = loadSound(BRICK_HIT);
 
     private static AudioClip loadSound(String path) {
         try {
@@ -38,10 +39,9 @@ public class Sound {
             themeSound.play();
         }
     }
-
     public static void playBrickHit() {
-        if (HitSound != null) {
-            HitSound.play();
+        if(brickhitSound != null) {
+            brickhitSound.play();
         }
     }
     public static void playHit() {

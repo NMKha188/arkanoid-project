@@ -30,7 +30,7 @@ public class InGameLogic {
 
     private static final BallList ballList = new BallList();
 
-    private static BrickSet brickSet = Map.getMap(5);
+    private static BrickSet brickSet = Map.getMap(10);
 
     private static final PowerUpList powerUpList = new PowerUpList();
 
