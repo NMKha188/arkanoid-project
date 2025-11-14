@@ -67,19 +67,19 @@ public class InGameLogic {
         return gameRoot;
     }
 
-    public static Paddle getPaddle() {
+    public synchronized static Paddle getPaddle() {
         return paddle;
     }
 
-    public static BallList getBallList() {
+    public synchronized static BallList getBallList() {
         return ballList;
     }
 
-    public static BrickSet getBrickSet() {
+    public synchronized static BrickSet getBrickSet() {
         return brickSet;
     }
 
-    public static PowerUpList getPowerUpList() {
+    public synchronized static PowerUpList getPowerUpList() {
         return powerUpList;
     }
 

@@ -84,11 +84,11 @@ public class BallList implements GameObject {
                 if (ball.isAtBottom()) {
                     if (ballList.size() == 1) {
                         released = false;
-                        ball.initializeVelocity(paddle);
-                        powerUpList.reset();
+                        ball.reset();
                         InGameStatus.loseLife();
                         Platform.runLater(() -> {
                             showDirectionLine();
+                            powerUpList.reset();
                         });
                     } else {
                         Platform.runLater(() -> {
