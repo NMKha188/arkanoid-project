@@ -8,6 +8,7 @@ import arkanoid.source.code.gameplay.brick.Brick;
 import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.brick.ResonanceBrick;
 import arkanoid.source.code.graphic.Texture;
+import javafx.application.Platform;
 
 public class ExplosiveBall extends PowerUp {
     private static boolean inExplosiveMode = false; // turn on/off explosive mode
@@ -28,7 +29,9 @@ public class ExplosiveBall extends PowerUp {
         inExplosiveMode = true;
         if (o instanceof BallList) {
             for (Ball ball : ((BallList) o).getBallList()) {
-                Texture.applyExplosiveTextureToBall(ball.getShape());
+                Platform.runLater(() -> {
+                    Texture.applyExplosiveTextureToBall(ball.getShape());
+                });
             }
         }
     }
@@ -56,7 +59,9 @@ public class ExplosiveBall extends PowerUp {
         inExplosiveMode = false;
         if (o instanceof BallList) {
             for (Ball ball : ((BallList) o).getBallList()) {
-                Texture.applyTextureToBall(ball.getShape());
+                Platform.runLater(() -> {
+                    Texture.applyTextureToBall(ball.getShape());
+                });
             }
         }
     }

@@ -6,6 +6,7 @@ import arkanoid.source.code.gameplay.InGameStatus;
 import arkanoid.source.code.gameplay.paddle.Paddle;
 import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
+import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
@@ -66,23 +67,54 @@ public class BallList implements GameObject {
         }
     }
 
-    // update all balls state
-    public void update(Paddle paddle, BrickSet brickSet, PowerUpList powerUpList) {
+    public void updateLogic() {
+        Paddle paddle = InGameLogic.getPaddle();
+        PowerUpList powerUpList = InGameLogic.getPowerUpList();
+
         if (!released && ballList.size() == 1) {
             Ball defaultBall = ballList.getFirst();
 
             defaultBall.initializeVelocity(paddle);
+        } else {
+            for (int i = 0; i < ballList.size(); i++) {
+                Ball ball = ballList.get(i);
 
-            defaultBall.getShape().setCenterX(ballList.getFirst().getX());
-            defaultBall.getShape().setCenterY(ballList.getFirst().getY());
+                ball.updateLogic();
+
+                if (ball.isAtBottom()) {
+                    if (ballList.size() == 1) {
+                        released = false;
+                        ball.initializeVelocity(paddle);
+                        powerUpList.reset();
+                        InGameStatus.loseLife();
+                        Platform.runLater(() -> {
+                            showDirectionLine();
+                        });
+                    } else {
+                        Platform.runLater(() -> {
+                            ball.removeShapeFromGameRoot();
+                        });
+                        ballList.remove(i--);
+                    }
+                }
+            }
+        }
+    }
+
+    public void updateVisual() {
+        Paddle paddle = InGameLogic.getPaddle();
+
+        if (!released && ballList.size() == 1) {
+            Ball defaultBall = ballList.getFirst();
+
+            defaultBall.updateVisual();
+
+            double currentAngle = Math.atan2(defaultBall.getVy(), defaultBall.getVx());
 
             double startX = paddle.getX() + paddle.getWidth() / 2;
             double startY = paddle.getY() - defaultBall.getRadius();
-
-            double currentVxRad = Math.atan2(defaultBall.getVy(), defaultBall.getVx());
-
-            double endX = startX + 50 * Math.cos(currentVxRad);
-            double endY = startY + 50 * Math.sin(currentVxRad);
+            double endX = startX + 50 * Math.cos(currentAngle);
+            double endY = startY + 50 * Math.sin(currentAngle);
 
             directionLine.setStartX(startX);
             directionLine.setStartY(startY);
@@ -92,31 +124,9 @@ public class BallList implements GameObject {
             for (int i = 0; i < ballList.size(); i++) {
                 Ball ball = ballList.get(i);
 
-                ball.collideWithWalls();
-
-                if (ball.isAtBottom()) {
-                    if (ballList.size() == 1) {
-                        released = false;
-                        showDirectionLine();
-                        ball.setVx(0);
-                        powerUpList.reset(paddle, this);
-                        InGameStatus.loseLife();
-                    } else {
-                        ball.removeShapeFromGameRoot();
-                        ballList.remove(i--);
-                    }
-                }
-
-                ball.collideWithPaddle(paddle);
-
-                ball.collideWithBrickSet(brickSet, powerUpList);
-
-                ball.update();
+                ball.updateVisual();
             }
         }
-    }
-
-    public void update() {
     }
 
     // clear all balls, add new default ball

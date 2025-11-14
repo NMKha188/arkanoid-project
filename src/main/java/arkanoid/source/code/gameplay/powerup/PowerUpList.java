@@ -1,12 +1,14 @@
 package arkanoid.source.code.gameplay.powerup;
 
 import arkanoid.source.code.gameplay.GameObject;
+import arkanoid.source.code.gameplay.InGameLogic;
 import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.paddle.Paddle;
 import arkanoid.source.code.gameplay.brick.Brick;
-import arkanoid.source.code.gameplay.brick.BrickSet;
+import javafx.application.Platform;
 
+import java.time.Instant;
 import java.util.ArrayList;
 
 public class PowerUpList implements GameObject {
@@ -23,11 +25,19 @@ public class PowerUpList implements GameObject {
 
     private void addPowerUpToList(PowerUp powerUp) {
         powerUpList.add(powerUp);
-        powerUp.addShapeToRoot();
+        Platform.runLater(() -> {
+            powerUp.addShapeToRoot();
+        });
     }
 
     private void removePowerUpFromList(int index) {
-        powerUpList.get(index).removeShapeFromRoot();
+        PowerUp powerUp = powerUpList.get(index);
+        if (powerUp == null) {
+            return;
+        }
+        Platform.runLater(() -> {
+            powerUp.removeShapeFromRoot();
+        });
         powerUpList.remove(index);
     }
 
@@ -84,18 +94,22 @@ public class PowerUpList implements GameObject {
         }
     }
 
-    public void update() {
-    }
+    public void updateLogic() {
+        Paddle paddle = InGameLogic.getPaddle();
+        BallList ballList = InGameLogic.getBallList();
 
-    // update all power up state
-    public void update(Paddle paddle, BallList ballList, BrickSet brickSet) {
         for (int i = 0; i < powerUpList.size(); i++) {
             PowerUp powerUp = powerUpList.get(i);
-            // fall down
-            powerUp.update();
-            // paddle catch power up
-            powerUp.caughtByPaddle(paddle);
-            // fall to bottom without being caught by paddle
+
+            powerUp.updateLogic();
+
+            if (powerUp.caughtByPaddle(paddle)) {
+                powerUp.setEffectStartTime(Instant.now());
+                Platform.runLater(() -> {
+                    powerUp.removeShapeFromGameRoot();
+                });
+            }
+
             if (powerUp.isFallenToBottom()) {
                 this.removePowerUpFromList(i--);
             }
@@ -126,11 +140,16 @@ public class PowerUpList implements GameObject {
         }
     }
 
-    public void reset() {
+    public void updateVisual() {
+        for (PowerUp powerUp : powerUpList) {
+            powerUp.updateVisual();
+        }
     }
 
-    // remove all power up effect, clear all power up
-    public void reset(Paddle paddle, BallList ballList) {
+    public void reset() {
+        Paddle paddle = InGameLogic.getPaddle();
+        BallList ballList = InGameLogic.getBallList();
+
         for (PowerUp powerUp : powerUpList) {
             if (powerUp.onDuration()) {
                 if (powerUp instanceof ExpandPaddle || powerUp instanceof SpeedUpPaddle) {
@@ -141,7 +160,10 @@ public class PowerUpList implements GameObject {
                 }
             }
         }
-        this.removeShapeFromGameRoot();
-        powerUpList.clear();
+
+        Platform.runLater(() -> {
+            this.removeShapeFromGameRoot();
+            powerUpList.clear();
+        });
     }
 }

@@ -5,6 +5,7 @@ import arkanoid.source.code.gameplay.InGameStatus;
 import arkanoid.source.code.gameplay.RectangleGameObject;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import arkanoid.source.code.graphic.Texture;
+import javafx.application.Platform;
 
 public abstract class Brick extends RectangleGameObject {
     protected int hitPoints;
@@ -41,16 +42,23 @@ public abstract class Brick extends RectangleGameObject {
         }
         hitPoints -= hitPointsLoss;
         if (isDestroyed()) {
-            this.removeShapeFromGameRoot();
             brickSet.loseBrick();
-            InGameStatus.setScore(InGameStatus.getScore() + score);
-            powerUpList.createPowerUp(this);
+            Platform.runLater(() -> {
+                this.removeShapeFromGameRoot();
+                InGameStatus.setScore(InGameStatus.getScore() + score);
+                powerUpList.createPowerUp(this);
+            });
         } else {
-            Texture.applyTextureToBrick(shape, hitPoints);
+            Platform.runLater(() -> {
+                Texture.applyTextureToBrick(shape, hitPoints);
+            });
         }
     }
 
-    public void update() {
+    public void updateLogic() {
+    }
+
+    public void updateVisual() {
     }
 
     // reset HP
@@ -58,28 +66,40 @@ public abstract class Brick extends RectangleGameObject {
         switch (this) {
             case NormalBrick normalBrick -> {
                 hitPoints = Config.NORMAL_BRICK_HP;
-                Texture.applyTextureToBrick(shape, hitPoints);
+                Platform.runLater(() -> {
+                    Texture.applyTextureToBrick(shape, hitPoints);
+                });
             }
             case HardBrick hardBrick -> {
                 hitPoints = Config.HARD_BRICK_HP;
-                Texture.applyTextureToBrick(shape, hitPoints);
+                Platform.runLater(() -> {
+                    Texture.applyTextureToBrick(shape, hitPoints);
+                });
             }
             case RegenerativeBrick regenerativeBrick -> {
                 hitPoints = Config.REGENERATIVE_BRICK_HP;
-                Texture.applyTextureToBrick(shape, hitPoints);
+                Platform.runLater(() -> {
+                    Texture.applyTextureToBrick(shape, hitPoints);
+                });
                 regenerativeBrick.setHitMoment(null);
             }
             case UnbreakableBrick unbreakableBrick -> {
                 hitPoints = Integer.MAX_VALUE;
-                Texture.applyTextureToBrick(shape, 6);
+                Platform.runLater(() -> {
+                    Texture.applyTextureToBrick(shape, 6);
+                });
             }
             case ResonanceBrick resonanceBrick -> {
                 hitPoints = 1;
-                Texture.applyTextureToBrick(shape, 7);
+                Platform.runLater(() -> {
+                    Texture.applyTextureToBrick(shape, 7);
+                });
             }
             case ExplosiveBrick explosiveBrick -> {
                 hitPoints = 2;
-                Texture.applyTextureToBrick(shape, 8);
+                Platform.runLater(() -> {
+                    Texture.applyTextureToBrick(shape, 8);
+                });
             }
             default -> {
             }

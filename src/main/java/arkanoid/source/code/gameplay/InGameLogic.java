@@ -28,19 +28,16 @@ public class InGameLogic {
     public static boolean pausing = false;
 
     private static final Paddle paddle = new Paddle();
-
     private static final BallList ballList = new BallList();
-
-    private static BrickSet brickSet = Map.getMap(1);
-
+    private static BrickSet brickSet;
     private static final PowerUpList powerUpList = new PowerUpList();
+
+    private static GameLogicThread gameLogicThread;
 
     static {
         Texture.applyBackground(gameRoot);
 
         paddle.addShapeToGameRoot();
-
-        brickSet.addShapeToGameRoot();
 
         ballList.addShapeToGameRoot();
         ballList.addDirectionLineToGameRoot();
@@ -70,6 +67,22 @@ public class InGameLogic {
         return gameRoot;
     }
 
+    public static Paddle getPaddle() {
+        return paddle;
+    }
+
+    public static BallList getBallList() {
+        return ballList;
+    }
+
+    public static BrickSet getBrickSet() {
+        return brickSet;
+    }
+
+    public static PowerUpList getPowerUpList() {
+        return powerUpList;
+    }
+
     public static void loadMap() {
         if (brickSet != null) {
             brickSet.removeShapeFromGameRoot();
@@ -83,8 +96,12 @@ public class InGameLogic {
         // handle key press
         gameScene.setOnKeyPressed(event -> {
             switch(event.getCode()) {
-                case LEFT -> movingLeft = true;
-                case RIGHT -> movingRight = true;
+                case LEFT -> {
+                    movingLeft = true;
+                }
+                case RIGHT -> {
+                    movingRight = true;
+                }
                 default -> {
                 }
             }
@@ -93,8 +110,12 @@ public class InGameLogic {
         // Handle key release
         gameScene.setOnKeyReleased(event -> {
             switch(event.getCode()) {
-                case LEFT -> movingLeft = false;
-                case RIGHT -> movingRight = false;
+                case LEFT -> {
+                    movingLeft = false;
+                }
+                case RIGHT -> {
+                    movingRight = false;
+                }
                 case SPACE -> {
                     ballList.setReleased(true);
                     ballList.hideDirectionLine();
@@ -111,19 +132,21 @@ public class InGameLogic {
 
     public static Scene createGameScene(Stage primaryStage) {
         loadMap();
+
         reset();
+
         handleInGameKeyInput();
 
         if (gameTimer != null) {
             gameTimer.stop();
         }
+
+        gameLogicThread = new GameLogicThread(paddle, ballList, brickSet, powerUpList);
+        new Thread(gameLogicThread).start();
+
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                paddle.update();
-                ballList.update(paddle, brickSet, powerUpList);
-                brickSet.update(powerUpList);
-                powerUpList.update(paddle, ballList, brickSet);
                 if(brickSet.isClear()) {
                     InGameStatus.setNextMap();
                     SaveGame.saveGame();
@@ -142,6 +165,10 @@ public class InGameLogic {
             gameTimer.stop();
             gameTimer = null;
         }
+        if (gameLogicThread != null) {
+            gameLogicThread.stopThread();
+            gameLogicThread = null;
+        }
         InGameStatus.stopDownRecAnimation();
     }
 
@@ -151,7 +178,7 @@ public class InGameLogic {
         paddle.reset();
         ballList.reset();
         brickSet.reset();
-        powerUpList.reset(paddle, ballList);
+        powerUpList.reset();
         InGameStatus.startDownRecAnimation();
     }
 }

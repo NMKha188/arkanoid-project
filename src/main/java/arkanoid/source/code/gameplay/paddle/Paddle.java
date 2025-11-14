@@ -18,15 +18,15 @@ public class Paddle extends RectangleGameObject {
         Texture.applyTextureToPaddle(shape);
     }
 
-    public synchronized double getSpeed() {
+    public double getSpeed() {
         return paddleSpeed;
     }
 
-    public synchronized void setPaddleSpeed(double paddleSpeed) {
+    public void setPaddleSpeed(double paddleSpeed) {
         this.paddleSpeed = paddleSpeed;
     }
 
-    public synchronized void updateLogic() {
+    public void updateLogic() {
         if (InGameLogic.isMovingLeft() && !InGameLogic.isMovingRight() && x >= Config.EXTRA / 2) {
             x -= paddleSpeed;
         } else if (InGameLogic.isMovingRight() && !InGameLogic.isMovingLeft() && x <= Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - width) {
@@ -36,11 +36,6 @@ public class Paddle extends RectangleGameObject {
 
     public void updateVisual() {
         shape.setX(x);
-    }
-
-    public void update() {
-        updateLogic();
-        updateVisual();
     }
 
     public void reset() {

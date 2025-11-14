@@ -5,6 +5,7 @@ import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.ball.Ball;
 import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.graphic.Texture;
+import javafx.application.Platform;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -26,7 +27,9 @@ public class TripleBall extends PowerUp {
         }
         for (Ball ball : newBalls) {
             ballList.addBallToList(ball);
-            ball.addShapeToGameRoot();
+            Platform.runLater(() -> {
+                ball.addShapeToGameRoot();
+            });
         }
         newBalls.clear();
     }

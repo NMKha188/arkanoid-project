@@ -9,11 +9,11 @@ public class Config {
     // paddle
     public static final double PADDLE_WIDTH = 80;
     public static final double PADDLE_HEIGHT = 15;
-    public static final double PADDLE_SPEED = 3;
+    public static final double PADDLE_SPEED = 6;
 
     // ball
     public static final double BALL_RADIUS = 10;
-    public static final double BALL_SPEED = 3.5;
+    public static final double BALL_SPEED = 7;
 
     // 1 set of bricks
     public static final int BRICKS_ROW = 16;
