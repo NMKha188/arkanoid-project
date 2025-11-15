@@ -33,6 +33,7 @@ public class Texture {
     private static Image explosiveBallImage;
     private static Image[] brickImages = new Image[10];
     private static Image[] explosionImages = new Image[8];
+    private static Image[] lightingImages = new Image[12];
 
     private static Image expandPaddlePowerUPImage;
     private static Image speedUpPaddlePowerUpImage;
@@ -87,6 +88,10 @@ public class Texture {
                 String path = "/arkanoid/resources/explosionsprites/explosion" + (i + 1) + ".png";
                 explosionImages[i] = loadImage(path);
             }
+            for (int i = 0; i < lightingImages.length; i++) {
+                String path = "/arkanoid/resources/lightingsprites/lighting" + (i + 1) + ".png";
+                lightingImages[i] = loadImage(path);
+            }
         } catch (Exception e) {
             System.err.println("Error loading textures resources");
             e.printStackTrace();
@@ -132,6 +137,46 @@ public class Texture {
         if (rightBorderImage != null) {
             rightRec.setFill(new ImagePattern(rightBorderImage));
         }
+    }
+
+    public static void playLightingAnimation(double x, double y) {
+        if (lightingImages == null || lightingImages[0] == null) {
+            System.err.println("Lighting animation frames not loaded!");
+            return;
+        }
+
+        double frameWidth = 150;
+        double frameHeight = 150;
+
+        Rectangle lightingRect = new Rectangle(frameWidth, frameHeight);
+
+        lightingRect.setX(x - frameWidth / 2);
+        lightingRect.setY(y - frameHeight / 2);
+
+        lightingRect.setFill(new ImagePattern(lightingImages[0]));
+
+        InGameLogic.getRoot().getChildren().add(lightingRect);
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        double frameDuration = 80;
+
+        for (int i = 0; i < lightingImages.length; i++) {
+            final int frameIndex = i;
+            KeyFrame kf = new KeyFrame(
+                    Duration.millis(frameDuration * (i + 1)),
+                    e -> {
+                        if (lightingRect != null && lightingRect.getScene() != null) {
+                            lightingRect.setFill(new ImagePattern(lightingImages[frameIndex]));
+                        }
+                    }
+            );
+            timeline.getKeyFrames().add(kf);
+        }
+
+        timeline.setOnFinished(e -> InGameLogic.getRoot().getChildren().remove(lightingRect));
+
+        timeline.play();
     }
 
     public static void playExplosionAnimation(double x, double y) {
