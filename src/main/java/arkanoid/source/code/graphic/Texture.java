@@ -57,50 +57,50 @@ public class Texture {
 
     static {
         try {
-            backgroundImage = loadImage("/arkanoid/resources/background.png");
+            backgroundImage = loadImage("/arkanoid/resources/texture/background.png");
 
-            paddleImage = loadImage("/arkanoid/resources/paddle/paddle.png");
+            paddleImage = loadImage("/arkanoid/resources/texture/paddle/paddle.png");
 
-            normalBallImage = loadImage("/arkanoid/resources/ball/ball.png");
-            explosiveBallImage = loadImage("/arkanoid/resources/ball/explosiveball.png");
+            normalBallImage = loadImage("/arkanoid/resources/texture/ball/ball.png");
+            explosiveBallImage = loadImage("/arkanoid/resources/texture/ball/explosiveball.png");
 
             brickImages[0] = null;
-            brickImages[1] = loadImage("/arkanoid/resources/brick/brick1.png");
-            brickImages[2] = loadImage("/arkanoid/resources/brick/brick2.png");
-            brickImages[3] = loadImage("/arkanoid/resources/brick/brick3.png");
-            brickImages[4] = loadImage("/arkanoid/resources/brick/brick4.png");
-            brickImages[5] = loadImage("/arkanoid/resources/brick/brick5.png");
-            brickImages[6] = loadImage("/arkanoid/resources/brick/brick6.png");
-            brickImages[7] = loadImage("/arkanoid/resources/brick/brick7.png");
-            brickImages[8] = loadImage("/arkanoid/resources/brick/brick8.png");
-            brickImages[9] = loadImage("/arkanoid/resources/brick/brick9.png");
+            brickImages[1] = loadImage("/arkanoid/resources/texture/brick/brick1.png");
+            brickImages[2] = loadImage("/arkanoid/resources/texture/brick/brick2.png");
+            brickImages[3] = loadImage("/arkanoid/resources/texture/brick/brick3.png");
+            brickImages[4] = loadImage("/arkanoid/resources/texture/brick/brick4.png");
+            brickImages[5] = loadImage("/arkanoid/resources/texture/brick/brick5.png");
+            brickImages[6] = loadImage("/arkanoid/resources/texture/brick/brick6.png");
+            brickImages[7] = loadImage("/arkanoid/resources/texture/brick/brick7.png");
+            brickImages[8] = loadImage("/arkanoid/resources/texture/brick/brick8.png");
+            brickImages[9] = loadImage("/arkanoid/resources/texture/brick/brick9.png");
 
-            expandPaddlePowerUPImage = loadImage("/arkanoid/resources/powerup/powerup_expandpaddle.png");
-            speedUpPaddlePowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_speedpaddle.png");
-            explosiveBallPowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_explosiveball.png");
-            slowBallPowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_slowball.png");
-            tripleBallPowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_tripleball.png");
-            livePowerUpImage = loadImage("/arkanoid/resources/powerup/powerup_live.png");
+            expandPaddlePowerUPImage = loadImage("/arkanoid/resources/texture/powerup/powerup_expandpaddle.png");
+            speedUpPaddlePowerUpImage = loadImage("/arkanoid/resources/texture/powerup/powerup_speedpaddle.png");
+            explosiveBallPowerUpImage = loadImage("/arkanoid/resources/texture/powerup/powerup_explosiveball.png");
+            slowBallPowerUpImage = loadImage("/arkanoid/resources/texture/powerup/powerup_slowball.png");
+            tripleBallPowerUpImage = loadImage("/arkanoid/resources/texture/powerup/powerup_tripleball.png");
+            livePowerUpImage = loadImage("/arkanoid/resources/texture/powerup/powerup_live.png");
 
-            topBorderImage = loadImage("/arkanoid/resources/border/topRec.png");
-            leftBorderImage = loadImage("/arkanoid/resources/border/leftRec.png");
-            rightBorderImage = loadImage("/arkanoid/resources/border/rightRec.png");
+            topBorderImage = loadImage("/arkanoid/resources/texture/border/topRec.png");
+            leftBorderImage = loadImage("/arkanoid/resources/texture/border/leftRec.png");
+            rightBorderImage = loadImage("/arkanoid/resources/texture/border/rightRec.png");
             for (int i = 0; i < downBorderImages.length; i++) {
-                String path = "/arkanoid/resources/border/downRec" + (i + 1) + ".png";
+                String path = "/arkanoid/resources/texture/border/downRec" + (i + 1) + ".png";
                 downBorderImages[i] = loadImage(path);
             }
             for (int i = 0; i < explosionImages.length; i++) {
-                String path = "/arkanoid/resources/explosionsprites/explosion" + (i + 1) + ".png";
+                String path = "/arkanoid/resources/texture/explosionsprites/explosion" + (i + 1) + ".png";
                 explosionImages[i] = loadImage(path);
             }
 
             for (int i = 0; i < lightingImages.length; i++) {
-                String path = "/arkanoid/resources/lightingsprites/lighting" + (i + 1) + ".png";
+                String path = "/arkanoid/resources/texture/lightingsprites/lighting" + (i + 1) + ".png";
                 lightingImages[i] = loadImage(path);
             }
 
             for (int i = 0; i < healImages.length; i++) {
-                String path = "/arkanoid/resources/healsprites/heal" + (i + 1) + ".png";
+                String path = "/arkanoid/resources/texture/healsprites/heal" + (i + 1) + ".png";
                 healImages[i] = loadImage(path);
             }
 

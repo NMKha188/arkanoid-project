@@ -18,7 +18,7 @@
         <!-- Background Image - Fixed size for Scene Builder -->
         <ImageView fx:id="backgroundImage" fitHeight="746.0" fitWidth="746.0" pickOnBounds="true" preserveRatio="false">
             <image>
-                <Image url="@background.png" />
+                <Image url="@texture/background.png" />
             </image>
         </ImageView>
 
@@ -32,7 +32,7 @@
             <VBox alignment="CENTER" spacing="10.0">
                 <ImageView fitHeight="150.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@Arkanoid-logo.png" />
+                        <Image url="@texture/Arkanoid-logo.png" />
                     </image>
                 </ImageView>
                 <Label text="Classic Arcade Game" textFill="WHITE">
@@ -161,32 +161,32 @@
                                         <children>
                                             <ImageView fitHeight="74.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@powerup/powerup_expandpaddle.png" />
+                                                    <Image url="@texture/powerup/powerup_expandpaddle.png" />
                                                 </image>
                                             </ImageView>
                                             <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@powerup/powerup_speedpaddle.png" />
+                                                    <Image url="@texture/powerup/powerup_speedpaddle.png" />
                                                 </image>
                                             </ImageView>
                                             <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@powerup/powerup_live.png" />
+                                                    <Image url="@texture/powerup/powerup_live.png" />
                                                 </image>
                                             </ImageView>
                                             <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@powerup/powerup_slowball.png" />
+                                                    <Image url="@texture/powerup/powerup_slowball.png" />
                                                 </image>
                                             </ImageView>
                                             <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@powerup/powerup_tripleball.png" />
+                                                    <Image url="@texture/powerup/powerup_tripleball.png" />
                                                 </image>
                                             </ImageView>
                                             <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="10.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@powerup/powerup_explosiveball.png" />
+                                                    <Image url="@texture/powerup/powerup_explosiveball.png" />
                                                 </image>
                                             </ImageView>
                                         </children>
@@ -245,7 +245,7 @@
                                                     <Font size="24.0" />
                                                 </font>
                                             </Label>
-                                            <Label prefHeight="35.0" prefWidth="482.0" text="• Gạch lan (phá các gạch cùng loại quanh nó" textFill="WHITE">
+                                            <Label prefHeight="35.0" prefWidth="482.0" text="• Gạch lan (phá các gạch cùng loại quanh nó)" textFill="WHITE">
                                                 <font>
                                                     <Font size="24.0" />
                                                 </font>
@@ -261,22 +261,22 @@
                                         <children>
                                             <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@brick/brick3.png" />
+                                                    <Image url="@texture/brick/brick3.png" />
+                                                </image>
+                                            </ImageView>
+                                            <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@texture/brick/brick6.png" />
                                                 </image>
                                             </ImageView>
                                             <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@brick/brick7.png" />
+                                                    <Image url="@texture/brick/brick7.png" />
                                                 </image>
                                             </ImageView>
                                             <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@brick/brick8.png" />
-                                                </image>
-                                            </ImageView>
-                                            <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                                <image>
-                                                    <Image url="@brick/brick6.png" />
+                                                    <Image url="@texture/brick/brick8.png" />
                                                 </image>
                                             </ImageView>
                                         </children>
@@ -285,27 +285,27 @@
                                         <children>
                                             <ImageView fitHeight="53.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@brick/brick5.png" />
+                                                    <Image url="@texture/brick/brick5.png" />
                                                 </image>
                                             </ImageView>
                                             <ImageView fitHeight="53.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@brick/brick4.png" />
+                                                    <Image url="@texture/brick/brick4.png" />
                                                 </image>
                                             </ImageView>
                                             <ImageView fitHeight="54.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@brick/brick3.png" />
+                                                    <Image url="@texture/brick/brick3.png" />
                                                 </image>
                                             </ImageView>
                                             <ImageView fitHeight="49.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@brick/brick2.png" />
+                                                    <Image url="@texture/brick/brick2.png" />
                                                 </image>
                                             </ImageView>
                                             <ImageView fitHeight="53.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@brick/brick1.png" />
+                                                    <Image url="@texture/brick/brick1.png" />
                                                 </image>
                                             </ImageView>
                                         </children>

@@ -110,7 +110,7 @@ public class InGameStatus {
         return group;
     }
 
-    private static void updateTexts() {
+    public static void updateTexts() {
         scoreText.setText("Score: " + score);
         livesText.setText("Lives: " + lives);
         levelText.setText("Level: " + level);

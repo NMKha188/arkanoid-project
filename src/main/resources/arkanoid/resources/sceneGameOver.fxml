@@ -15,7 +15,7 @@
         <!-- Background Image - Fixed size -->
         <ImageView fx:id="backgroundImage" fitHeight="746.0" fitWidth="746.0" pickOnBounds="true" preserveRatio="false">
             <image>
-                <Image url="@background.png" />
+                <Image url="@texture/background.png" />
             </image>
         </ImageView>
 

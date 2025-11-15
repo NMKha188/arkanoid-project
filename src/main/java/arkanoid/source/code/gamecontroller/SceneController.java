@@ -68,6 +68,7 @@ public class SceneController {
         });
         loadGameButton.setOnAction(e -> {
             SaveGame.loadGame();
+            InGameStatus.updateTexts();
             startGame(loadGameButton);
         });
         exitButton.setOnAction(e -> {
