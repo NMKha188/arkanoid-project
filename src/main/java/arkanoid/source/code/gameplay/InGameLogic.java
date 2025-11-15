@@ -25,7 +25,6 @@ public class InGameLogic {
     private static boolean movingRight = false;
 
     public static AnimationTimer gameTimer;
-    public static boolean pausing = false;
 
     private static final Paddle paddle = new Paddle();
     private static final BallList ballList = new BallList();
@@ -65,6 +64,14 @@ public class InGameLogic {
 
     public static Pane getRoot() {
         return gameRoot;
+    }
+
+    public static GameLogicThread getGameLogicThread() {
+        return gameLogicThread;
+    }
+
+    public static void setGameLogicThread(GameLogicThread newGameLogicThread) {
+        gameLogicThread = newGameLogicThread;
     }
 
     public synchronized static Paddle getPaddle() {
@@ -121,7 +128,7 @@ public class InGameLogic {
                     ballList.hideDirectionLine();
                 }
                 case P -> {
-                    gameTimer.stop();
+                    stopGame();
                     PauseScreen.showPauseOverlay((Stage) gameScene.getWindow());
                 }
                 default -> {
@@ -139,6 +146,11 @@ public class InGameLogic {
 
         if (gameTimer != null) {
             gameTimer.stop();
+        }
+
+        if (gameLogicThread != null) {
+            gameLogicThread.stopThread();
+            gameLogicThread = null;
         }
 
         gameLogicThread = new GameLogicThread(paddle, ballList, brickSet, powerUpList);

@@ -84,7 +84,7 @@ public class Texture {
                 downBorderImages[i] = loadImage(path);
             }
             for (int i = 0; i < explosionImages.length; i++) {
-                String path = "/arkanoid/resources/explosion" + (i + 1) + ".png";
+                String path = "/arkanoid/resources/explosionsprites/explosion" + (i + 1) + ".png";
                 explosionImages[i] = loadImage(path);
             }
         } catch (Exception e) {

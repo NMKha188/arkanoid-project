@@ -1,7 +1,7 @@
 package arkanoid.source.code.gameplay.brick;
 
 public class Map {
-    private static final BrickSet[] map = new BrickSet[13];
+    private static final BrickSet[] map = new BrickSet[11];
 
     static {
         map[1] = new BrickSet();
@@ -24,10 +24,6 @@ public class Map {
         map[9].readData("/arkanoid/resources/mapdata/map9.txt");
         map[10] = new BrickSet();
         map[10].readData("/arkanoid/resources/mapdata/map10.txt");
-        map[11] = new BrickSet();
-        map[11].readData("/arkanoid/resources/mapdata/map11.txt");
-        map[12] = new BrickSet();
-        map[11].readData("/arkanoid/resources/mapdata/map12.txt");
     }
 
     public static BrickSet getMap(int index) {

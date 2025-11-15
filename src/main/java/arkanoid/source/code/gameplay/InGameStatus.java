@@ -124,7 +124,7 @@ public class InGameStatus {
         InGameLogic.reset();
     }
     public static boolean hasFinishedGame() {
-        return level>4;
+        return level > 10;
     }
 
     public static void addGroupToGameRoot() {

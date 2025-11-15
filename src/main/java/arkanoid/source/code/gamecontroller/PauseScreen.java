@@ -1,6 +1,7 @@
 package arkanoid.source.code.gamecontroller;
 
 import arkanoid.source.code.config.Config;
+import arkanoid.source.code.gameplay.GameLogicThread;
 import arkanoid.source.code.gameplay.InGameLogic;
 import arkanoid.source.code.gameplay.InGameStatus;
 import javafx.fxml.FXML;
@@ -35,13 +36,23 @@ public class PauseScreen {
     }
 
     private void resumeGame() {
-        // Resume the game timer
-        InGameLogic.gameTimer.start();
-
-        // Hide the pause overlay
         if (pauseStage != null) {
             pauseStage.hide();
         }
+
+        if (InGameLogic.getGameLogicThread() == null) {
+            InGameLogic.setGameLogicThread(
+                    new GameLogicThread(
+                            InGameLogic.getPaddle(),
+                            InGameLogic.getBallList(),
+                            InGameLogic.getBrickSet(),
+                            InGameLogic.getPowerUpList()
+                    )
+            );
+            new Thread(InGameLogic.getGameLogicThread()).start();
+        }
+
+        InGameStatus.startDownRecAnimation();
     }
 
     private void exitToMainMenu() {
