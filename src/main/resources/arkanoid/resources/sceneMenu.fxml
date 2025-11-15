@@ -245,7 +245,7 @@
                                                     <Font size="24.0" />
                                                 </font>
                                             </Label>
-                                            <Label prefHeight="35.0" prefWidth="482.0" text="• Gạch lan (phá các gạch cùng loại quanh nó" textFill="WHITE">
+                                            <Label prefHeight="35.0" prefWidth="482.0" text="• Gạch lan (phá các gạch cùng loại quanh nó)" textFill="WHITE">
                                                 <font>
                                                     <Font size="24.0" />
                                                 </font>
@@ -264,6 +264,11 @@
                                                     <Image url="@brick/brick3.png" />
                                                 </image>
                                             </ImageView>
+                                 <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                       <Image url="@brick/brick6.png" />
+                                    </image>
+                                 </ImageView>
                                             <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
                                                     <Image url="@brick/brick7.png" />
@@ -272,11 +277,6 @@
                                  <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                        <Image url="@brick/brick8.png" />
-                                    </image>
-                                 </ImageView>
-                                 <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@brick/brick6.png" />
                                     </image>
                                  </ImageView>
                                         </children>
