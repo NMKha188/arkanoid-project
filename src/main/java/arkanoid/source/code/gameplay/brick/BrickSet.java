@@ -97,30 +97,7 @@ public class BrickSet implements GameObject {
 
     // private method to construct new brick based on data read
     private static Brick constructBrick(double x, double y, int type) {
-        Brick newBrick = null;
-        switch (type) {
-            case 1 -> {
-                newBrick = new NormalBrick(x, y);
-            }
-            case 2 -> {
-                newBrick = new HardBrick(x, y);
-            }
-            case 3 -> {
-                newBrick = new UnbreakableBrick(x, y);
-            }
-            case 4 -> {
-                newBrick = new ResonanceBrick(x, y);
-            }
-            case 5 -> {
-                newBrick = new ExplosiveBrick(x, y);
-            }
-            case 6 -> {
-                newBrick = new RegenerativeBrick(x, y);
-            }
-            default -> {
-            }
-        }
-        return newBrick;
+        return BrickFactory.createBrick(x, y, type);
     }
 
     public void addResonanceBrick(ResonanceBrick resonanceBrick) {

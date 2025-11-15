@@ -46,51 +46,10 @@ public class PowerUpList implements GameObject {
         double x = brick.getX() + (brick.getWidth() - Config.POWER_UP_WIDTH) / 2;
         double y = brick.getY() + (brick.getHeight() - Config.POWER_UP_HEIGHT) / 2;
 
-        switch ((int) (Math.random() * 6)) {
-            case 0 -> {
-                // expand paddle
-                if ((int) (Math.random() * 100) <= Config.EXPAND_PADDLE_PROBABILITY) {
-                    PowerUp expandPaddle = new ExpandPaddle(x, y);
-                    this.addPowerUpToList(expandPaddle);
-                }
-            }
-            case 1 -> {
-                // speed up paddle
-                if ((int) (Math.random() * 100) <= Config.SPEED_UP_PADDLE_PROBABILITY) {
-                    PowerUp speedUpPaddle = new SpeedUpPaddle(x, y);
-                    this.addPowerUpToList(speedUpPaddle);
-                }
-            }
-            case 2 -> {
-                // slow ball
-                if ((int) (Math.random() * 100) <= Config.SLOW_BALL_PROBABILITY) {
-                    PowerUp slowBall = new SlowBall(x, y);
-                    this.addPowerUpToList(slowBall);
-                }
-            }
-            case 3 -> {
-                // explosive ball
-                if ((int) (Math.random() * 100) <= Config.EXPLOSIVE_BALL_PROBABILITY) {
-                    PowerUp explosiveBall = new ExplosiveBall(x, y);
-                    this.addPowerUpToList(explosiveBall);
-                }
-            }
-            case 4 -> {
-                // triple ball
-                if ((int) (Math.random() * 100) <= Config.TRIPLE_BALL_PROBABILITY) {
-                    PowerUp tripleBall = new TripleBall(x, y);
-                    this.addPowerUpToList(tripleBall);
-                }
-            }
-            case 5 -> {
-                // life
-                if ((int) (Math.random() * 100) <= Config.LIVE_PROBABILITY) {
-                    PowerUp live = new Live(x, y);
-                    this.addPowerUpToList(live);
-                }
-            }
-            default -> {
-            }
+        PowerUp powerUp = PowerUpFactory.createRandomPowerUp(x, y);
+
+        if (powerUp != null) {
+            this.addPowerUpToList(powerUp);
         }
     }
 
