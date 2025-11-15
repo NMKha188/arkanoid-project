@@ -162,7 +162,16 @@ public class Ball implements GameObject {
         if (o instanceof Paddle) {
             return Shape.intersect(shape, ((Paddle) o).getShape()).getBoundsInLocal().getHeight() > 0;
         } else if (o instanceof Brick) {
-            return Shape.intersect(shape, ((Brick) o).getShape()).getBoundsInLocal().getHeight() > 0;
+            Brick brick = (Brick) o;
+
+            double closestX = Math.max(brick.getX(), Math.min(x, brick.getX() + brick.getWidth()));
+            double closestY = Math.max(brick.getY(), Math.min(y, brick.getY() + brick.getHeight()));
+
+            double dx = x - closestX;
+            double dy = y - closestY;
+            double distance = Math.sqrt((dx * dx) + (dy * dy));
+
+            return distance <= this.getRadius();
         }
         return false;
     }
