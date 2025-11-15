@@ -46,6 +46,9 @@ public class RegenerativeBrick extends Brick {
             return;
         }
         if (Duration.between(hitMoment, Instant.now()).getSeconds() >= REGENERATE_TIME) {
+            Platform.runLater(() -> {
+                Texture.playHealAnimation(x + width / 2, y + height / 2);
+            });
             hitPoints += 1;
             Platform.runLater(() -> {
                 Texture.applyTextureToBrick(shape, hitPoints);
