@@ -110,7 +110,7 @@ public class InGameStatus {
         return group;
     }
 
-    private static void updateTexts() {
+    public static void updateTexts() {
         scoreText.setText("Score: " + score);
         livesText.setText("Lives: " + lives);
         levelText.setText("Level: " + level);
@@ -124,7 +124,7 @@ public class InGameStatus {
         InGameLogic.reset();
     }
     public static boolean hasFinishedGame() {
-        return level>4;
+        return level>7;
     }
     public static void addGroupToGameRoot() {
         InGameLogic.getRoot().getChildren().add(InGameStatus.getGroup());
