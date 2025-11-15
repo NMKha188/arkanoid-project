@@ -166,6 +166,7 @@ public class InGameLogic {
                 if(brickSet.isClear()) {
                     InGameStatus.setNextMap();
                     SaveGame.saveGame();
+                    reset();
                     System.out.println("Level Passed");
                     SceneController.completeLevel();
                 }
