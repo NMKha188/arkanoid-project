@@ -130,42 +130,19 @@ public class SceneController {
     }
 
     public static void switchToMainMenu(Stage stage) {
-        try {
-            // Create a GameEngine instance and call its method
-            GameEngine gameEngine = new GameEngine();
-            gameEngine.start(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ScreenFactory.createScreen(ScreenFactory.ScreenType.MAINMENU, stage);
     }
 
     public static void completeLevel() {
+        InGameLogic.stopGame();
         Platform.runLater(() -> {
-            if (primaryStage != null) {
-                InGameLogic.stopGame();
-                System.out.println("Switching to next level scene...");
-                LevelClearScreen.levelClear(InGameStatus.getScore(), primaryStage);
-            } else {
-                System.out.println("You passed");
-                System.out.println("Your score: " + InGameStatus.getScore());
-                System.out.println("ERROR: primaryStage is null!");
-                System.exit(0);
-            }
+            ScreenFactory.createScreen(ScreenFactory.ScreenType.LEVEL_CLEAR, primaryStage);
         });
     }
 
     public static void showGameOverScene() {
         Platform.runLater(() -> {
-            if (primaryStage != null) {
-                InGameLogic.stopGame();
-                System.out.println("Switching to game over scene...");
-                GameOverScreen.switchToGameOverScene(InGameStatus.getScore(), primaryStage);
-            } else {
-                System.out.println("You lose");
-                System.out.println("Your final score: " + InGameStatus.getScore());
-                System.out.println("ERROR: primaryStage is null!");
-                System.exit(0);
-            }
+            ScreenFactory.createScreen(ScreenFactory.ScreenType.GAME_OVER, primaryStage);
         });
     }
 }

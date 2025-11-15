@@ -3,6 +3,7 @@ package arkanoid.source.code.gameplay;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gamecontroller.PauseScreen;
 import arkanoid.source.code.gamecontroller.SceneController;
+import arkanoid.source.code.gamecontroller.ScreenFactory;
 import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.brick.Map;
@@ -130,7 +131,8 @@ public class InGameLogic {
                 }
                 case P -> {
                     stopGame();
-                    PauseScreen.showPauseOverlay((Stage) gameScene.getWindow());
+                    ScreenFactory.createScreen(ScreenFactory.ScreenType.PAUSE,
+                            (Stage) gameScene.getWindow());
                 }
                 default -> {
                 }
