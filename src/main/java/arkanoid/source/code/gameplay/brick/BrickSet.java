@@ -63,6 +63,14 @@ public class BrickSet implements GameObject {
         return brickSet[i][j];
     }
 
+    public void loseBrick() {
+        numOfBricksLeft--;
+    }
+
+    public boolean isClear() {
+        return numOfBricksLeft == 0;
+    }
+
     // read data from a data path to create a brick set (using title map method)
     public void readData(String path) {
         InputStream inputStream = InGameLogic.class.getResourceAsStream(path);
@@ -123,11 +131,9 @@ public class BrickSet implements GameObject {
         explosiveBrickQueue.offer(explosiveBrick);
     }
 
-    public void update() {
-    }
+    public void updateLogic() {
+        PowerUpList powerUpList = InGameLogic.getPowerUpList();
 
-    // update all brick state (not including getting hit since that method has already been called inside a ball collision method)
-    public void update(PowerUpList powerUpList) {
         for (int i = 0; i < BRICKS_ROW; i++) {
             for (int j = 0; j < BRICKS_PER_ROW; j++) {
                 if (getOneBrickAt(i, j) instanceof RegenerativeBrick) {
@@ -148,12 +154,7 @@ public class BrickSet implements GameObject {
         }
     }
 
-    public void loseBrick() {
-        numOfBricksLeft--;
-    }
-
-    public boolean isClear() {
-        return numOfBricksLeft == 0;
+    public void updateVisual() {
     }
 
     // reset all brick state

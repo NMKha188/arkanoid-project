@@ -66,7 +66,9 @@ public abstract class RectangleGameObject implements GameObject {
         InGameLogic.getRoot().getChildren().remove(shape);
     }
 
-    public abstract void update();
+    public abstract void updateLogic();
+
+    public abstract void updateVisual();
 
     public abstract void reset();
 }

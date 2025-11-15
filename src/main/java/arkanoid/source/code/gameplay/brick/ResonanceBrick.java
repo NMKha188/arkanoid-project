@@ -3,6 +3,7 @@ package arkanoid.source.code.gameplay.brick;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import arkanoid.source.code.graphic.Texture;
+import javafx.application.Platform;
 
 public class ResonanceBrick extends Brick {
     // arrays for flood fill technique

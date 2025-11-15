@@ -26,13 +26,21 @@ public class Paddle extends RectangleGameObject {
         this.paddleSpeed = paddleSpeed;
     }
 
-    // update paddle position based on key press
-    public void update() {
+    public void updateLogic() {
         if (InGameLogic.isMovingLeft() && !InGameLogic.isMovingRight() && x >= Config.EXTRA / 2) {
             x -= paddleSpeed;
+            if (x < Config.EXTRA / 2) {
+                x = Config.EXTRA / 2;
+            }
         } else if (InGameLogic.isMovingRight() && !InGameLogic.isMovingLeft() && x <= Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - width) {
             x += paddleSpeed;
+            if (x > Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - width) {
+                x = Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - width;
+            }
         }
+    }
+
+    public void updateVisual() {
         shape.setX(x);
     }
 

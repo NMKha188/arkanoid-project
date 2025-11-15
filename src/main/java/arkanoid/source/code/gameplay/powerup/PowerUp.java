@@ -45,6 +45,10 @@ public abstract class PowerUp extends RectangleGameObject {
         return effectStartTime;
     }
 
+    public void setEffectStartTime(Instant moment) {
+        this.effectStartTime = moment;
+    }
+
     public void addShapeToRoot() {
         InGameLogic.getRoot().getChildren().add(shape);
     }
@@ -53,9 +57,11 @@ public abstract class PowerUp extends RectangleGameObject {
         InGameLogic.getRoot().getChildren().remove(shape);
     }
 
-    // update position
-    public void update() {
+    public void updateLogic() {
         y += fallingSpeed;
+    }
+
+    public void updateVisual() {
         shape.setY(y);
     }
 
@@ -65,11 +71,8 @@ public abstract class PowerUp extends RectangleGameObject {
     }
 
     // get caught by paddle
-    public void caughtByPaddle(Paddle paddle) {
-        if (effectStartTime == null && Shape.intersect(shape, paddle.getShape()).getBoundsInLocal().getHeight() > 0) {
-            effectStartTime = Instant.now();
-            this.removeShapeFromRoot();
-        }
+    public boolean caughtByPaddle(Paddle paddle) {
+        return effectStartTime == null && Shape.intersect(shape, paddle.getShape()).getBoundsInLocal().getHeight() > 0;
     }
 
     // check if power up is on duration (after getting caught by paddle)
@@ -77,12 +80,12 @@ public abstract class PowerUp extends RectangleGameObject {
         return effectStartTime != null && Duration.between(effectStartTime, Instant.now()).getSeconds() < duration;
     }
 
-    public abstract void applyEffect(GameObject o);
-
     // check if power up has run out of duration (after getting caught by paddle)
     public boolean runOutOfDuration() {
         return effectStartTime != null && Duration.between(effectStartTime, Instant.now()).getSeconds() >= duration;
     }
+
+    public abstract void applyEffect(GameObject o);
 
     public abstract void removeEffect(GameObject o);
 

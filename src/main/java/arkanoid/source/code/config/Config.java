@@ -13,7 +13,7 @@ public class Config {
 
     // ball
     public static final double BALL_RADIUS = 10;
-    public static final double BALL_SPEED = 6;
+    public static final double BALL_SPEED = 7;
 
     // 1 set of bricks
     public static final int BRICKS_ROW = 16;
@@ -55,7 +55,7 @@ public class Config {
     public static final long SLOW_BALL_DURATION = 10;
     public static final double SLOW_RATIO = 0.67;
     // power up: explosive ball
-    public static final int EXPLOSIVE_BALL_PROBABILITY = 40;
+    public static final int EXPLOSIVE_BALL_PROBABILITY = 14;
     public static final long EXPLOSIVE_BALL_DURATION = 5;
     // power up: triple ball
     public static final int TRIPLE_BALL_PROBABILITY = 14;

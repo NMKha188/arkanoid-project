@@ -67,6 +67,14 @@ public class InGameLogic {
         return gameRoot;
     }
 
+    public static GameLogicThread getGameLogicThread() {
+        return gameLogicThread;
+    }
+
+    public static void setGameLogicThread(GameLogicThread newGameLogicThread) {
+        gameLogicThread = newGameLogicThread;
+    }
+
     public static Paddle getPaddle() {
         return paddle;
     }

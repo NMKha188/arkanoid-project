@@ -40,14 +40,16 @@ public class PauseScreen {
             pauseStage.hide();
         }
 
-        if (InGameLogic.gameLogicThread == null) {
-            InGameLogic.gameLogicThread = new GameLogicThread(
-                    InGameLogic.getPaddle(),
-                    InGameLogic.getBallList(),
-                    InGameLogic.getBrickSet(),
-                    InGameLogic.getPowerUpList()
+        if (InGameLogic.getGameLogicThread() == null) {
+            InGameLogic.setGameLogicThread(
+                    new GameLogicThread(
+                            InGameLogic.getPaddle(),
+                            InGameLogic.getBallList(),
+                            InGameLogic.getBrickSet(),
+                            InGameLogic.getPowerUpList()
+                    )
             );
-            new Thread(InGameLogic.gameLogicThread).start();
+            new Thread(InGameLogic.getGameLogicThread()).start();
         }
 
         InGameStatus.startDownRecAnimation();

@@ -5,7 +5,9 @@ public interface GameObject {
 
     void removeShapeFromGameRoot();
 
-    void update();
+    void updateLogic();
+
+    void updateVisual();
 
     void reset();
 }

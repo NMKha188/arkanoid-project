@@ -9,6 +9,7 @@ import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import arkanoid.source.code.gameplay.powerup.ExplosiveBall;
 import arkanoid.source.code.graphic.Texture;
+import javafx.application.Platform;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
@@ -21,8 +22,8 @@ public class Ball implements GameObject {
     private double ballSpeed = Config.BALL_SPEED;
     private double Vx;
     private double Vy;
-    private double maxVx = ballSpeed * 0.67;
-    private double changeVx = 0.05;
+    private double maxVx = ballSpeed * 0.75;
+    private double changeVx = 0.1;
 
     public Ball() {
         shape = new Circle(BALL_RADIUS);
@@ -134,18 +135,49 @@ public class Ball implements GameObject {
         Vy = -Math.sqrt(Math.pow(ballSpeed, 2) - Math.pow(Vx, 2));
     }
 
+    public void updateLogic() {
+        Paddle paddle = InGameLogic.getPaddle();
+        BrickSet brickSet = InGameLogic.getBrickSet();
+        PowerUpList powerUpList = InGameLogic.getPowerUpList();
+
+        this.collideWithWalls();
+        this.collideWithPaddle(paddle);
+        this.collideWithBrickSet(brickSet, powerUpList);
+
+        x += Vx;
+        y += Vy;
+    }
+
+    public void updateVisual() {
+        shape.setCenterX(x);
+        shape.setCenterY(y);
+    }
+
+    public void reset() {
+        Vx = 0;
+    }
+
     // check collision with other Game Objects
     private boolean checkCollision(GameObject o) {
         if (o instanceof Paddle) {
             return Shape.intersect(shape, ((Paddle) o).getShape()).getBoundsInLocal().getHeight() > 0;
         } else if (o instanceof Brick) {
-            return Shape.intersect(shape, ((Brick) o).getShape()).getBoundsInLocal().getHeight() > 0;
+            Brick brick = (Brick) o;
+
+            double closestX = Math.max(brick.getX(), Math.min(x, brick.getX() + brick.getWidth()));
+            double closestY = Math.max(brick.getY(), Math.min(y, brick.getY() + brick.getHeight()));
+
+            double dx = x - closestX;
+            double dy = y - closestY;
+            double distance = Math.sqrt((dx * dx) + (dy * dy));
+
+            return distance <= this.getRadius();
         }
         return false;
     }
 
     // collide with top and side walls
-    public void collideWithWalls() {
+    private void collideWithWalls() {
         // collide with the side walls
         if (x <= Config.EXTRA / 2 + BALL_RADIUS || x >= Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - BALL_RADIUS) {
             Vx = -Vx;
@@ -154,19 +186,23 @@ public class Ball implements GameObject {
             } else {
                 x = Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - BALL_RADIUS - 1;
             }
-            shape.setCenterX(x);
+            Platform.runLater(() -> {
+                shape.setCenterX(x);
+            });
         }
 
         // collide with the top
         if (y <= Config.EXTRA / 4 + BALL_RADIUS) {
             Vy = -Vy;
             y = Config.EXTRA / 4 + BALL_RADIUS + 1;
-            shape.setCenterY(y);
+            Platform.runLater(() -> {
+                shape.setCenterY(y);
+            });
         }
     }
 
     // collide with paddle logic
-    public void collideWithPaddle(Paddle paddle) {
+    private void collideWithPaddle(Paddle paddle) {
         if (this.checkCollision(paddle)) {
             // collide with the top surface of the paddle
             if (paddle.getX() <= x && x <= paddle.getX() + paddle.getWidth()) {
@@ -177,26 +213,35 @@ public class Ball implements GameObject {
                 if ((Vx > 0 && x < paddleCenter) || (Vx < 0 && x > paddleCenter)) {
                     Vx = -Vx;
                 }
-
                 // effect from paddle speed
                 if (InGameLogic.isMovingLeft()) {
                     Vx = Vx * 0.7 - 0.3 * paddle.getSpeed();
+                    if (Vx < -maxVx) {
+                        Vx = -maxVx;
+                    }
                 } else if (InGameLogic.isMovingRight()) {
                     Vx = Vx * 0.7 + 0.3 * paddle.getSpeed();
+                    if (Vx > maxVx) {
+                        Vx = maxVx;
+                    }
                 }
                 Vy = -Math.sqrt(Math.pow(ballSpeed, 2) - Math.pow(Vx, 2));
                 y = paddle.getY() - BALL_RADIUS - 1;
-                shape.setCenterY(y);
+                Platform.runLater(() -> {
+                    shape.setCenterY(y);
+                });
             }
             // collide with the sides of the paddle
-            else if (paddle.getY() <= y) {
+            else if (paddle.getY() <= y && y <= paddle.getY() + paddle.getHeight()) {
                 Vx = -Vx;
                 if (x <= paddle.getX() + paddle.getWidth() / 2) {
                     x = paddle.getX() - BALL_RADIUS - 1;
                 } else {
                     x = paddle.getX() + paddle.getWidth() + BALL_RADIUS + 1;
                 }
-                shape.setCenterX(x);
+                Platform.runLater(() -> {
+                    shape.setCenterX(x);
+                });
             }
             // collide with the corners of the paddle
             else {
@@ -211,7 +256,7 @@ public class Ball implements GameObject {
     }
 
     // collide with brick set (all bricks appear on the screen)
-    public void collideWithBrickSet(BrickSet brickSet, PowerUpList powerUpList) {
+    private void collideWithBrickSet(BrickSet brickSet, PowerUpList powerUpList) {
         for (int i = 0; i < brickSet.getBricksRow(); i++) {
             for (int j = 0; j < brickSet.getBricksPerRow(); j++) {
                 Brick currentBrick = brickSet.getOneBrickAt(i, j);
@@ -232,7 +277,9 @@ public class Ball implements GameObject {
                         if (leftBrick != null && this.checkCollision(leftBrick)) {
                             // explosive ball is on
                             if (ExplosiveBall.isInExplosiveMode()) {
-                                Texture.playExplosionAnimation(x, y);
+                                Platform.runLater(() -> {
+                                    Texture.playExplosionAnimation(x, y);
+                                });
                                 ExplosiveBall.explosiveDamage(brickSet, i, j - 1, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
@@ -242,7 +289,9 @@ public class Ball implements GameObject {
                         } else if (rightBrick != null && this.checkCollision(rightBrick)) {
                             // explosive ball is on
                             if (ExplosiveBall.isInExplosiveMode()) {
-                                Texture.playExplosionAnimation(x, y);
+                                Platform.runLater(() -> {
+                                    Texture.playExplosionAnimation(x, y);
+                                });
                                 ExplosiveBall.explosiveDamage(brickSet, i, j + 1, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
@@ -257,7 +306,9 @@ public class Ball implements GameObject {
                         } else {
                             y = currentBrick.getY() + Config.BRICK_HEIGHT + BALL_RADIUS + 1;
                         }
-                        shape.setCenterY(y);
+                        Platform.runLater(() -> {
+                            shape.setCenterY(y);
+                        });
                     }
                     // collide with current brick and either top or bottom brick
                     else if (topBrick != null && !topBrick.isDestroyed() && this.checkCollision(topBrick)
@@ -266,7 +317,9 @@ public class Ball implements GameObject {
                         if (topBrick != null && this.checkCollision(topBrick)) {
                             // explosive ball is on
                             if (ExplosiveBall.isInExplosiveMode()) {
-                                Texture.playExplosionAnimation(x, y);
+                                Platform.runLater(() -> {
+                                    Texture.playExplosionAnimation(x, y);
+                                });
                                 ExplosiveBall.explosiveDamage(brickSet, i - 1, j, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
@@ -276,7 +329,9 @@ public class Ball implements GameObject {
                         } else if (bottomBrick != null && this.checkCollision(bottomBrick)) {
                             // explosive ball is on
                             if (ExplosiveBall.isInExplosiveMode()) {
-                                Texture.playExplosionAnimation(x, y);
+                                Platform.runLater(() -> {
+                                    Texture.playExplosionAnimation(x, y);
+                                });
                                 ExplosiveBall.explosiveDamage(brickSet, i + 1, j, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
@@ -291,12 +346,16 @@ public class Ball implements GameObject {
                         } else {
                             x = currentBrick.getX() + Config.BRICK_WIDTH + BALL_RADIUS + 1;
                         }
-                        shape.setCenterX(x);
+                        Platform.runLater(() -> {
+                            shape.setCenterX(x);
+                        });
                     }
                     // collide with only current brick
                     else {
                         if (ExplosiveBall.isInExplosiveMode()) {
-                            Texture.playExplosionAnimation(x, y);
+                            Platform.runLater(() -> {
+                                Texture.playExplosionAnimation(x, y);
+                            });
                             ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                         } else {
                             currentBrick.getHit(1, brickSet, powerUpList);
@@ -318,7 +377,9 @@ public class Ball implements GameObject {
             } else {
                 y = brick.getY() + brick.getHeight() + BALL_RADIUS + 1;
             }
-            shape.setCenterY(y);
+            Platform.runLater(() -> {
+                shape.setCenterY(y);
+            });
         }
         // collide with the sides of the brick
         else if (y >= brick.getY() && y <= brick.getY() + brick.getHeight()) {
@@ -328,7 +389,9 @@ public class Ball implements GameObject {
             } else {
                 x = brick.getX() + brick.getWidth() + BALL_RADIUS + 1;
             }
-            shape.setCenterX(x);
+            Platform.runLater(() -> {
+                shape.setCenterX(x);
+            });
         }
         // collide with corners of the brick
         else {
@@ -365,15 +428,5 @@ public class Ball implements GameObject {
             k = 0.9;
         }
         return k;
-    }
-
-    public void update() {
-        x += Vx;
-        y += Vy;
-        shape.setCenterX(x);
-        shape.setCenterY(y);
-    }
-
-    public void reset() {
     }
 }
