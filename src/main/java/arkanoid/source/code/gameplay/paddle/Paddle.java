@@ -29,8 +29,14 @@ public class Paddle extends RectangleGameObject {
     public void updateLogic() {
         if (InGameLogic.isMovingLeft() && !InGameLogic.isMovingRight() && x >= Config.EXTRA / 2) {
             x -= paddleSpeed;
+            if (x < Config.EXTRA / 2) {
+                x = Config.EXTRA / 2;
+            }
         } else if (InGameLogic.isMovingRight() && !InGameLogic.isMovingLeft() && x <= Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - width) {
             x += paddleSpeed;
+            if (x > Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - width) {
+                x = Config.EXTRA / 2 + InGameLogic.getGameplayScreenWidth() - width;
+            }
         }
     }
 
