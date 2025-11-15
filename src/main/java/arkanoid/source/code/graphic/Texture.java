@@ -34,6 +34,7 @@ public class Texture {
     private static Image[] brickImages = new Image[10];
     private static Image[] explosionImages = new Image[8];
     private static Image[] lightingImages = new Image[12];
+    private static Image[] healImages = new Image[11];
 
     private static Image expandPaddlePowerUPImage;
     private static Image speedUpPaddlePowerUpImage;
@@ -92,6 +93,11 @@ public class Texture {
             for (int i = 0; i < lightingImages.length; i++) {
                 String path = "/arkanoid/resources/lightingsprites/lighting" + (i + 1) + ".png";
                 lightingImages[i] = loadImage(path);
+            }
+
+            for (int i = 0; i < healImages.length; i++) {
+                String path = "/arkanoid/resources/healsprites/heal" + (i + 1) + ".png";
+                healImages[i] = loadImage(path);
             }
 
         } catch (Exception e) {
@@ -177,6 +183,46 @@ public class Texture {
         }
 
         timeline.setOnFinished(e -> InGameLogic.getRoot().getChildren().remove(lightingRect));
+
+        timeline.play();
+    }
+
+    public static void playHealAnimation(double x, double y) {
+        if (healImages == null || healImages[0] == null) {
+            System.err.println("Heal animation frames not loaded!");
+            return;
+        }
+
+        double frameWidth = 150;
+        double frameHeight = 150;
+
+        Rectangle healRect = new Rectangle(frameWidth, frameHeight);
+
+        healRect.setX(x - frameWidth / 2);
+        healRect.setY(y - frameHeight / 2);
+
+        healRect.setFill(new ImagePattern(healImages[0]));
+
+        InGameLogic.getRoot().getChildren().add(healRect);
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        double frameDuration = 80;
+
+        for (int i = 0; i < lightingImages.length; i++) {
+            final int frameIndex = i;
+            KeyFrame kf = new KeyFrame(
+                    Duration.millis(frameDuration * (i + 1)),
+                    e -> {
+                        if (healRect != null && healRect.getScene() != null) {
+                            healRect.setFill(new ImagePattern(healImages[frameIndex]));
+                        }
+                    }
+            );
+            timeline.getKeyFrames().add(kf);
+        }
+
+        timeline.setOnFinished(e -> InGameLogic.getRoot().getChildren().remove(healRect));
 
         timeline.play();
     }
