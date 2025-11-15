@@ -193,4 +193,11 @@ public class InGameLogic {
         powerUpList.reset();
         InGameStatus.startDownRecAnimation();
     }
+    public static void setMovingLeft(boolean b) {
+        movingLeft=b;
+    }
+
+    public static void setMovingRight(boolean b) {
+        movingRight=b;
+    }
 }
