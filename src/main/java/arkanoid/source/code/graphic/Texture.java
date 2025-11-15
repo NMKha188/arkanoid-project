@@ -5,13 +5,17 @@ import arkanoid.source.code.gameplay.InGameLogic;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -126,24 +130,32 @@ public class Texture {
                     new BackgroundSize(InGameLogic.getGameplayScreenWidth() + Config.EXTRA, InGameLogic.getGameplayScreenHeight() + Config.EXTRA / 2, false, false, false, false)
             );
             rootPane.setBackground(new Background(bgImage));
+        } else {
+            rootPane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         }
     }
 
     public static void applyTextureToTopRec(Rectangle topRec) {
         if (topBorderImage != null) {
             topRec.setFill(new ImagePattern(topBorderImage));
+        } else {
+            topRec.setFill(Color.GRAY);
         }
     }
 
     public static void applyTextureToLeftRec(Rectangle leftRec) {
         if (leftBorderImage != null) {
             leftRec.setFill(new ImagePattern(leftBorderImage));
+        } else {
+            leftRec.setFill(Color.GRAY);
         }
     }
 
     public static void applyTextureToRightRec(Rectangle rightRec) {
         if (rightBorderImage != null) {
             rightRec.setFill(new ImagePattern(rightBorderImage));
+        } else {
+            rightRec.setFill(Color.GRAY);
         }
     }
 
@@ -174,7 +186,7 @@ public class Texture {
             KeyFrame kf = new KeyFrame(
                     Duration.millis(frameDuration * (i + 1)),
                     e -> {
-                        if (lightingRect != null && lightingRect.getScene() != null) {
+                        if (lightingRect != null && lightingRect.getScene() != null && lightingImages[frameIndex] != null) {
                             lightingRect.setFill(new ImagePattern(lightingImages[frameIndex]));
                         }
                     }
@@ -214,7 +226,7 @@ public class Texture {
             KeyFrame kf = new KeyFrame(
                     Duration.millis(frameDuration * (i + 1)),
                     e -> {
-                        if (healRect != null && healRect.getScene() != null) {
+                        if (healRect != null && healRect.getScene() != null && healImages[frameIndex] != null) {
                             healRect.setFill(new ImagePattern(healImages[frameIndex]));
                         }
                     }
@@ -253,7 +265,7 @@ public class Texture {
             KeyFrame kf = new KeyFrame(
                     Duration.millis(frameDuration * (i + 1)),
                     e -> {
-                        if (explosionRect != null && explosionRect.getScene() != null) {
+                        if (explosionRect != null && explosionRect.getScene() != null && explosionImages[frameIndex] != null) {
                             explosionRect.setFill(new ImagePattern(explosionImages[frameIndex]));
                         }
                     }
@@ -266,10 +278,10 @@ public class Texture {
         timeline.play();
     }
 
-    // downRec animation
     public static void applyAndPlayAnimation(Rectangle borderShape) {
         if (downBorderImages == null || downBorderImages[0] == null) {
             System.err.println("DownRec animation frames not loaded!");
+            borderShape.setFill(Color.RED);
             return;
         }
 
@@ -288,7 +300,7 @@ public class Texture {
             KeyFrame kf = new KeyFrame(
                     Duration.millis(frameDuration * (i + 1)),
                     e -> {
-                        if (borderShape != null && borderShape.getScene() != null) {
+                        if (borderShape != null && borderShape.getScene() != null && downBorderImages[frameIndex] != null) {
                             borderShape.setFill(new ImagePattern(downBorderImages[frameIndex]));
                         }
                     }
@@ -299,7 +311,6 @@ public class Texture {
         borderAnimation.play();
     }
 
-    // stop downRec animation
     public static void stopAnimation() {
         if (borderAnimation != null) {
             borderAnimation.stop();
@@ -310,52 +321,80 @@ public class Texture {
     public static void applyTextureToPaddle(Rectangle paddleShape) {
         if (paddleImage != null) {
             paddleShape.setFill(new ImagePattern(paddleImage));
+        } else {
+            paddleShape.setFill(Color.WHITE);
         }
     }
 
     public static void applyTextureToBall(Circle ballShape) {
         if (normalBallImage != null) {
             ballShape.setFill(new ImagePattern(normalBallImage));
+        } else {
+            ballShape.setFill(Color.WHITE);
         }
     }
 
     public static void applyExplosiveTextureToBall(Circle ballShape) {
         if (explosiveBallImage != null) {
             ballShape.setFill(new ImagePattern(explosiveBallImage));
+        } else {
+            ballShape.setFill(Color.ORANGERED);
         }
     }
 
     public static void applyTextureToBrick(Rectangle brickShape, int index) {
         if (index > 0 && index < brickImages.length && brickImages[index] != null) {
             brickShape.setFill(new ImagePattern(brickImages[index]));
+        } else {
+            switch(index) {
+                case 1: brickShape.setFill(Color.LIGHTBLUE); break;
+                case 2: brickShape.setFill(Color.LIGHTGREEN); break;
+                case 3: brickShape.setFill(Color.YELLOW); break;
+                case 4: brickShape.setFill(Color.ORANGE); break;
+                case 5: brickShape.setFill(Color.RED); break;
+                case 6: brickShape.setFill(Color.PURPLE); break;
+                case 7: brickShape.setFill(Color.BLUE); break;
+                case 8: brickShape.setFill(Color.CYAN); break;
+                case 9: brickShape.setFill(Color.MAGENTA); break;
+                default: brickShape.setFill(Color.GRAY);
+            }
         }
     }
 
     public static void applyTextureToPowerUp(Rectangle powerUpShape, PowerUpType type) {
         Image texture = null;
+        Color fallbackColor = Color.PINK;
 
         switch (type) {
             case EXPAND:
                 texture = expandPaddlePowerUPImage;
+                fallbackColor = Color.GREEN;
                 break;
             case SPEED_UP:
                 texture = speedUpPaddlePowerUpImage;
+                fallbackColor = Color.CYAN;
                 break;
             case EXPLOSIVEBALL:
                 texture = explosiveBallPowerUpImage;
+                fallbackColor = Color.RED;
                 break;
             case SLOWBALL:
                 texture = slowBallPowerUpImage;
+                fallbackColor = Color.BLUE;
                 break;
             case TRIPLEBALL:
                 texture = tripleBallPowerUpImage;
+                fallbackColor = Color.YELLOW;
                 break;
             case LIVE:
                 texture = livePowerUpImage;
+                fallbackColor = Color.LIGHTGREEN;
                 break;
         }
         if (texture != null) {
             powerUpShape.setFill(new ImagePattern(texture));
+        } else {
+            powerUpShape.setFill(fallbackColor);
         }
     }
 }

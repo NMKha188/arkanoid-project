@@ -8,6 +8,7 @@ import arkanoid.source.code.gameplay.brick.Brick;
 import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import arkanoid.source.code.gameplay.powerup.ExplosiveBall;
+import arkanoid.source.code.graphic.Sound;
 import arkanoid.source.code.graphic.Texture;
 import javafx.application.Platform;
 import javafx.scene.shape.Circle;
@@ -204,6 +205,9 @@ public class Ball implements GameObject {
     // collide with paddle logic
     private void collideWithPaddle(Paddle paddle) {
         if (this.checkCollision(paddle)) {
+            Platform.runLater(() -> {
+                Sound.playPaddleHit();
+            });
             // collide with the top surface of the paddle
             if (paddle.getX() <= x && x <= paddle.getX() + paddle.getWidth()) {
                 // effect from the distance between the position of collision and the center of the paddle
@@ -279,10 +283,14 @@ public class Ball implements GameObject {
                             if (ExplosiveBall.isInExplosiveMode()) {
                                 Platform.runLater(() -> {
                                     Texture.playExplosionAnimation(x, y);
+                                    Sound.playExplosion();
                                 });
                                 ExplosiveBall.explosiveDamage(brickSet, i, j - 1, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
+                                Platform.runLater(() -> {
+                                    Sound.playBrickHit();
+                                });
                                 leftBrick.getHit(1, brickSet, powerUpList);
                                 currentBrick.getHit(1, brickSet, powerUpList);
                             }
@@ -291,10 +299,14 @@ public class Ball implements GameObject {
                             if (ExplosiveBall.isInExplosiveMode()) {
                                 Platform.runLater(() -> {
                                     Texture.playExplosionAnimation(x, y);
+                                    Sound.playExplosion();
                                 });
                                 ExplosiveBall.explosiveDamage(brickSet, i, j + 1, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
+                                Platform.runLater(() -> {
+                                    Sound.playBrickHit();
+                                });
                                 rightBrick.getHit(1, brickSet, powerUpList);
                                 currentBrick.getHit(1, brickSet, powerUpList);
                             }
@@ -319,10 +331,14 @@ public class Ball implements GameObject {
                             if (ExplosiveBall.isInExplosiveMode()) {
                                 Platform.runLater(() -> {
                                     Texture.playExplosionAnimation(x, y);
+                                    Sound.playExplosion();
                                 });
                                 ExplosiveBall.explosiveDamage(brickSet, i - 1, j, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
+                                Platform.runLater(() -> {
+                                    Sound.playBrickHit();
+                                });
                                 topBrick.getHit(1, brickSet, powerUpList);
                                 currentBrick.getHit(1, brickSet, powerUpList);
                             }
@@ -331,10 +347,14 @@ public class Ball implements GameObject {
                             if (ExplosiveBall.isInExplosiveMode()) {
                                 Platform.runLater(() -> {
                                     Texture.playExplosionAnimation(x, y);
+                                    Sound.playExplosion();
                                 });
                                 ExplosiveBall.explosiveDamage(brickSet, i + 1, j, powerUpList);
                                 ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                             } else { // normal ball
+                                Platform.runLater(() -> {
+                                    Sound.playBrickHit();
+                                });
                                 bottomBrick.getHit(1, brickSet, powerUpList);
                                 currentBrick.getHit(1, brickSet, powerUpList);
                             }
@@ -355,9 +375,13 @@ public class Ball implements GameObject {
                         if (ExplosiveBall.isInExplosiveMode()) {
                             Platform.runLater(() -> {
                                 Texture.playExplosionAnimation(x, y);
+                                Sound.playExplosion();
                             });
                             ExplosiveBall.explosiveDamage(brickSet, i, j, powerUpList);
                         } else {
+                            Platform.runLater(() -> {
+                                Sound.playBrickHit();
+                            });
                             currentBrick.getHit(1, brickSet, powerUpList);
                         }
                         this.collideWithBrick(currentBrick);

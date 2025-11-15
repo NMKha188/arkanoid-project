@@ -5,6 +5,7 @@ import arkanoid.source.code.gameplay.InGameLogic;
 import arkanoid.source.code.gameplay.InGameStatus;
 import arkanoid.source.code.gameplay.paddle.Paddle;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
+import arkanoid.source.code.graphic.Sound;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -87,6 +88,7 @@ public class BallList implements GameObject {
                         InGameStatus.loseLife();
                         Platform.runLater(() -> {
                             showDirectionLine();
+                            Sound.playLoseLife();
                             powerUpList.reset();
                         });
                     } else {

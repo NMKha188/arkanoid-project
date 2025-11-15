@@ -3,7 +3,7 @@ module arkanoid.source.code {
     requires javafx.fxml;
     requires java.desktop;
     requires javafx.graphics;
-//    requires arkanoid.source.code;
+    requires javafx.media;
     opens arkanoid.source.code.gameplay to javafx.fxml;
     opens arkanoid.source.code.gamecontroller to javafx.fxml;
     exports arkanoid.source.code.gameplay.brick;

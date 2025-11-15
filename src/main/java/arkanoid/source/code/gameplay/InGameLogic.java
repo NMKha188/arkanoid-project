@@ -8,6 +8,7 @@ import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.brick.Map;
 import arkanoid.source.code.gameplay.paddle.Paddle;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
+import arkanoid.source.code.graphic.Sound;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -35,6 +36,8 @@ public class InGameLogic {
 
     static {
         Texture.applyBackground(gameRoot);
+
+        Sound.playThemeSound();
 
         paddle.addShapeToGameRoot();
 
