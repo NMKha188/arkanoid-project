@@ -4,7 +4,6 @@ import arkanoid.source.code.gameplay.GameObject;
 import arkanoid.source.code.gameplay.InGameLogic;
 import arkanoid.source.code.gameplay.InGameStatus;
 import arkanoid.source.code.gameplay.paddle.Paddle;
-import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;

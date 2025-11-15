@@ -58,6 +58,14 @@ public class InGameLogic {
         return movingLeft;
     }
 
+    public static void setMovingLeft(boolean moving) {
+        movingLeft = moving;
+    }
+
+    public static void setMovingRight(boolean moving) {
+        movingRight = moving;
+    }
+
     public static boolean isMovingRight() {
         return movingRight;
     }
@@ -192,12 +200,5 @@ public class InGameLogic {
         brickSet.reset();
         powerUpList.reset();
         InGameStatus.startDownRecAnimation();
-    }
-    public static void setMovingLeft(boolean b) {
-        movingLeft=b;
-    }
-
-    public static void setMovingRight(boolean b) {
-        movingRight=b;
     }
 }
