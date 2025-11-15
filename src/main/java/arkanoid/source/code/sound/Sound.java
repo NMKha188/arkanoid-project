@@ -1,4 +1,4 @@
-package arkanoid.source.code.graphic;
+package arkanoid.source.code.sound;
 
 import javafx.scene.media.AudioClip;
 import java.net.URL;

@@ -49,11 +49,11 @@
                         <Font name="System Bold" size="30.0" />
                     </font>
                 </Button>
-            <Button fx:id="loadGameButton" focusTraversable="false" layoutX="183.0" layoutY="10.0" prefHeight="75.0" prefWidth="300.0" style="-fx-base: #5ef35e; -fx-background-radius: 40; -fx-cursor: hand;" text="LOAD GAME">
-               <font>
-                  <Font name="System Bold" size="30.0" />
-               </font>
-            </Button>
+                <Button fx:id="loadGameButton" focusTraversable="false" layoutX="183.0" layoutY="10.0" prefHeight="75.0" prefWidth="300.0" style="-fx-base: #5ef35e; -fx-background-radius: 40; -fx-cursor: hand;" text="LOAD GAME">
+                    <font>
+                        <Font name="System Bold" size="30.0" />
+                    </font>
+                </Button>
                 <Button fx:id="ldbButton" focusTraversable="false" layoutX="183.0" layoutY="100.0" prefHeight="75.0" prefWidth="300.0" style="-fx-base: #91c6ee; -fx-background-radius: 40; -fx-cursor: hand;" text="LEADERBOARD">
                     <font>
                         <Font name="System Bold" size="30.0" />
@@ -75,7 +75,7 @@
         </VBox>
 
         <!-- Instructions Overlay -->
-        <VBox fx:id="instructionsOverlay" alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="746.0" prefWidth="746.0" spacing="20.0" visible="false">
+        <VBox fx:id="instructionsOverlay" alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="746.0" prefWidth="746.0" spacing="20.0">
             <!-- Dark Overlay -->
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="rgba(0,0,0,0.8)" width="746.0" />
             <TabPane focusTraversable="false" prefHeight="509.0" prefWidth="746.0" style="-fx-border-color: #370404e6; -fx-border-radius: 10; -fx-border-width: 10; -fx-cursor: hand;" tabClosingPolicy="UNAVAILABLE" tabMinHeight="40.0" tabMinWidth="220.0">
@@ -105,11 +105,11 @@
                                                                     <Font size="18.0" />
                                                                 </font>
                                                             </Label>
-                                             <Label focusTraversable="false" layoutX="30.0" layoutY="58.0" text="• P - Dừng game " textFill="WHITE">
-                                                <font>
-                                                   <Font size="18.0" />
-                                                </font>
-                                             </Label>
+                                                            <Label focusTraversable="false" layoutX="30.0" layoutY="58.0" text="• P - Dừng game " textFill="WHITE">
+                                                                <font>
+                                                                    <Font size="18.0" />
+                                                                </font>
+                                                            </Label>
                                                         </children>
                                                     </VBox>
                                                 </children>
@@ -233,8 +233,13 @@
                         <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="329.0" prefWidth="746.0" style="-fx-background-color: #550404e6;">
                                 <children>
-                                    <VBox alignment="CENTER_LEFT" layoutX="204.0" layoutY="246.0" prefHeight="182.0" prefWidth="481.0" spacing="32.0">
+                                    <VBox alignment="CENTER_LEFT" layoutX="195.0" layoutY="191.0" prefHeight="182.0" prefWidth="481.0" spacing="32.0">
                                         <children>
+                                            <Label layoutX="10.0" layoutY="17.0" text="• Gạch hồi phục (Tự hồi HP qua thời gian)" textFill="WHITE">
+                                                <font>
+                                                    <Font size="24.0" />
+                                                </font>
+                                            </Label>
                                             <Label text="• Gạch bất tử (Không thể bị phá)" textFill="WHITE">
                                                 <font>
                                                     <Font size="24.0" />
@@ -245,18 +250,18 @@
                                                     <Font size="24.0" />
                                                 </font>
                                             </Label>
-                                 <Label layoutX="10.0" layoutY="117.0" prefHeight="35.0" prefWidth="482.0" text="• Gạch nổ (2 HP, gây sát thương các gạch quanh nó)" textFill="WHITE">
-                                    <font>
-                                       <Font size="20.0" />
-                                    </font>
-                                 </Label>
+                                            <Label layoutX="10.0" layoutY="117.0" prefHeight="35.0" prefWidth="482.0" text="• Gạch nổ (2 HP, gây sát thương các gạch quanh nó)" textFill="WHITE">
+                                                <font>
+                                                    <Font size="20.0" />
+                                                </font>
+                                            </Label>
                                         </children>
                                     </VBox>
-                                    <VBox layoutX="81.0" layoutY="245.0" prefHeight="117.0" prefWidth="102.0" spacing="15.0">
+                                    <VBox layoutX="81.0" layoutY="184.0" prefHeight="117.0" prefWidth="102.0" spacing="15.0">
                                         <children>
                                             <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@brick/brick6.png" />
+                                                    <Image url="@brick/brick3.png" />
                                                 </image>
                                             </ImageView>
                                             <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true">
@@ -264,14 +269,19 @@
                                                     <Image url="@brick/brick7.png" />
                                                 </image>
                                             </ImageView>
-                                 <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@brick/brick8.png" />
-                                    </image>
-                                 </ImageView>
+                                            <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@brick/brick8.png" />
+                                                </image>
+                                            </ImageView>
+                                            <ImageView fitHeight="53.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@brick/brick6.png" />
+                                                </image>
+                                            </ImageView>
                                         </children>
                                     </VBox>
-                                    <HBox layoutX="81.0" layoutY="51.0" prefHeight="60.0" prefWidth="540.0" spacing="10.0">
+                                    <HBox layoutX="81.0" layoutY="33.0" prefHeight="60.0" prefWidth="540.0" spacing="10.0">
                                         <children>
                                             <ImageView fitHeight="53.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
@@ -300,12 +310,12 @@
                                             </ImageView>
                                         </children>
                                     </HBox>
-                                    <Label layoutX="142.0" layoutY="111.0" text="• Các gạch thường (Lần lượt từ 5-1 HP)" textFill="WHITE">
+                                    <Label layoutX="142.0" layoutY="93.0" text="• Các gạch thường (Lần lượt từ 5-1 HP)" textFill="WHITE">
                                         <font>
                                             <Font name="System Bold" size="24.0" />
                                         </font>
                                     </Label>
-                                    <Label layoutX="244.0" layoutY="186.0" text="• Các gạch đặc biệt" textFill="WHITE">
+                                    <Label layoutX="244.0" layoutY="149.0" text="• Các gạch đặc biệt" textFill="WHITE">
                                         <font>
                                             <Font name="System Bold" size="24.0" />
                                         </font>

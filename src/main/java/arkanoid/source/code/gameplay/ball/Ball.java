@@ -8,7 +8,7 @@ import arkanoid.source.code.gameplay.brick.Brick;
 import arkanoid.source.code.gameplay.brick.BrickSet;
 import arkanoid.source.code.gameplay.powerup.PowerUpList;
 import arkanoid.source.code.gameplay.powerup.ExplosiveBall;
-import arkanoid.source.code.graphic.Sound;
+import arkanoid.source.code.sound.Sound;
 import arkanoid.source.code.graphic.Texture;
 import javafx.application.Platform;
 import javafx.scene.shape.Circle;
