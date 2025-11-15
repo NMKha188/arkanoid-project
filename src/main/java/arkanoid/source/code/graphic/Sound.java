@@ -10,11 +10,13 @@ public class Sound {
     private static final String THEME_SOUND = "/arkanoid/resources/sounds/theme.mp3";
     private static final String EXPLOSION_PATH = "/arkanoid/resources/sounds/explode.mp3";
     private static final String BRICK_HIT = "/arkanoid/resources/sounds/brick_hit.mp3";
+    private static final String THUNDER_PATH = "/arkanoid/resources/sounds/thunder.mp3";
     private static final AudioClip themeSound = loadSound(THEME_SOUND);
     private static final AudioClip HitSound = loadSound(HIT_PATH);
     private static final AudioClip loseLifeSound = loadSound(LOSE_LIFE_PATH);
     private static final AudioClip explosionSound = loadSound(EXPLOSION_PATH);
     private static final AudioClip brickhitSound = loadSound(BRICK_HIT);
+    private static final AudioClip thunderSound = loadSound(THUNDER_PATH);
 
     private static AudioClip loadSound(String path) {
         try {
@@ -57,6 +59,11 @@ public class Sound {
     public static void playExplosion() {
         if (explosionSound != null) {
             explosionSound.play();
+        }
+    }
+    public static void playThunder() {
+        if (thunderSound != null) {
+            thunderSound.play();
         }
     }
 }
