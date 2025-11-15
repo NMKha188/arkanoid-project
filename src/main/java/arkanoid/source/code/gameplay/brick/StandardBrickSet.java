@@ -1,7 +1,7 @@
 package arkanoid.source.code.gameplay.brick;
 
-public class BrickFactory {
-    public static Brick createBrick(double x, double y, int type) {
+public class StandardBrickSet extends BrickSet {
+    public Brick createBrick(double x, double y, int type) {
         return switch (type) {
             case 1 -> new NormalBrick(x, y);
             case 2 -> new HardBrick(x, y);

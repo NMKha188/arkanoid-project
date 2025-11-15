@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class BrickSet implements GameObject {
+public abstract class BrickSet implements GameObject {
     // number of rows and number of bricks each row
     private final int BRICKS_ROW = Config.BRICKS_ROW;
     private final int BRICKS_PER_ROW = Config.BRICKS_PER_ROW;
@@ -81,23 +81,22 @@ public class BrickSet implements GameObject {
                     if (!scanner.hasNextInt()) {
                         return;
                     }
-                    double x = Config.EXTRA / 2 + j * Config.BRICK_WIDTH;
-                    double y = Config.EXTRA / 4 + i * Config.BRICK_HEIGHT;
                     int type = scanner.nextInt();
-                    brickSet[i][j] = constructBrick(x, y, type);
-                    if (brickSet[i][j] != null && !(brickSet[i][j] instanceof UnbreakableBrick)) {
-                        totalNumOfBricks++;
+                    if (type != 0) {
+                        double x = Config.EXTRA / 2 + j * Config.BRICK_WIDTH;
+                        double y = Config.EXTRA / 4 + i * Config.BRICK_HEIGHT;
+
+                        brickSet[i][j] = createBrick(x, y, type);
+
+                        if (brickSet[i][j] != null && !(brickSet[i][j] instanceof UnbreakableBrick)) {
+                            totalNumOfBricks++;
+                        }
                     }
                 }
             }
             numOfBricksLeft = totalNumOfBricks;
             scanner.close();
         }
-    }
-
-    // private method to construct new brick based on data read
-    private static Brick constructBrick(double x, double y, int type) {
-        return BrickFactory.createBrick(x, y, type);
     }
 
     public void addResonanceBrick(ResonanceBrick resonanceBrick) {
@@ -150,4 +149,7 @@ public class BrickSet implements GameObject {
         explosiveBrickQueue.clear();
         this.addShapeToGameRoot();
     }
+
+    // abstract factory method
+    protected abstract Brick createBrick(double x, double y, int type);
 }
