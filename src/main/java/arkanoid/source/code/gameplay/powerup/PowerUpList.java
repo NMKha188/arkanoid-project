@@ -6,6 +6,7 @@ import arkanoid.source.code.gameplay.ball.BallList;
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.paddle.Paddle;
 import arkanoid.source.code.gameplay.brick.Brick;
+import arkanoid.source.code.sound.Sound;
 import javafx.application.Platform;
 
 import java.time.Instant;
@@ -66,6 +67,7 @@ public class PowerUpList implements GameObject {
                 powerUp.setEffectStartTime(Instant.now());
                 Platform.runLater(() -> {
                     powerUp.removeShapeFromGameRoot();
+                    Sound.playPowerUp();
                 });
             }
 

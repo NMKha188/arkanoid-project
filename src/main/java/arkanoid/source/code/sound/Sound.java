@@ -6,18 +6,22 @@ import java.net.URL;
 public class Sound {
 
     private static final String PADDLE_HIT = "/arkanoid/resources/sounds/paddle_hit.wav";
-    private static final String LOSE_LIFE_PATH = "/arkanoid/resources/sounds/gamedie.mp3";
+    private static final String LOSE_LIFE = "/arkanoid/resources/sounds/gamedie.mp3";
     private static final String THEME_SOUND = "/arkanoid/resources/sounds/theme.mp3";
-    private static final String EXPLOSION_PATH = "/arkanoid/resources/sounds/explode.mp3";
+    private static final String EXPLOSION = "/arkanoid/resources/sounds/explode.mp3";
     private static final String BRICK_HIT = "/arkanoid/resources/sounds/brick_hit.mp3";
-    private static final String THUNDER_PATH = "/arkanoid/resources/sounds/thunder.mp3";
+    private static final String LIGHTNING = "/arkanoid/resources/sounds/lightning.mp3";
+    private static final String POWERUP = "/arkanoid/resources/sounds/powerup.mp3";
+    private static final String WIN = "/arkanoid/resources/sounds/win.mp3";
 
     private static final AudioClip themeSound = loadSound(THEME_SOUND);
     private static final AudioClip paddleHitSound = loadSound(PADDLE_HIT);
-    private static final AudioClip brickhitSound = loadSound(BRICK_HIT);
-    private static final AudioClip loseLifeSound = loadSound(LOSE_LIFE_PATH);
-    private static final AudioClip explosionSound = loadSound(EXPLOSION_PATH);
-    private static final AudioClip thunderSound = loadSound(THUNDER_PATH);
+    private static final AudioClip brickHitSound = loadSound(BRICK_HIT);
+    private static final AudioClip loseLifeSound = loadSound(LOSE_LIFE);
+    private static final AudioClip explosionSound = loadSound(EXPLOSION);
+    private static final AudioClip powerUpSound = loadSound(POWERUP);
+    private static final AudioClip winSound = loadSound(WIN);
+    private static final AudioClip lightningSound = loadSound(LIGHTNING);
 
     private static AudioClip loadSound(String path) {
         try {
@@ -44,8 +48,8 @@ public class Sound {
     }
 
     public static void playBrickHit() {
-        if(brickhitSound != null) {
-            brickhitSound.play();
+        if(brickHitSound != null) {
+            brickHitSound.play();
         }
     }
 
@@ -67,9 +71,21 @@ public class Sound {
         }
     }
 
-    public static void playThunder() {
-        if (thunderSound != null) {
-            thunderSound.play();
+    public static void playLightning() {
+        if (lightningSound != null) {
+            lightningSound.play();
+        }
+    }
+
+    public static void playPowerUp() {
+        if(powerUpSound != null) {
+            powerUpSound.play();
+        }
+    }
+
+    public static void playWin() {
+        if(winSound != null) {
+            winSound.play();
         }
     }
 }

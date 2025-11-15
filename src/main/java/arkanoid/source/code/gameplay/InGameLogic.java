@@ -172,6 +172,7 @@ public class InGameLogic {
             public void handle(long now) {
                 if(brickSet.isClear()) {
                     reset();
+                    Sound.playWin();
                     InGameStatus.setNextMap();
                     SaveGame.saveGame();
                     System.out.println("Level Passed");
