@@ -33,6 +33,7 @@ public class Texture {
     private static Image explosiveBallImage;
     private static Image[] brickImages = new Image[10];
     private static Image[] explosionImages = new Image[8];
+    private static Image[] lightingImages = new Image[12];
 
     private static Image expandPaddlePowerUPImage;
     private static Image speedUpPaddlePowerUpImage;
@@ -84,9 +85,15 @@ public class Texture {
                 downBorderImages[i] = loadImage(path);
             }
             for (int i = 0; i < explosionImages.length; i++) {
-                String path = "/arkanoid/resources/explosion" + (i + 1) + ".png";
+                String path = "/arkanoid/resources/explosionsprites/explosion" + (i + 1) + ".png";
                 explosionImages[i] = loadImage(path);
             }
+
+            for (int i = 0; i < lightingImages.length; i++) {
+                String path = "/arkanoid/resources/lightingsprites/lighting" + (i + 1) + ".png";
+                lightingImages[i] = loadImage(path);
+            }
+
         } catch (Exception e) {
             System.err.println("Error loading textures resources");
             e.printStackTrace();
@@ -133,15 +140,55 @@ public class Texture {
             rightRec.setFill(new ImagePattern(rightBorderImage));
         }
     }
-  
-    public static void playExplosionAnimation(Pane gamePane, double x, double y) {
+
+    public static void playLightingAnimation(double x, double y) {
+        if (lightingImages == null || lightingImages[0] == null) {
+            System.err.println("Lighting animation frames not loaded!");
+            return;
+        }
+
+        double frameWidth = 150;
+        double frameHeight = 150;
+
+        Rectangle lightingRect = new Rectangle(frameWidth, frameHeight);
+
+        lightingRect.setX(x - frameWidth / 2);
+        lightingRect.setY(y - frameHeight / 2);
+
+        lightingRect.setFill(new ImagePattern(lightingImages[0]));
+
+        InGameLogic.getRoot().getChildren().add(lightingRect);
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        double frameDuration = 80;
+
+        for (int i = 0; i < lightingImages.length; i++) {
+            final int frameIndex = i;
+            KeyFrame kf = new KeyFrame(
+                    Duration.millis(frameDuration * (i + 1)),
+                    e -> {
+                        if (lightingRect != null && lightingRect.getScene() != null) {
+                            lightingRect.setFill(new ImagePattern(lightingImages[frameIndex]));
+                        }
+                    }
+            );
+            timeline.getKeyFrames().add(kf);
+        }
+
+        timeline.setOnFinished(e -> InGameLogic.getRoot().getChildren().remove(lightingRect));
+
+        timeline.play();
+    }
+
+    public static void playExplosionAnimation(double x, double y) {
         if (explosionImages == null || explosionImages[0] == null) {
             System.err.println("Explosion animation frames not loaded!");
             return;
         }
 
-        double frameWidth = explosionImages[0].getWidth();
-        double frameHeight = explosionImages[0].getHeight();
+        double frameWidth = 150;
+        double frameHeight = 150;
 
         Rectangle explosionRect = new Rectangle(frameWidth, frameHeight);
 
@@ -150,7 +197,7 @@ public class Texture {
 
         explosionRect.setFill(new ImagePattern(explosionImages[0]));
 
-        gamePane.getChildren().add(explosionRect);
+        InGameLogic.getRoot().getChildren().add(explosionRect);
         Timeline timeline = new Timeline();
         timeline.setCycleCount(1);
         double frameDuration = 80;
@@ -168,11 +215,11 @@ public class Texture {
             timeline.getKeyFrames().add(kf);
         }
 
-        timeline.setOnFinished(e -> gamePane.getChildren().remove(explosionRect));
+        timeline.setOnFinished(e -> InGameLogic.getRoot().getChildren().remove(explosionRect));
 
         timeline.play();
     }
-  
+
     // downRec animation
     public static void applyAndPlayAnimation(Rectangle borderShape) {
         if (downBorderImages == null || downBorderImages[0] == null) {
