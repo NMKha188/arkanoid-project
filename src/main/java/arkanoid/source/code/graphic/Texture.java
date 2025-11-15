@@ -145,8 +145,8 @@ public class Texture {
             return;
         }
 
-        double frameWidth = 150;
-        double frameHeight = 150;
+        double frameWidth = 50;
+        double frameHeight = 50;
 
         Rectangle lightingRect = new Rectangle(frameWidth, frameHeight);
 
