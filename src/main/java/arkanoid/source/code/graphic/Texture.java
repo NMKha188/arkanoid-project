@@ -82,11 +82,11 @@ public class Texture {
             tripleBallPowerUpImage = loadImage("/arkanoid/resources/texture/powerup/powerup_tripleball.png");
             livePowerUpImage = loadImage("/arkanoid/resources/texture/powerup/powerup_live.png");
 
-            topBorderImage = loadImage("/arkanoid/resources/texture/border/topRec.png");
-            leftBorderImage = loadImage("/arkanoid/resources/texture/border/leftRec.png");
-            rightBorderImage = loadImage("/arkanoid/resources/texture/border/rightRec.png");
+            topBorderImage = loadImage("/arkanoid/resources/texture/border/topBorder.png");
+            leftBorderImage = loadImage("/arkanoid/resources/texture/border/leftBorder.png");
+            rightBorderImage = loadImage("/arkanoid/resources/texture/border/rightBorder.png");
             for (int i = 0; i < downBorderImages.length; i++) {
-                String path = "/arkanoid/resources/texture/border/downRec" + (i + 1) + ".png";
+                String path = "/arkanoid/resources/texture/border/downBorder" + (i + 1) + ".png";
                 downBorderImages[i] = loadImage(path);
             }
             for (int i = 0; i < explosionImages.length; i++) {

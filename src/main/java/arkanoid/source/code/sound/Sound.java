@@ -5,7 +5,7 @@ import java.net.URL;
 
 public class Sound {
 
-    private static final String PADDLE_HIT = "/arkanoid/resources/sounds/hit.wav";
+    private static final String PADDLE_HIT = "/arkanoid/resources/sounds/paddle_hit.wav";
     private static final String LOSE_LIFE_PATH = "/arkanoid/resources/sounds/gamedie.mp3";
     private static final String THEME_SOUND = "/arkanoid/resources/sounds/theme.mp3";
     private static final String EXPLOSION_PATH = "/arkanoid/resources/sounds/explode.mp3";
