@@ -121,6 +121,7 @@ public class PowerUpList implements GameObject {
                 }
             }
         }
+        ExplosiveBall.resetExplosiveMode();
 
         Platform.runLater(() -> {
             this.removeShapeFromGameRoot();

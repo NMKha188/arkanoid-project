@@ -64,4 +64,8 @@ public class ExplosiveBall extends PowerUp {
             }
         }
     }
+
+    public static void resetExplosiveMode() {
+        inExplosiveMode = false;
+    }
 }
