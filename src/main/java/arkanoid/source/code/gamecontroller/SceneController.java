@@ -161,6 +161,7 @@ public class SceneController {
                 InGameLogic.stopGame();
                 System.out.println("Switching to game over scene...");
                 GameOverScreen.switchToGameOverScene(InGameStatus.getScore(), primaryStage);
+                SaveGame.resetSaveGameFile();
             } else {
                 System.out.println("You lose");
                 System.out.println("Your final score: " + InGameStatus.getScore());
