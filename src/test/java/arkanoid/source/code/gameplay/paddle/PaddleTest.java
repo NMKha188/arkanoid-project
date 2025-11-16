@@ -37,7 +37,7 @@ public class PaddleTest {
         assertEquals(expectedY, paddle.getY(), DELTA);
         assertEquals(Config.PADDLE_WIDTH, paddle.getWidth(), DELTA);
         assertEquals(Config.PADDLE_HEIGHT, paddle.getHeight(), DELTA);
-        assertEquals(Config.PADDLE_SPEED, paddle.getSpeed(), DELTA);
+        assertEquals(Config.PADDLE_SPEED, paddle.getPaddleSpeed(), DELTA);
     }
 
     @Test
