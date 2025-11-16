@@ -28,7 +28,7 @@ public class InGameLogic {
     private static boolean movingLeft = false;
     private static boolean movingRight = false;
 
-    public static AnimationTimer gameTimer;
+    private static AnimationTimer gameTimer;
 
     private static final Paddle paddle = new Paddle();
     private static final BallList ballList = new BallList();
