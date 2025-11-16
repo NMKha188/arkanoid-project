@@ -20,14 +20,14 @@ public class PowerUpList implements GameObject {
 
     public void removeShapeFromGameRoot() {
         for (PowerUp powerUp : powerUpList) {
-            powerUp.removeShapeFromRoot();
+            powerUp.removeShapeFromGameRoot();
         }
     }
 
     private void addPowerUpToList(PowerUp powerUp) {
         powerUpList.add(powerUp);
         Platform.runLater(() -> {
-            powerUp.addShapeToRoot();
+            powerUp.addShapeToGameRoot();
         });
     }
 
@@ -37,7 +37,7 @@ public class PowerUpList implements GameObject {
             return;
         }
         Platform.runLater(() -> {
-            powerUp.removeShapeFromRoot();
+            powerUp.removeShapeFromGameRoot();
         });
         powerUpList.remove(index);
     }

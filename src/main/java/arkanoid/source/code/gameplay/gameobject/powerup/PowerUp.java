@@ -49,14 +49,6 @@ public abstract class PowerUp extends RectangleGameObject {
         this.effectStartTime = moment;
     }
 
-    public void addShapeToRoot() {
-        InGameLogic.getRoot().getChildren().add(shape);
-    }
-
-    public void removeShapeFromRoot() {
-        InGameLogic.getRoot().getChildren().remove(shape);
-    }
-
     public void updateLogic() {
         y += fallingSpeed;
     }
