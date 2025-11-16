@@ -82,7 +82,6 @@ public class InGameStatus {
     }
 
     public static void setNextMap() {
-        score = getFinalScore();
         updateTexts();
         level++;
     }
