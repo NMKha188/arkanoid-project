@@ -219,12 +219,12 @@ public class Ball implements GameObject {
                 }
                 // effect from paddle speed
                 if (InGameLogic.isMovingLeft()) {
-                    Vx = Vx * 0.7 - 0.3 * paddle.getSpeed();
+                    Vx = Vx * 0.7 - 0.3 * paddle.getPaddleSpeed();
                     if (Vx < -maxVx) {
                         Vx = -maxVx;
                     }
                 } else if (InGameLogic.isMovingRight()) {
-                    Vx = Vx * 0.7 + 0.3 * paddle.getSpeed();
+                    Vx = Vx * 0.7 + 0.3 * paddle.getPaddleSpeed();
                     if (Vx > maxVx) {
                         Vx = maxVx;
                     }
@@ -432,7 +432,7 @@ public class Ball implements GameObject {
 
     // private method to calculate ratio between Vx and Vy when ball collides with corners of 1 brick
     private double calculateRatioBetweenVxAndVy(Brick brick) {
-        // logic: Vx/Vy = dx/dy = k (k limit is between 0.75 and 1.25)-> Vx^2 + Vy^2 = ballSpeed -> Vx = ..., Vy = ...
+        // logic: Vx/Vy = dx/dy = k (k limit is between 0.9 and 1.1)-> Vx^2 + Vy^2 = ballSpeed -> Vx = ..., Vy = ...
         double dx;
         double dy;
         if (x < brick.getX()) {

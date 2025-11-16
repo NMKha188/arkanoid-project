@@ -20,7 +20,7 @@ public class SpeedUpPaddle extends PowerUp {
         if (!alreadyApplyEffect) {
             alreadyApplyEffect = true;
             alreadyRemoveEffect = false;
-            ((Paddle) o).setPaddleSpeed(((Paddle) o).getSpeed() * SPEED_UP_RATIO);
+            ((Paddle) o).setPaddleSpeed(((Paddle) o).getPaddleSpeed() * SPEED_UP_RATIO);
         }
     }
 
@@ -28,7 +28,7 @@ public class SpeedUpPaddle extends PowerUp {
         if (!alreadyRemoveEffect) {
             alreadyApplyEffect = false;
             alreadyRemoveEffect = true;
-            ((Paddle) o).setPaddleSpeed(((Paddle) o).getSpeed() / SPEED_UP_RATIO);
+            ((Paddle) o).setPaddleSpeed(((Paddle) o).getPaddleSpeed() / SPEED_UP_RATIO);
         }
     }
 }
