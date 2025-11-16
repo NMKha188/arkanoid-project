@@ -2,7 +2,8 @@ package arkanoid.source.code.gameplay.ball;
 
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.InGameLogic;
-import arkanoid.source.code.gameplay.paddle.Paddle;
+import arkanoid.source.code.gameplay.gameobject.ball.Ball;
+import arkanoid.source.code.gameplay.gameobject.paddle.Paddle;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -2,6 +2,7 @@ package arkanoid.source.code.gameplay.paddle;
 
 import arkanoid.source.code.config.Config;
 import arkanoid.source.code.gameplay.InGameLogic;
+import arkanoid.source.code.gameplay.gameobject.paddle.Paddle;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

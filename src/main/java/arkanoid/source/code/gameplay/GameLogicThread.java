@@ -1,9 +1,9 @@
 package arkanoid.source.code.gameplay;
 
-import arkanoid.source.code.gameplay.ball.BallList;
-import arkanoid.source.code.gameplay.brick.BrickSet;
-import arkanoid.source.code.gameplay.paddle.Paddle;
-import arkanoid.source.code.gameplay.powerup.PowerUpList;
+import arkanoid.source.code.gameplay.gameobject.ball.BallList;
+import arkanoid.source.code.gameplay.gameobject.brick.BrickSet;
+import arkanoid.source.code.gameplay.gameobject.paddle.Paddle;
+import arkanoid.source.code.gameplay.gameobject.powerup.PowerUpList;
 import javafx.application.Platform;
 
 public class GameLogicThread implements Runnable {

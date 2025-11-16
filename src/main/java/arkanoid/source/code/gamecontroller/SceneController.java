@@ -1,9 +1,9 @@
 package arkanoid.source.code.gamecontroller;
 
 import arkanoid.source.code.gameplay.InGameLogic;
-import arkanoid.source.code.gameplay.InGameStatus;
-import arkanoid.source.code.gameplay.Ranking;
-import arkanoid.source.code.gameplay.SaveGame;
+import arkanoid.source.code.gameplay.gamestatus.InGameStatus;
+import arkanoid.source.code.gameplay.gamestatus.Ranking;
+import arkanoid.source.code.gameplay.gamestatus.SaveGame;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;

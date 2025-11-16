@@ -1,16 +1,19 @@
 package arkanoid.source.code.gameplay;
 
 import arkanoid.source.code.config.Config;
-import arkanoid.source.code.gamecontroller.PauseScreen;
 import arkanoid.source.code.gamecontroller.SceneController;
-import arkanoid.source.code.gameplay.ball.BallList;
-import arkanoid.source.code.gameplay.brick.BrickSet;
-import arkanoid.source.code.gameplay.brick.Map;
-import arkanoid.source.code.gameplay.paddle.Paddle;
-import arkanoid.source.code.gameplay.powerup.PowerUpList;
+import arkanoid.source.code.gameplay.gameobject.ball.BallList;
+import arkanoid.source.code.gameplay.gameobject.brick.BrickSet;
+import arkanoid.source.code.gameplay.gameobject.brick.Map;
+import arkanoid.source.code.gameplay.gamecommand.*;
+import arkanoid.source.code.gameplay.gameobject.paddle.Paddle;
+import arkanoid.source.code.gameplay.gameobject.powerup.PowerUpList;
+import arkanoid.source.code.gameplay.gamestatus.InGameStatus;
+import arkanoid.source.code.gameplay.gamestatus.SaveGame;
 import arkanoid.source.code.sound.Sound;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import arkanoid.source.code.graphic.Texture;
@@ -77,6 +80,10 @@ public class InGameLogic {
         return gameRoot;
     }
 
+    public static Scene getGameScene() {
+        return gameScene;
+    }
+
     public static GameLogicThread getGameLogicThread() {
         return gameLogicThread;
     }
@@ -111,41 +118,21 @@ public class InGameLogic {
     }
 
     private static void handleInGameKeyInput() {
-        // handle key press
-        gameScene.setOnKeyPressed(event -> {
-            switch(event.getCode()) {
-                case LEFT -> {
-                    movingLeft = true;
-                }
-                case RIGHT -> {
-                    movingRight = true;
-                }
-                default -> {
-                }
-            }
-        });
+        GameCommand releasedBall = new ReleasedBallCommand(ballList);
+        GameCommand moveLeft = new MoveLeftCommand();
+        GameCommand stopMoveLeft = new StopMoveLeftCommand();
+        GameCommand moveRight = new MoveRightCommand();
+        GameCommand stopMoveRight = new StopMoveRightCommand();
+        GameCommand pauseGame = new PauseGameCommand();
 
-        // Handle key release
-        gameScene.setOnKeyReleased(event -> {
-            switch(event.getCode()) {
-                case LEFT -> {
-                    movingLeft = false;
-                }
-                case RIGHT -> {
-                    movingRight = false;
-                }
-                case SPACE -> {
-                    ballList.setReleased(true);
-                    ballList.hideDirectionLine();
-                }
-                case P -> {
-                    stopGame();
-                    PauseScreen.showPauseOverlay((Stage) gameScene.getWindow());
-                }
-                default -> {
-                }
-            }
-        });
+        InputHandler inputHandler = new InputHandler();
+
+        inputHandler.bindKey(KeyCode.SPACE, releasedBall, null);
+        inputHandler.bindKey(KeyCode.LEFT, moveLeft, stopMoveLeft);
+        inputHandler.bindKey(KeyCode.RIGHT, moveRight, stopMoveRight);
+        inputHandler.bindKey(KeyCode.P, pauseGame, null);
+
+        inputHandler.setupInput(gameScene);
     }
 
     public static Scene createGameScene(Stage primaryStage) {
