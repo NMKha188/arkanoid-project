@@ -18,7 +18,7 @@ public class Paddle extends RectangleGameObject {
         Texture.applyTextureToPaddle(shape);
     }
 
-    public double getSpeed() {
+    public double getPaddleSpeed() {
         return paddleSpeed;
     }
 
