@@ -46,12 +46,12 @@ public class LevelClearScreen {
         updateScoreLabels();
         backtoMMButton.setOnAction(e -> {
             if(InGameStatus.hasFinishedGame()) {
+                Ranking.printAndSaveRankScore(finalScore);
                 SaveGame.resetSaveGameFile();
             }
             else {
                 SaveGame.saveGame();
             }
-            Ranking.printAndSaveRankScore(currentScore);
             InGameLogic.reset();
             switchToMainMenu();
         });
