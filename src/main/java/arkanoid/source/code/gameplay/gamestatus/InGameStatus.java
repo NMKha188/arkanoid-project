@@ -31,8 +31,8 @@ public class InGameStatus {
     private static final double SCORE_Y = Config.BRICK_HEIGHT - 2;
     private static final double LIVES_X = Config.BRICK_WIDTH * 12;
     private static final double LIVES_Y = Config.BRICK_HEIGHT - 2;
-    private static final double level_X = (SCORE_X + LIVES_X) / 2;
-    private static final double level_Y = Config.BRICK_HEIGHT - 2;
+    private static final double lEVEL_X = (SCORE_X + LIVES_X) / 2;
+    private static final double lEVEL_Y = Config.BRICK_HEIGHT - 2;
     static {
         scoreText.setFont(Font.font("Papyrus", 25));
         scoreText.setFill(Color.BLACK);
@@ -46,8 +46,8 @@ public class InGameStatus {
 
         levelText.setFont(Font.font("Papyrus", 25));
         levelText.setFill(Color.BLACK);
-        levelText.setX(level_X);
-        levelText.setY(level_Y);
+        levelText.setX(lEVEL_X);
+        levelText.setY(lEVEL_Y);
     }
     public static void applyBorderTextures() {
         Texture.applyTextureToTopRec(topBorder);
