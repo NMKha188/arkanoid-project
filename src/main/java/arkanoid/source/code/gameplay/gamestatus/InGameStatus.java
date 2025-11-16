@@ -49,6 +49,7 @@ public class InGameStatus {
         levelText.setX(lEVEL_X);
         levelText.setY(lEVEL_Y);
     }
+
     public static void applyBorderTextures() {
         Texture.applyTextureToTopRec(topBorder);
         Texture.applyTextureToLeftRec(leftBorder);
@@ -62,6 +63,7 @@ public class InGameStatus {
     public static void stopDownRecAnimation() {
         Texture.stopAnimation();
     }
+
     public static int getScore() {
         return score;
     }
